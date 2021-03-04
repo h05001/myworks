@@ -39,7 +39,7 @@ class Scraping extends Command
      */
     public function handle()
     {
-      /*{
+      {
       echo "start1\n";
         //ここにコマンドの実行処理を書く
        $goutte = GoutteFacade::request('GET', 'https://www.c-labo-online.jp/product/148044');
@@ -56,7 +56,7 @@ class Scraping extends Command
         });
 
         echo '価格：' . $goutte->filter('#pricech')->text() . "\n";
-      }*/
+      }
 
       {
       echo "start2\n";
@@ -77,7 +77,7 @@ class Scraping extends Command
         echo '価格：' . $goutte->filter('#pricech')->text() . "\n";
       }
 
-      /*{
+      {
       echo "start3\n";
         //ここにコマンドの実行処理を書く
        $goutte = GoutteFacade::request('GET', 'https://yuyu-tei.jp/game_ygo/carddetail/cardpreview.php?VER=blvo&CID=10004&MODE=sell');
@@ -94,7 +94,7 @@ class Scraping extends Command
         });
 
         echo '価格：' . $goutte->filter('p.price')->text() . "\n";
-      }*/
+      }
 
 
     }

@@ -6,9 +6,9 @@ echo 'test';
     <tr>
       <th>店名</th>
     </tr>
-    @foreach ($shopnames as $shopname)
+    @foreach ($cardprice_form as $shopname)
     <tr>
-      <td>$shopname->cardshop</td>
+      <td>{{$shopname->cardshop}}</td>
     </tr>
     @endforeach
   </table>
