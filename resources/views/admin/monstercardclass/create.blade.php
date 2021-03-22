@@ -21,35 +21,24 @@
                         </ul>
                     @endif
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">カードマスタID</label>
+                        <label class="col-md-3" for="card_master_id">カードマスタID</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="card_master_id" value="{{ old('card_master_id') }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">モンスターカード種類01</label>
+                        <label class="col-md-3" for="class_id">種類ID</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="monster_card_class_01" value="{{ old('monster_card_class_01') }}">
+                            <input type="text" class="form-control" name="class_id" value="{{ old('class_id') }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">モンスターカード種類02</label>
+                        <label class="col-md-3" for="monster_card_class">モンスターカード種類</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="monster_card_class_02" value="{{ old('monster_card_class_02') }}">
+                            <input type="text" class="form-control" name="monster_card_class" value="{{ old('monster_card_class') }}">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-3" for="title">モンスターカード種類03</label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" name="monster_card_class_03" value="{{ old('monster_card_class_03') }}">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-3" for="title">モンスターカード種類04</label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" name="monster_card_class_04" value="{{ old('monster_card_class_04') }}">
-                        </div>
-                    </div>
+                    
 
                     {{ csrf_field() }}
                     <input type="submit" class="btn btn-primary" value="更新">

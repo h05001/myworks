@@ -21,58 +21,58 @@
                         </ul>
                     @endif
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">カードマスタID</label>
+                        <label class="col-md-3" for="card_master_id">カードマスタID</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="card_master_id" value="{{ old('card_master_id') }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">属性</label>
+                        <label class="col-md-3" for="property">属性</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="attribute" value="{{ old('attribute') }}">
+                            <input type="text" class="form-control" name="property" value="{{ old('property') }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">種族</label>
+                        <label class="col-md-3" for="tribe">種族</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="tribe" value="{{ old('tribe') }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">レベル</label>
+                        <label class="col-md-3" for="level">レベル</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="level" value="{{ old('level') }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">ランク</label>
+                        <label class="col-md-3" for="rank">ランク</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="rank" value="{{ old('rank') }}">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">スケール</label>
+                        <label class="col-md-3" for="scale">スケール</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="scale" value="{{ old('scale') }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">ペンデュラム効果</label>
+                        <label class="col-md-3" for="pendulum_effect">ペンデュラム効果</label>
                         <div class="col-md-9">
                           <textarea class="form-control" name="pendulum_effect" rows="15">{{ old('pendulum_effect') }}</textarea>
-                            
+
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">Link</label>
+                        <label class="col-md-3" for="link">Link</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="link" value="{{ old('link') }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">マーカーの向き</label>
+                        <label class="col-md-3" for="link_marker">マーカーの向き</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="link_marker" value="{{ old('link_marker') }}">
                         </div>
@@ -80,15 +80,15 @@
 
 
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">攻撃力</label>
+                        <label class="col-md-3" for="attack">攻撃力</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="attack" value="{{ old('attack') }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">守備力</label>
+                        <label class="col-md-3" for="defense">守備力</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name=defense value="{{ old('defense') }}">
+                            <input type="text" class="form-control" name="defense" value="{{ old('defense') }}">
                         </div>
                     </div>
 

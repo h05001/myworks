@@ -21,13 +21,13 @@
                         </ul>
                     @endif
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">カードショップ名</label>
+                        <label class="col-md-3" for="cardshop">カードショップ名</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="cardshop" value="{{ old('cardshop') }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">URL</label>
+                        <label class="col-md-3" for="URL">URL</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="URL" value="{{ old('URL') }}">
                         </div>

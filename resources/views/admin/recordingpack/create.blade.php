@@ -21,13 +21,13 @@
                     </ul>
                 @endif
                 <div class="form-group row">
-                    <label class="col-md-3" for="title">収録パック名</label>
+                    <label class="col-md-3" for="recordingpack">収録パック名</label>
                     <div class="col-md-9">
                         <input type="text" class="form-control" name="recordingpack" value="{{ old('recordingpack') }}">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-md-3" for="title">収録パックID</label>
+                    <label class="col-md-3" for="recordingpackid">収録パックID</label>
                     <div class="col-md-9">
                         <input type="text" class="form-control" name="recordingpackid" value="{{ old('recordingpackid') }}">
                     </div>

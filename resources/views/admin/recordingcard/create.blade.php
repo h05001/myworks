@@ -21,13 +21,13 @@
                     </ul>
                 @endif
                 <div class="form-group row">
-                    <label class="col-md-3" for="title">カード名</label>
+                    <label class="col-md-3" for="cardname">カード名</label>
                     <div class="col-md-9">
                         <input type="text" class="form-control" name="cardname" value="{{ old('cardname') }}">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-md-3" for="title">収録パックID</label>
+                    <label class="col-md-3" for="recordingpackid">収録パックID</label>
                     <div class="col-md-9">
                         <input type="text" class="form-control" name="recordingpackid" value="{{ old('recordingpackid') }}">
                     </div>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                      <label class="col-md-3" for="title">レアリティ</label>
+                      <label class="col-md-3" for="rarity">レアリティ</label>
                       <div class="col-md-9">
                           <input type="text" class="form-control" name="rarity" value="{{ old('rarity') }}">
                       </div>

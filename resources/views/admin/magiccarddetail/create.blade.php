@@ -21,19 +21,19 @@
                         </ul>
                     @endif
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">カードマスタID</label>
+                        <label class="col-md-3" for="card_master_id">カードマスタID</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="card_master_id" value="{{ old('card_master_id') }}">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-3" for="title">魔法カード種類</label>
+                        <label class="col-md-3" for="magic_class">魔法カード種類</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="magic_class" value="{{ old('magic_class') }}">
                         </div>
                     </div>
-                    
+
                     {{ csrf_field() }}
                     <input type="submit" class="btn btn-primary" value="更新">
 

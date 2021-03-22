@@ -19,7 +19,7 @@ class CreateCardDetailsTable extends Migration
             $table->string('ruby'); //読み方を保存するカラム
             $table->string('card_class'); //カード分類を保存するカラム
             $table->string('image_path')->nullable();  // 画像のパスを保存するカラム
-            $table->string('card_text');//カードテキストを保存するカラム
+            $table->text('card_text');//カードテキストを保存するカラム
             $table->timestamps();
         });
     }

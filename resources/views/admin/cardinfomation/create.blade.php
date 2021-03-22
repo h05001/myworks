@@ -22,25 +22,25 @@
                         </ul>
                     @endif
                     <div class="form-group row">
-                        <label class="col-md-2" for="title">カード名</label>
+                        <label class="col-md-2" for="cardname">カード名</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control" name="cardname" value="{{ old('cardname') }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2" for="title">カード分類</label>
+                        <label class="col-md-2" for="cardclass">カード分類</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control" name="cardclass" value="{{ old('cardclass') }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2" for="title">カードテキスト</label>
+                        <label class="col-md-2" for="cardtext">カードテキスト</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control" name="cardtext" value="{{ old('cardtext') }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                          <label class="col-md-2" for="title">レアリティ</label>
+                          <label class="col-md-2" for="rarity">レアリティ</label>
                           <div class="col-md-10">
                               <input type="text" class="form-control" name="rarity" value="{{ old('rarity') }}">
                           </div>
