@@ -85,6 +85,14 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('monstercardclass/edit', 'Admin\MonsterCardClassController@update');
     Route::get('monstercardclass', 'Admin\MonsterCardClassController@index');
     Route::get('monstercardclass/delete', 'Admin\MonsterCardClassController@delete');
+
+    Route::get('monsterclassmaster/create', 'Admin\MonsterClassMasterController@add');
+    Route::post('monsterclassmaster/create', 'Admin\MonsterClassMasterController@create');
+    Route::get('monsterclassmaster/edit', 'Admin\MonsterClassMasterController@edit');
+    Route::post('monsterclassmaster/edit', 'Admin\MonsterClassMasterController@update');
+    Route::get('monsterclassmaster', 'Admin\MonsterClassMasterController@index');
+    Route::get('monsterclassmaster/delete', 'Admin\MonsterClassMasterController@delete');
+
     /*
     Route::get('pendulummonstercarddetail/create', 'Admin\PendulumMonsterCardDetailController@add');
     Route::post('pendulummonstercarddetail/create', 'Admin\PendulumMonsterCardDetailController@create');

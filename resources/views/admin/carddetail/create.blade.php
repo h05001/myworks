@@ -32,6 +32,74 @@ function entryChange(){
 //オンロードさせ、リロード時に選択を保持
 window.onload = entryChange;
 
+
+function entryChangeClass(){
+
+    // チェックボックスの一覧を取得
+    var checkBoxs = document.getElementsByClassName('changeCheck');
+    // 配列へ変換
+    var checkBoxsArr = Array.prototype.slice.call(checkBoxs);
+
+    // チェックボックス文繰り返す
+    for ( i = 0; i <= checkBoxsArr.length ; i++) {
+
+        if (document.getElementById('xyz').checked === true){
+                //フォーム
+                document.getElementById('level').style.display = "none";//レベル
+                document.getElementById('rank').style.display = "block";//ランク
+                document.getElementById('scale').style.display = "none";//スケール
+                document.getElementById('pendulum_effect').style.display = "none";//ペンデュラム効果テキスト
+                document.getElementById('link_leval').style.display = "none";//リンク
+                document.getElementById('link_marker').style.display = "none";//マーカーの向き
+                document.getElementById('defense').style.display = "block";//守備力
+
+            }else if(document.getElementById('pendulum').checked === true){
+                //フォーム
+                document.getElementById('level').style.display = "block";//レベル
+                document.getElementById('rank').style.display = "none";//ランク
+                document.getElementById('scale').style.display = "block";//スケール
+                document.getElementById('pendulum_effect').style.display = "block";//ペンデュラム効果テキスト
+                document.getElementById('link_leval').style.display = "none";//リンク
+                document.getElementById('link_marker').style.display = "none";//マーカーの向き
+                document.getElementById('defense').style.display = "block";//守備力
+
+            }else if(document.getElementById('link').checked === true){
+                //フォーム
+                document.getElementById('level').style.display = "none";//レベル
+                document.getElementById('rank').style.display = "none";//ランク
+                document.getElementById('scale').style.display = "none";//スケール
+                document.getElementById('pendulum_effect').style.display = "none";//ペンデュラム効果テキスト
+                document.getElementById('link_leval').style.display = "block";//リンク
+                document.getElementById('link_marker').style.display = "block";//マーカーの向き
+                document.getElementById('defense').style.display = "none";//守備力
+
+            /*}else if(document.getElementById('xyz').checked === true && document.getElementById('pendulum').checked === true){
+                //フォーム
+                document.getElementById('level').style.display = "none";//レベル
+                document.getElementById('rank').style.display = "block";//ランク
+                document.getElementById('scale').style.display = "block";//スケール
+                document.getElementById('pendulum_effect').style.display = "block";//ペンデュラム効果テキスト
+                document.getElementById('link_leval').style.display = "none";//リンク
+                document.getElementById('link_marker').style.display = "none";//マーカーの向き
+                document.getElementById('defense').style.display = "block";//守備力*/
+
+            }else{
+                document.getElementById('level').style.display = "block";//レベル
+                document.getElementById('rank').style.display = "none";//ランク
+                document.getElementById('scale').style.display = "none";//スケール
+                document.getElementById('pendulum_effect').style.display = "none";//ペンデュラム効果テキスト
+                document.getElementById('link_leval').style.display = "none";//リンク
+                document.getElementById('link_marker').style.display = "none";//マーカーの向き
+                document.getElementById('defense').style.display = "block";//守備力
+            }
+        }
+    }
+
+
+
+//オンロードさせ、リロード時に選択を保持
+window.onload = entryChangeClass;
+
 </script>
 
 {{-- admin.blade.phpの@yield('title')に'ニュースの新規作成'を埋め込む --}}
@@ -71,6 +139,7 @@ window.onload = entryChange;
                         <label class="col-md-3" for="card_class">カード分類</label>
                         <div class="col-md-9">
                             <select id="changeSelect"  onchange="entryChange();" class="form-control" name="card_class" value="{{ old('card_class') }}">
+                              <option value="">カード種類の選択</option>
                               <option value="select1">モンスターカード</option>
                               <option value="select2">魔法カード</option>
                               <option value="select3">罠カード</option>
@@ -80,39 +149,88 @@ window.onload = entryChange;
 
                     <!-- 表示非表示切り替え -->
                     <div id="firstBox">
-
+<!--
                         <div class="form-group row">
                             <label class="col-md-3" for="class_id">種類ID</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" name="class_id" value="{{ old('class_id') }}">
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-md-3" for="monster_card_class">モンスターカード種類</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="monster_card_class" value="{{ old('monster_card_class') }}">
-                            </div>
-                        </div>
-<!--
-                        <select name="monster_card_class" class="form-control"  value="{{ old('monster_card_class') }}">
-                            <option value="">モンスターカード種類の選択</option>
-                            <option value="normal">通常</option>
-                            <option value="effect">効果</option>
-                            <option value="ritual">儀式</option>
-                            <option value="fusion">融合</option>
-                            <option value="synchro">シンクロ</option>
-                            <option value="xyz">エクシーズ</option>
-                            <option value="toon">トゥーン</option>
-                            <option value="spirit">スピリット</option>
-                            <option value="union">ユニオン</option>
-                            <option value="gemini">デュアル</option>
-                            <option value="tuner">チューナー</option>
-                            <option value="flip">リバース</option>
-                            <option value="pendulum">ペンデュラム</option>
-                            <option value="special_summon">特殊召喚</option>
-                            <option value="link">リンク</option>
-
 -->
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                              <label  for="monster_card_class">モンスターカード種類</label>
+                            </div>
+                            <div class="col-md-9 form-inline">
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox"  onchange="entryChangeClass();" name="monster_card_class" class="changeCheck"  value="normal">通常</label>
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox"  onchange="entryChangeClass();" name="monster_card_class" class="changeCheck"  value="effect">効果</label>
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox"  onchange="entryChangeClass();" name="monster_card_class" class="changeCheck"  value="ritual">儀式</label>
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox"  onchange="entryChangeClass();" name="monster_card_class" class="changeCheck"  value="fusion">融合</label>
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox"  onchange="entryChangeClass();" name="monster_card_class" class="changeCheck"  value="synchro">シンクロ</label>
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox"  onchange="entryChangeClass();" name="monster_card_class" class="changeCheck"  value="xyz" id="xyz">エクシーズ</label>
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox"  onchange="entryChangeClass();" name="monster_card_class" class="changeCheck"  value="toon">トゥーン</label>
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox"  onchange="entryChangeClass();" name="monster_card_class" class="changeCheck"  value="spirit">スピリット</label>
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox"  onchange="entryChangeClass();" name="monster_card_class" class="changeCheck" value="union">ユニオン</label>
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox"  onchange="entryChangeClass();" name="monster_card_class" class="changeCheck" value="gemini">デュアル</label>
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox" onchange="entryChangeClass();" name="monster_card_class" class="changeCheck" value="tuner">チューナー</label>
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox"  onchange="entryChangeClass();" name="monster_card_class" class="changeCheck" value="flip">リバース</label>
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox" onchange="entryChangeClass();" name="monster_card_class" class="changeCheck" value="pendulum" id="pendulum">ペンデュラム</label>
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox" onchange="entryChangeClass();" name="monster_card_class" class="changeCheck" value="special_summon">特殊召喚</label>
+
+                                <label class="checkbox-inline" >
+                                    <input class="form-check-input" type="checkbox" onchange="entryChangeClass();" name="monster_card_class" class="changeCheck"  value="link" id="link">リンク</label>
+
+                                </div>
+
+                          </div>
+
+                              <!--
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="normal">
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="effect">
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="ritual">
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="fusion">
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="synchro">
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="xyz">
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="toon">
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="spirit">
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="union">
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="gemini">
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="tuner">
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="flip">
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="pendulum">
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="special_summon">
+                                <input type="checkbox" name="monster_card_class" class="form-control"  value="link">
+                                -->
+
+
                         <div class="form-group row">
                             <label class="col-md-3" for="property">属性</label>
                             <div class="col-md-9">
@@ -167,7 +285,7 @@ window.onload = entryChange;
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div id="level" class="form-group row">
                             <label class="col-md-3" for="level">レベル</label>
                             <div class="col-md-9">
                             <!--    <input type="text" class="form-control" name="level" value="{{ old('level') }}"> -->
@@ -190,7 +308,7 @@ window.onload = entryChange;
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div id="rank" class="form-group row">
                             <label class="col-md-3" for="rank">ランク</label>
                             <div class="col-md-9">
                             <!--    <input type="text" class="form-control" name="rank" value="{{ old('rank') }}"> -->
@@ -213,7 +331,7 @@ window.onload = entryChange;
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div id="scale" class="form-group row">
                             <label class="col-md-3" for="scale">スケール</label>
                             <div class="col-md-9">
                           <!--      <input type="text" class="form-control" name="scale" value="{{ old('scale') }}"> -->
@@ -238,7 +356,7 @@ window.onload = entryChange;
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div id="pendulum_effect" class="form-group row">
                             <label class="col-md-3" for="pendulum_effect">ペンデュラム効果</label>
                             <div class="col-md-9">
                               <textarea class="form-control" name="pendulum_effect" rows="15">{{ old('pendulum_effect') }}</textarea>
@@ -246,7 +364,7 @@ window.onload = entryChange;
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div id="link_leval" class="form-group row">
                             <label class="col-md-3" for="link">Link</label>
                             <div class="col-md-9">
                               <!--  <input type="text" class="form-control" name="link" value="{{ old('link') }}"> -->
@@ -263,12 +381,43 @@ window.onload = entryChange;
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div id="link_marker" class="form-group row">
                             <label class="col-md-3" for="link_marker">マーカーの向き</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="link_marker" value="{{ old('link_marker') }}">
-                            </div>
-                        </div>
+                              <div class="col-md-1">
+                                <input class="form-check-input" type="checkbox"  name="link_marker[]" class="form-control"  value="1">
+                                    <label class="form-check-label" for="1">上</label>
+                              </div>
+                              <div class="col-md-1">
+                                <input class="form-check-input" type="checkbox"  name="link_marker[]" class="form-control"  value="2">
+                                    <label class="form-check-label" for="2">右上</label>
+                              </div>
+                              <div class="col-md-1">
+                                <input class="form-check-input" type="checkbox"  name="link_marker[]" class="form-control"  value="3">
+                                    <label class="form-check-label" for="3">右</label>
+                              </div>
+                              <div class="col-md-1">
+                                <input class="form-check-input" type="checkbox"  name="link_marker[]" class="form-control"  value="4">
+                                    <label class="form-check-label" for="4">右下</label>
+                              </div>
+
+                              <div class="col-md-1">
+                                <input class="form-check-input" type="checkbox"  name="link_marker[]" class="form-control"  value="5">
+                                    <label class="form-check-label" for="5">下</label>
+                              </div>
+                              <div class="col-md-1">
+                                <input class="form-check-input" type="checkbox"  name="link_marker[]" class="form-control"  value="6">
+                                    <label class="form-check-label" for="6">左下</label>
+                              </div>
+                              <div class="col-md-1">
+                                <input class="form-check-input" type="checkbox" name="link_marker[]" class="form-control"  value="7">
+                                    <label class="form-check-label" for="7">左</label>
+                              </div>
+                              <div class="col-md-1">
+                                <input class="form-check-input" type="checkbox" name="link_marker[]" class="form-control"  value="8">
+                                    <label class="form-check-label" for="8">左上</label>
+                              </div>
+                          </div>
+
 
 
                         <div class="form-group row">
@@ -277,7 +426,7 @@ window.onload = entryChange;
                                 <input type="text" class="form-control" name="attack" value="{{ old('attack') }}">
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div id="defense" class="form-group row">
                             <label class="col-md-3" for="defense">守備力</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" name="defense" value="{{ old('defense') }}">

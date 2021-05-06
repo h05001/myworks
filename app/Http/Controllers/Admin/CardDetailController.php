@@ -18,7 +18,8 @@ class CardDetailController extends Controller
 
     public function create(Request $request)
   {
-    // Varidationを行う
+    //カードマスタ
+          // Varidationを行う
           $this->validate($request, CardDetail::$rules);
 
           $carddetail = new CardDetail;
@@ -32,6 +33,54 @@ class CardDetailController extends Controller
           // データベースに保存する
           $carddetail->fill($form);
           $carddetail->save();
+
+    //モンスターカードマスタ
+          // Varidationを行う
+          $this->validate($request, MonsterCardDetail::$rules);
+
+          $monstercarddetail = new MonsterCardDetail;
+          $form = $request->all();
+
+          // フォームから送信されてきた_tokenを削除する
+          unset($form['_token']);
+
+
+          // データベースに保存する
+          $monstercarddetail->fill($form);
+          $monstercarddetail->save();
+
+    //魔法カードマスタ
+
+          // Varidationを行う
+          $this->validate($request, MagicCardDetail::$rules);
+
+          $magiccarddetail = new MagicCardDetail;
+          $form = $request->all();
+
+          // フォームから送信されてきた_tokenを削除する
+          unset($form['_token']);
+
+
+          // データベースに保存する
+          $magiccarddetail->fill($form);
+          $magiccarddetail->save();
+
+    //罠カードマスタ
+
+          // Varidationを行う
+          $this->validate($request, TrapCardDetail::$rules);
+
+          $trapcarddetail = new TrapCardDetail;
+          $form = $request->all();
+
+          // フォームから送信されてきた_tokenを削除する
+          unset($form['_token']);
+
+
+          // データベースに保存する
+          $trapcarddetail->fill($form);
+          $trapcarddetail->save();
+
       return redirect('admin/carddetail/create');
   }
 
