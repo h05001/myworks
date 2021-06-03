@@ -14,7 +14,7 @@ class CreateCardDetailsTable extends Migration
     public function up()
     {
         Schema::create('card_details', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('card_master_id');
             $table->string('card_name'); //カード名を保存するカラム
             $table->string('ruby'); //読み方を保存するカラム
             $table->string('card_class'); //カード分類を保存するカラム

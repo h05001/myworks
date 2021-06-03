@@ -31,7 +31,7 @@ class CardDetailController extends Controller
           unset($form['image']);
 
           // データベースに保存する
-          $carddetail->card_master_id = $request->card_master_id;
+          //$carddetail->card_master_id = $request->card_master_id;
           $carddetail->card_name = $request->card_name;
           $carddetail->ruby = $request->ruby;
           $carddetail->card_class = $request->card_class;
@@ -44,14 +44,14 @@ class CardDetailController extends Controller
           $this->validate($request, MonsterCardDetail::$rules);
 
           $monstercarddetail = new MonsterCardDetail;
-          $form = $request->all();
+          $form = $request->all();//全てのプロパティを呼び出す(モンスターカードマスタにある全カラムを取得)
 
           // フォームから送信されてきた_tokenを削除する
           unset($form['_token']);
 
 
           // データベースに保存する
-          $monstercarddetail->card_master_id = $request->card_master_id;
+          //$monstercarddetail->card_master_id = $request->card_master_id;
           $monstercarddetail->property = $request->property;
           $monstercarddetail->tribe = $request->tribe;
           $monstercarddetail->level = $request->level;
@@ -94,7 +94,7 @@ class CardDetailController extends Controller
           unset($form['_token']);
 
           // データベースに保存する
-          $monsterclassmaster->card_master_id = $request->card_master_id;
+          //$monsterclassmaster->card_master_id = $request->card_master_id;
           $monsterclassmaster->monster_class = $request->monster_class;
           $monsterclassmaster->save();
 
@@ -113,7 +113,7 @@ class CardDetailController extends Controller
 
 
           // データベースに保存する
-          $magiccarddetail->card_master_id = $request->card_master_id;
+          //$magiccarddetail->card_master_id = $request->card_master_id;
           $magiccarddetail->magic_card_class = $request->magic_card_class;
           $magiccarddetail->save();
 
@@ -131,7 +131,7 @@ class CardDetailController extends Controller
 
 
           // データベースに保存する
-          $trapcarddetail->card_master_id = $request->card_master_id;
+          //$trapcarddetail->card_master_id = $request->card_master_id;
           $trapcarddetail->trap_card_class = $request->trap_card_class;
           $trapcarddetail->save();
 
