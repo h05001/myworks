@@ -14,7 +14,7 @@ class CreateMonsterCardDetailsTable extends Migration
     public function up()
     {
         Schema::create('monster_card_details', function (Blueprint $table) {
-            $table->integer('card_master_id');//カードマスタIDを保存するカラム
+            $table->increments('card_master_id');//カードマスタIDを保存するカラム
             $table->string('property'); //属性を保存するカラム
             $table->string('tribe'); //種族を保存するカラム
             $table->string('level')->nullable(); //レベルを保存するカラム

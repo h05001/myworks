@@ -65,6 +65,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('magiccarddetail', 'Admin\MagicCardDetailController@index');
     Route::get('magiccarddetail/delete', 'Admin\MagicCardDetailController@delete');
 
+
     Route::get('trapcarddetail/create', 'Admin\TrapCardDetailController@add');
     Route::post('trapcarddetail/create', 'Admin\TrapCardDetailController@create');
     Route::get('trapcarddetail/edit', 'Admin\TrapCardDetailController@edit');

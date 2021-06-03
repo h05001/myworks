@@ -14,9 +14,9 @@ class CreateMonsterCardClassesTable extends Migration
     public function up()
     {
         Schema::create('monster_card_classes', function (Blueprint $table) {
-            $table->integer('card_master_id');//カードマスタIDを保存するカラム
-            $table->integer('class_id');//種類IDを保存するカラム
-            
+            $table->increments('card_master_id');//カードマスタIDを保存するカラム
+            $table->string('class_id');//種類IDを保存するカラム
+
             $table->timestamps();
 
             //プライマリキー(複合キー)を設定する

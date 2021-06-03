@@ -11,7 +11,7 @@ class MagicCardDetail extends Model
 
     // 以下を追記
     public static $rules = array(
-        'card_master_id' => 'required',
+        //'card_master_id' => 'required',
         'magic_card_class' => 'required',
 
     );

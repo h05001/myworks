@@ -14,7 +14,7 @@ class CreateMagicCardDetailsTable extends Migration
     public function up()
     {
         Schema::create('magic_card_details', function (Blueprint $table) {
-          $table->integer('card_master_id');//カードマスタIDを保存するカラム
+          $table->increments('card_master_id');//カードマスタIDを保存するカラム
           $table->string('magic_card_class'); //魔法カード種類を保存するカラム
           $table->timestamps();
         });
