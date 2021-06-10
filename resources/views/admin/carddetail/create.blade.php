@@ -568,7 +568,7 @@ function changeDisabled(value,checked){
                             <label class="col-md-3" for="magic_class">魔法カード種類</label>
                             <div class="col-md-9">
                             <!--    <input type="text" class="form-control" name="magic_class" value="{{ old('magic_class') }}"> -->
-                                <select name="magic_class" class="form-control"  value="{{ old('magic_class') }}">
+                                <select name="magic_card_class" class="form-control"  value="{{ old('magic_card_class') }}">
                                     <option value="">魔法カード種類を選択</option>
                                     <option value="normal">通常魔法</option>
                                     <option value="equip">装備魔法</option>
@@ -588,7 +588,7 @@ function changeDisabled(value,checked){
                             <label class="col-md-3" for="trap_class">罠カード種類</label>
                             <div class="col-md-9">
                             <!--    <input type="text" class="form-control" name="trap_class" value="{{ old('trap_class') }}"> -->
-                                <select name="trap_class" class="form-control"  value="{{ old('trap_class') }}">
+                                <select name="trap_card_class" class="form-control"  value="{{ old('trap_card_class') }}">
                                     <option value="">罠カード種類を選択</option>
                                     <option value="normal">通常罠</option>
                                     <option value="continuous">永続罠</option>
@@ -618,7 +618,7 @@ function changeDisabled(value,checked){
 
 
                     {{ csrf_field() }}
-                    <input type="submit" class="btn btn-primary" value="更新">
+                    <input type="submit" class="btn btn-primary" value="登録">
 
                 </form>
             </div>

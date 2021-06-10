@@ -6,29 +6,30 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\CardDetail;
+use App\MonsterCardDetail;
+use App\MagicCardDetail;
+use App\TrapCardDetail;
 
 class CardDetailController extends Controller
 {
-    //
     public function add()
-  {
-      return view('admin.carddetail.create');
-  }
+    {
+        return view('admin.carddetail.create');
+    }
 
 
     public function create(Request $request)
-  {
+    {
+      //$result = CardDetail::get('card_class');
+      //$request->input("card_class");
+      $request->card_class;
+      //$result = CardDetail :: with(card_class)->get();
+      //dd($request);
     //カードマスタ
           // Varidationを行う
           $this->validate($request, CardDetail::$rules);
 
           $carddetail = new CardDetail;
-          $form = $request->all();
-
-          // フォームから送信されてきた_tokenを削除する
-          unset($form['_token']);
-          // フォームから送信されてきたimageを削除する
-          unset($form['image']);
 
           // データベースに保存する
           //$carddetail->card_master_id = $request->card_master_id;
@@ -40,6 +41,7 @@ class CardDetailController extends Controller
           $carddetail->save();
 
     //モンスターカードマスタ
+    if($request->card_class == "select1"){
           // Varidationを行う
           $this->validate($request, MonsterCardDetail::$rules);
 
@@ -64,77 +66,34 @@ class CardDetailController extends Controller
           $monstercarddetail->attack = $request->attack;
           $monstercarddetail->defense = $request->defense;
           $monstercarddetail->save();
-
-/*
-    //モンスター種類テーブル
-          // Varidationを行う
-          $this->validate($request, MonsterCardClassesTable::$rules);
-
-          $monstercardclasstable = new MonsterCardClassesTable;
-          $form = $request->all();
-
-          // フォームから送信されてきた_tokenを削除する
-          unset($form['_token']);
-
-          // データベースに保存する
-          $monstercardclasstable->card_master_id = $request->card_master_id;
-          $monstercardclasstable->class_id = $request->class_id;
-          $monstercardclasstable->save();
-*/
-
-
-    //モンスター種類マスタ
-          // Varidationを行う
-          $this->validate($request, MonsterClassMaster::$rules);
-
-          $monsterclassmaster = new MonsterClassMaster;
-          $form = $request->all();
-
-          // フォームから送信されてきた_tokenを削除する
-          unset($form['_token']);
-
-          // データベースに保存する
-          //$monsterclassmaster->card_master_id = $request->card_master_id;
-          $monsterclassmaster->monster_class = $request->monster_class;
-          $monsterclassmaster->save();
-
+        }
 
 
     //魔法カードマスタ
-
+    if($request->card_class == "select2"){
           // Varidationを行う
           $this->validate($request, MagicCardDetail::$rules);
 
           $magiccarddetail = new MagicCardDetail;
-          $form = $request->all();
-
-          // フォームから送信されてきた_tokenを削除する
-          unset($form['_token']);
-
 
           // データベースに保存する
           //$magiccarddetail->card_master_id = $request->card_master_id;
           $magiccarddetail->magic_card_class = $request->magic_card_class;
           $magiccarddetail->save();
-
+        }
 
     //罠カードマスタ
-
+    if($request->card_class == "select3"){
           // Varidationを行う
           $this->validate($request, TrapCardDetail::$rules);
 
           $trapcarddetail = new TrapCardDetail;//$trapcarddetail変数をインスタンス化
-          $form = $request->all();
-
-          // フォームから送信されてきた_tokenを削除する
-          unset($form['_token']);
-
 
           // データベースに保存する
           //$trapcarddetail->card_master_id = $request->card_master_id;
           $trapcarddetail->trap_card_class = $request->trap_card_class;
           $trapcarddetail->save();
-
+        }
 
       return redirect('admin/carddetail/create');
   }
