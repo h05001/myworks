@@ -1,41 +1,30 @@
 {{-- layouts/admin.blade.phpを読み込む --}}
 @extends('layouts.admin')
 <script type="text/javascript">
-
 function entryChange(){
-
     if(document.getElementById('changeSelect')){
         id = document.getElementById('changeSelect').value;
-
         if(id == 'select1'){
             //フォーム
             document.getElementById('firstBox').style.display = "block";
             document.getElementById('secondBox').style.display = "none";
             document.getElementById('thirdBox').style.display = "none";
-
         }else if(id == 'select2'){
             //フォーム
             document.getElementById('firstBox').style.display = "none";
             document.getElementById('secondBox').style.display = "block";
             document.getElementById('thirdBox').style.display = "none";
-
         }else if(id == 'select3'){
             //フォーム
             document.getElementById('firstBox').style.display = "none";
             document.getElementById('secondBox').style.display = "none";
             document.getElementById('thirdBox').style.display = "block";
-
         }
     }
 }
-
 //オンロードさせ、リロード時に選択を保持
 window.onload = entryChange;
-
-
 function entryChangeClass(){
-
-
     document.getElementById('level').style.display = "none";//レベル
     document.getElementById('rank').style.display = "none";//ランク
     document.getElementById('scale').style.display = "none";//スケール
@@ -43,10 +32,7 @@ function entryChangeClass(){
     document.getElementById('link_leval').style.display = "none";//リンク
     document.getElementById('link_marker').style.display = "none";//マーカーの向き
     document.getElementById('defense').style.display = "none";//守備力
-
-
     //changeDisabled(value,checked);
-
     //var test=checkBoxsArr[i];
     if(document.getElementById('xyz').checked === true && document.getElementById('pendulum').checked === true){
         //フォーム
@@ -54,36 +40,28 @@ function entryChangeClass(){
         document.getElementById('scale').style.display = "block";//スケール
         document.getElementById('pendulum_effect').style.display = "block";//ペンデュラム効果テキスト
         document.getElementById('defense').style.display = "block";//守備力
-
     }else if(document.getElementById('xyz').checked === true){
         //フォーム
         document.getElementById('rank').style.display = "block";//ランク
         document.getElementById('defense').style.display = "block";//守備力
-
     }else if(document.getElementById('pendulum').checked === true){
         //フォーム
         document.getElementById('level').style.display = "block";//レベル
         document.getElementById('scale').style.display = "block";//スケール
         document.getElementById('pendulum_effect').style.display = "block";//ペンデュラム効果テキスト
         document.getElementById('defense').style.display = "block";//守備力
-
     }else if(document.getElementById('link').checked === true){
         //フォーム
         document.getElementById('link_leval').style.display = "block";//リンク
         document.getElementById('link_marker').style.display = "block";//マーカーの向き
-
     }else{
         document.getElementById('level').style.display = "block";//レベル
         document.getElementById('defense').style.display = "block";//守備力
     }
   //}
 }
-
 //オンロードさせ、リロード時に選択を保持
 window.onload = entryChangeClass;
-
-
-
 function changeDisabled(value,checked){
     // チェックボックスの一覧を取得
     var checkBoxs = document.getElementsByClassName('changeCheck');
@@ -104,11 +82,9 @@ function changeDisabled(value,checked){
     document.getElementById('pendulum').disabled = false;  // 有効にする
     document.getElementById('special_summon').disabled = false;  // 有効にする
     document.getElementById('link').disabled = false;  // 有効にする
-
     checked = true;
     // チェックボックス文繰り返す
     for ( i = 0; i <= checkBoxsArr.length ; i++) {
-
       if(checkBoxsArr[i].checked){
         switch (checkBoxsArr[i].value){
           case 'normal':
@@ -125,11 +101,9 @@ function changeDisabled(value,checked){
             document.getElementById('special_summon').disabled = checked;  // 無効にする
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-
           case 'effect':
             document.getElementById('normal').disabled = checked;  // 無効にする
             break;
-
           case 'ritual':
             document.getElementById('normal').disabled = checked;  // 無効にする
             document.getElementById('fusion').disabled = checked;  // 無効にする
@@ -137,7 +111,6 @@ function changeDisabled(value,checked){
             document.getElementById('xyz').disabled = checked;  // 無効にする
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-
           case 'fusion':
             document.getElementById('normal').disabled = checked;  // 無効にする
             document.getElementById('ritual').disabled = checked;  // 無効にする
@@ -145,7 +118,6 @@ function changeDisabled(value,checked){
             document.getElementById('xyz').disabled = checked;  // 無効にする
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-
           case 'synchro':
             document.getElementById('normal').disabled = checked;  // 無効にする
             document.getElementById('ritual').disabled = checked;  // 無効にする
@@ -153,7 +125,6 @@ function changeDisabled(value,checked){
             document.getElementById('xyz').disabled = checked;  // 無効にする
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-
           case 'xyz':
             document.getElementById('normal').disabled = checked;  // 無効にする
             document.getElementById('ritual').disabled = checked;  // 無効にする
@@ -162,11 +133,9 @@ function changeDisabled(value,checked){
             document.getElementById('tuner').disabled = checked;  // 無効にする
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-
           case 'pendulum':
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-
           case 'link':
             document.getElementById('normal').disabled = checked;  // 無効にする
             document.getElementById('ritual').disabled = checked;  // 無効にする
@@ -177,14 +146,12 @@ function changeDisabled(value,checked){
             document.getElementById('flip').disabled = checked;  // 無効にする
             document.getElementById('pendulum').disabled = checked;  // 無効にする
             break;
-
           case 'toon':
           case 'spirit':
           case 'union':
           case 'special_summon':
             document.getElementById('normal').disabled = checked;  // 無効にする
             break;
-
           case 'gemini':
             document.getElementById('normal').disabled = checked;  // 無効にする
             document.getElementById('ritual').disabled = checked;  // 無効にする
@@ -192,27 +159,20 @@ function changeDisabled(value,checked){
             document.getElementById('synchro').disabled = checked;  // 無効にする
             document.getElementById('xyz').disabled = checked;  // 無効にする
             break;
-
           case 'tuner':
             document.getElementById('xyz').disabled = checked;  // 無効にする
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-
           case 'flip':
             document.getElementById('normal').disabled = checked;  // 無効にする
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-
           default:
             break;
-
-
         }
       }
   }
 }
-
-
 </script>
 
 {{-- admin.blade.phpの@yield('title')に'ニュースの新規作成'を埋め込む --}}

@@ -14,14 +14,14 @@ class MonsterCardDetail extends Model
 
         'property' => 'required',
         'tribe' => 'required',
-        'level' => 'required',
-        'rank' => 'required',
-        'scale' => 'required',
-        'pendulum_effect' => 'required',
-        'link' => 'required',
-        'link_marker' => 'required',
+        //'level' => 'required',
+        //'rank' => 'required',
+        //'scale' => 'required',
+        //'pendulum_effect' => 'required',
+        //'link' => 'required',
+        //'link_marker' => 'required',
         'attack' => 'required',
-        'defense' => 'required',
+        //'defense' => 'required',
 
     );
 }

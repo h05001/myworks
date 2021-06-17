@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\CardDetail;
 use App\MonsterCardDetail;
+use App\MonsterCardClass;
 use App\MagicCardDetail;
 use App\TrapCardDetail;
 
@@ -20,80 +21,89 @@ class CardDetailController extends Controller
 
     public function create(Request $request)
     {
-      //$result = CardDetail::get('card_class');
-      //$request->input("card_class");
-      $request->card_class;
-      //$result = CardDetail :: with(card_class)->get();
-      //dd($request);
-    //カードマスタ
-          // Varidationを行う
-          $this->validate($request, CardDetail::$rules);
+//dd($request);
+        $request->input("card_class");
+        //$request->card_class;
 
-          $carddetail = new CardDetail;
+        //dd($request);
+      //カードマスタ
+        // Varidationを行う
+        $this->validate($request, CardDetail::$rules);
 
-          // データベースに保存する
-          //$carddetail->card_master_id = $request->card_master_id;
-          $carddetail->card_name = $request->card_name;
-          $carddetail->ruby = $request->ruby;
-          $carddetail->card_class = $request->card_class;
-          $carddetail->image_path = $request->image_path;
-          $carddetail->card_text = $request->card_text;
-          $carddetail->save();
+        $carddetail = new CardDetail;
+
+        // データベースに保存する
+        //$carddetail->card_master_id = $request->card_master_id;
+        $carddetail->card_name = $request->card_name;
+        $carddetail->ruby = $request->ruby;
+        $carddetail->card_class = $request->card_class;
+        $carddetail->image_path = $request->image_path;
+        $carddetail->card_text = $request->card_text;
+        $carddetail->save();
+        $last_insert_id = $carddetail->id;
 
     //モンスターカードマスタ
     if($request->card_class == "select1"){
-          // Varidationを行う
-          $this->validate($request, MonsterCardDetail::$rules);
+        // Varidationを行う
+        $this->validate($request, MonsterCardDetail::$rules);
 
-          $monstercarddetail = new MonsterCardDetail;
-          $form = $request->all();//全てのプロパティを呼び出す(モンスターカードマスタにある全カラムを取得)
+        $monstercarddetail = new MonsterCardDetail;
 
-          // フォームから送信されてきた_tokenを削除する
-          unset($form['_token']);
+        // データベースに保存する
+        $monstercarddetail->card_master_id = $last_insert_id;
+        $monstercarddetail->property = $request->property;
+        $monstercarddetail->tribe = $request->tribe;
+        $monstercarddetail->level = $request->level;
+        $monstercarddetail->rank = $request->rank;
+        $monstercarddetail->scale = $request->scale;
+        $monstercarddetail->pendulum_effect = $request->pendulum_effect;
+        $monstercarddetail->link = $request->link;
+        $monstercarddetail->link = $request->link;
+        $monstercarddetail->link_marker = $request->link_marker;
+        $monstercarddetail->attack = $request->attack;
+        $monstercarddetail->defense = $request->defense;
+        $monstercarddetail->save();
 
 
-          // データベースに保存する
-          //$monstercarddetail->card_master_id = $request->card_master_id;
-          $monstercarddetail->property = $request->property;
-          $monstercarddetail->tribe = $request->tribe;
-          $monstercarddetail->level = $request->level;
-          $monstercarddetail->rank = $request->rank;
-          $monstercarddetail->scale = $request->scale;
-          $monstercarddetail->pendulum_effect = $request->pendulum_effect;
-          $monstercarddetail->link = $request->link;
-          $monstercarddetail->link = $request->link;
-          $monstercarddetail->link_marker = $request->link_marker;
-          $monstercarddetail->attack = $request->attack;
-          $monstercarddetail->defense = $request->defense;
-          $monstercarddetail->save();
-        }
+    //モンスター種類テーブル
+      // Varidationを行う
+      $this->validate($request, MonsterCardClass::$rules);
 
+      $monstercardclass = new MonsterCardClass;
+
+      // データベースに保存する
+      $monstercardclass->card_master_id = $last_insert_id;
+      $monstercardclass->class_id = $request->class_id;
+
+      $monstercarddetail->save();
+
+    }
 
     //魔法カードマスタ
     if($request->card_class == "select2"){
-          // Varidationを行う
-          $this->validate($request, MagicCardDetail::$rules);
+        // Varidationを行う
+        $this->validate($request, MagicCardDetail::$rules);
 
-          $magiccarddetail = new MagicCardDetail;
+        $magiccarddetail = new MagicCardDetail;
 
-          // データベースに保存する
-          //$magiccarddetail->card_master_id = $request->card_master_id;
-          $magiccarddetail->magic_card_class = $request->magic_card_class;
-          $magiccarddetail->save();
-        }
+        // データベースに保存する
+        $magiccarddetail->card_master_id = $last_insert_id;
+        $magiccarddetail->magic_card_class = $request->magic_card_class;
+        $magiccarddetail->save();
+      }
 
     //罠カードマスタ
     if($request->card_class == "select3"){
-          // Varidationを行う
-          $this->validate($request, TrapCardDetail::$rules);
+        // Varidationを行う
+        $this->validate($request, TrapCardDetail::$rules);
 
-          $trapcarddetail = new TrapCardDetail;//$trapcarddetail変数をインスタンス化
+        $trapcarddetail = new TrapCardDetail;//$trapcarddetail変数をインスタンス化
 
-          // データベースに保存する
-          //$trapcarddetail->card_master_id = $request->card_master_id;
-          $trapcarddetail->trap_card_class = $request->trap_card_class;
-          $trapcarddetail->save();
-        }
+        // データベースに保存する
+        $trapcarddetail->card_master_id = $last_insert_id;
+        $trapcarddetail->trap_card_class = $request->trap_card_class;
+        $trapcarddetail->save();
+      }
 
       return redirect('admin/carddetail/create');
   }
