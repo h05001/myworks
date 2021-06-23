@@ -1,6 +1,8 @@
 {{-- layouts/admin.blade.phpを読み込む --}}
 @extends('layouts.admin')
+
 <script type="text/javascript">
+
 function entryChange(){
     if(document.getElementById('changeSelect')){
         id = document.getElementById('changeSelect').value;
@@ -24,6 +26,7 @@ function entryChange(){
 }
 //オンロードさせ、リロード時に選択を保持
 window.onload = entryChange;
+
 function entryChangeClass(){
     document.getElementById('level').style.display = "none";//レベル
     document.getElementById('rank').style.display = "none";//ランク
@@ -40,20 +43,24 @@ function entryChangeClass(){
         document.getElementById('scale').style.display = "block";//スケール
         document.getElementById('pendulum_effect').style.display = "block";//ペンデュラム効果テキスト
         document.getElementById('defense').style.display = "block";//守備力
+
     }else if(document.getElementById('xyz').checked === true){
         //フォーム
         document.getElementById('rank').style.display = "block";//ランク
         document.getElementById('defense').style.display = "block";//守備力
+
     }else if(document.getElementById('pendulum').checked === true){
         //フォーム
         document.getElementById('level').style.display = "block";//レベル
         document.getElementById('scale').style.display = "block";//スケール
         document.getElementById('pendulum_effect').style.display = "block";//ペンデュラム効果テキスト
         document.getElementById('defense').style.display = "block";//守備力
+
     }else if(document.getElementById('link').checked === true){
         //フォーム
         document.getElementById('link_leval').style.display = "block";//リンク
         document.getElementById('link_marker').style.display = "block";//マーカーの向き
+
     }else{
         document.getElementById('level').style.display = "block";//レベル
         document.getElementById('defense').style.display = "block";//守備力
@@ -62,6 +69,7 @@ function entryChangeClass(){
 }
 //オンロードさせ、リロード時に選択を保持
 window.onload = entryChangeClass;
+
 function changeDisabled(value,checked){
     // チェックボックスの一覧を取得
     var checkBoxs = document.getElementsByClassName('changeCheck');
@@ -84,10 +92,11 @@ function changeDisabled(value,checked){
     document.getElementById('link').disabled = false;  // 有効にする
     checked = true;
     // チェックボックス文繰り返す
-    for ( i = 0; i <= checkBoxsArr.length ; i++) {
+    //あいうえお
+    for ( i = 0; i < checkBoxsArr.length ; i++) {
       if(checkBoxsArr[i].checked){
         switch (checkBoxsArr[i].value){
-          case 'normal':
+          case '0'://normal
             document.getElementById('effect').disabled = checked;  // 無効にする
             document.getElementById('ritual').disabled = checked; // 無効にする
             document.getElementById('fusion').disabled = checked;  // 無効にする
@@ -101,31 +110,31 @@ function changeDisabled(value,checked){
             document.getElementById('special_summon').disabled = checked;  // 無効にする
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-          case 'effect':
+          case '1'://effect
             document.getElementById('normal').disabled = checked;  // 無効にする
             break;
-          case 'ritual':
+          case '2'://ritual
             document.getElementById('normal').disabled = checked;  // 無効にする
             document.getElementById('fusion').disabled = checked;  // 無効にする
             document.getElementById('synchro').disabled = checked;  // 無効にする
             document.getElementById('xyz').disabled = checked;  // 無効にする
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-          case 'fusion':
+          case '3'://fusion
             document.getElementById('normal').disabled = checked;  // 無効にする
             document.getElementById('ritual').disabled = checked;  // 無効にする
             document.getElementById('synchro').disabled = checked;  // 無効にする
             document.getElementById('xyz').disabled = checked;  // 無効にする
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-          case 'synchro':
+          case '4'://synchro
             document.getElementById('normal').disabled = checked;  // 無効にする
             document.getElementById('ritual').disabled = checked;  // 無効にする
             document.getElementById('fusion').disabled = checked;  // 無効にする
             document.getElementById('xyz').disabled = checked;  // 無効にする
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-          case 'xyz':
+          case '5'://xyz
             document.getElementById('normal').disabled = checked;  // 無効にする
             document.getElementById('ritual').disabled = checked;  // 無効にする
             document.getElementById('fusion').disabled = checked;  // 無効にする
@@ -133,10 +142,10 @@ function changeDisabled(value,checked){
             document.getElementById('tuner').disabled = checked;  // 無効にする
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-          case 'pendulum':
+          case '12'://pendulum
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-          case 'link':
+          case '14'://link
             document.getElementById('normal').disabled = checked;  // 無効にする
             document.getElementById('ritual').disabled = checked;  // 無効にする
             document.getElementById('fusion').disabled = checked;  // 無効にする
@@ -146,24 +155,24 @@ function changeDisabled(value,checked){
             document.getElementById('flip').disabled = checked;  // 無効にする
             document.getElementById('pendulum').disabled = checked;  // 無効にする
             break;
-          case 'toon':
-          case 'spirit':
-          case 'union':
-          case 'special_summon':
+          case '6'://toon
+          case '7'://spirit
+          case '8'://union
+          case '13'://special_summon
             document.getElementById('normal').disabled = checked;  // 無効にする
             break;
-          case 'gemini':
+          case '9'://gemini
             document.getElementById('normal').disabled = checked;  // 無効にする
             document.getElementById('ritual').disabled = checked;  // 無効にする
             document.getElementById('fusion').disabled = checked;  // 無効にする
             document.getElementById('synchro').disabled = checked;  // 無効にする
             document.getElementById('xyz').disabled = checked;  // 無効にする
             break;
-          case 'tuner':
+          case '10'://tuner
             document.getElementById('xyz').disabled = checked;  // 無効にする
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
-          case 'flip':
+          case '11'://flip
             document.getElementById('normal').disabled = checked;  // 無効にする
             document.getElementById('link').disabled = checked;  // 無効にする
             break;
@@ -237,49 +246,49 @@ function changeDisabled(value,checked){
                             <div class="col-md-9 form-inline">
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class" value="normal" id="normal">通常</label>
+                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]" value="0" id="normal">通常</label>
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class" value="effect" id="effect">効果</label>
+                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]" value="1" id="effect">効果</label>
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class" value="ritual" id="ritual">儀式</label>
+                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]" value="2" id="ritual">儀式</label>
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class" value="fusion" id="fusion">融合</label>
+                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]" value="3" id="fusion">融合</label>
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class" value="synchro" id="synchro">シンクロ</label>
+                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]" value="4" id="synchro">シンクロ</label>
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class" value="xyz" id="xyz">エクシーズ</label>
+                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]" value="5" id="xyz">エクシーズ</label>
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class" value="toon" id="toon">トゥーン</label>
+                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]" value="6" id="toon">トゥーン</label>
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class"  value="spirit" id="spirit">スピリット</label>
+                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]"  value="7" id="spirit">スピリット</label>
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class" value="union" id="union">ユニオン</label>
+                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]" value="8" id="union">ユニオン</label>
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class"  value="gemini" id="gemini">デュアル</label>
+                                    <input class="form-check-input changeCheck" type="checkbox"  onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]"  value="9" id="gemini">デュアル</label>
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox" onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class"  value="tuner" id="tuner">チューナー</label>
+                                    <input class="form-check-input changeCheck" type="checkbox" onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]"  value="10" id="tuner">チューナー</label>
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox" onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class"  value="flip" id="flip">リバース</label>
+                                    <input class="form-check-input changeCheck" type="checkbox" onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]"  value="11" id="flip">リバース</label>
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox" onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class"  value="pendulum" id="pendulum">ペンデュラム</label>
+                                    <input class="form-check-input changeCheck" type="checkbox" onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]"  value="12" id="pendulum">ペンデュラム</label>
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox" onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class" value="special_summon" id="special_summon">特殊召喚</label>
+                                    <input class="form-check-input changeCheck" type="checkbox" onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]" value="13" id="special_summon">特殊召喚</label>
 
                                 <label class="checkbox-inline" >
-                                    <input class="form-check-input changeCheck" type="checkbox" onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="monster_card_class" value="link" id="link">リンク</label>
+                                    <input class="form-check-input changeCheck" type="checkbox" onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]" value="14" id="link">リンク</label>
 
                                 </div>
 
@@ -391,6 +400,7 @@ function changeDisabled(value,checked){
                                 <!--    <input type="text" class="form-control" name="rank" value="{{ old('rank') }}"> -->
                                     <select name="rank" class="form-control"  value="{{ old('rank') }}">
                                         <option value="">ランクを選択</option>
+                                        <option value="zero">0</option>
                                         <option value="one">1</option>
                                         <option value="two">2</option>
                                         <option value="three">3</option>
@@ -403,7 +413,7 @@ function changeDisabled(value,checked){
                                         <option value="ten">10</option>
                                         <option value="eleven">11</option>
                                         <option value="twelve">12</option>
-
+                                        <option value="thirteen">13</option>
                                     </select>
                                 </div>
                             </div>
@@ -459,6 +469,8 @@ function changeDisabled(value,checked){
                                         <option value="four">4</option>
                                         <option value="five">5</option>
                                         <option value="six">6</option>
+                                        <option value="seven">7</option>
+                                        <option value="eight">8</option>
 
                                     </select>
                                 </div>

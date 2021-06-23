@@ -44,26 +44,120 @@ class CardDetailController extends Controller
 
     //モンスターカードマスタ
     if($request->card_class == "select1"){
+dd($request);
+        $request->input("class_id");
+        $monstercardclass = new MonsterCardClass;
+
+        if($request->class_id != "5" && $request->class_id != "12" && $request->class_id != "14" ){
         // Varidationを行う
-        $this->validate($request, MonsterCardDetail::$rules);
+            $this->validate($request, MonsterCardDetail::$rules1);
 
-        $monstercarddetail = new MonsterCardDetail;
+            $monstercarddetail = new MonsterCardDetail;
 
-        // データベースに保存する
-        $monstercarddetail->card_master_id = $last_insert_id;
-        $monstercarddetail->property = $request->property;
-        $monstercarddetail->tribe = $request->tribe;
-        $monstercarddetail->level = $request->level;
-        $monstercarddetail->rank = $request->rank;
-        $monstercarddetail->scale = $request->scale;
-        $monstercarddetail->pendulum_effect = $request->pendulum_effect;
-        $monstercarddetail->link = $request->link;
-        $monstercarddetail->link = $request->link;
-        $monstercarddetail->link_marker = $request->link_marker;
-        $monstercarddetail->attack = $request->attack;
-        $monstercarddetail->defense = $request->defense;
-        $monstercarddetail->save();
+            // データベースに保存する
+            $monstercarddetail->card_master_id = $last_insert_id;
+            $monstercarddetail->property = $request->property;
+            $monstercarddetail->tribe = $request->tribe;
+            $monstercarddetail->level = $request->level;
+            //$monstercarddetail->rank = $request->rank;
+            //$monstercarddetail->scale = $request->scale;
+            //$monstercarddetail->pendulum_effect = $request->pendulum_effect;
+            //$monstercarddetail->link = $request->link;
+            //$monstercarddetail->link_marker = $request->link_marker;
+            $monstercarddetail->attack = $request->attack;
+            $monstercarddetail->defense = $request->defense;
+            $monstercarddetail->save();
+            $last_insert_id = $monstercarddetail->id;
+        }
 
+        if($request->class_id == "5"){//エクシーズ
+        // Varidationを行う
+            $this->validate($request, MonsterCardDetail::$rules2);
+
+            $monstercarddetail = new MonsterCardDetail;
+
+            // データベースに保存する
+            $monstercarddetail->card_master_id = $last_insert_id;
+            $monstercarddetail->property = $request->property;
+            $monstercarddetail->tribe = $request->tribe;
+            //$monstercarddetail->level = $request->level;
+            $monstercarddetail->rank = $request->rank;
+            //$monstercarddetail->scale = $request->scale;
+            //$monstercarddetail->pendulum_effect = $request->pendulum_effect;
+            //$monstercarddetail->link = $request->link;
+            //$monstercarddetail->link_marker = $request->link_marker;
+            $monstercarddetail->attack = $request->attack;
+            $monstercarddetail->defense = $request->defense;
+            $monstercarddetail->save();
+            $last_insert_id = $monstercarddetail->id;
+        }
+
+
+        if($request->class_id == "12"){//ペンデュラム
+        // Varidationを行う
+            $this->validate($request, MonsterCardDetail::$rules3);
+
+            $monstercarddetail = new MonsterCardDetail;
+
+            // データベースに保存する
+            $monstercarddetail->card_master_id = $last_insert_id;
+            $monstercarddetail->property = $request->property;
+            $monstercarddetail->tribe = $request->tribe;
+            $monstercarddetail->level = $request->level;
+            //$monstercarddetail->rank = $request->rank;
+            $monstercarddetail->scale = $request->scale;
+            $monstercarddetail->pendulum_effect = $request->pendulum_effect;
+            //$monstercarddetail->link = $request->link;
+            //$monstercarddetail->link_marker = $request->link_marker;
+            $monstercarddetail->attack = $request->attack;
+            $monstercarddetail->defense = $request->defense;
+            $monstercarddetail->save();
+            $last_insert_id = $monstercarddetail->id;
+        }
+
+        if($request->class_id == "14"){//リンク
+            // Varidationを行う
+            $this->validate($request, MonsterCardDetail::$rules4);
+
+            $monstercarddetail = new MonsterCardDetail;
+
+            // データベースに保存する
+            $monstercarddetail->card_master_id = $last_insert_id;
+            $monstercarddetail->property = $request->property;
+            $monstercarddetail->tribe = $request->tribe;
+            //$monstercarddetail->level = $request->level;
+            //$monstercarddetail->rank = $request->rank;
+            //$monstercarddetail->scale = $request->scale;
+            //$monstercarddetail->pendulum_effect = $request->pendulum_effect;
+            $monstercarddetail->link = $request->link;
+            $monstercarddetail->link_marker = $request->link_marker;
+            $monstercarddetail->attack = $request->attack;
+            //$monstercarddetail->defense = $request->defense;
+            $monstercarddetail->save();
+            $last_insert_id = $monstercarddetail->id;
+        }
+
+        if($request->class_id == "5" && $request->class_id == "12"){//エクシーズ&ペンデュラム
+        // Varidationを行う
+            $this->validate($request, MonsterCardDetail::$rules2);
+
+            $monstercarddetail = new MonsterCardDetail;
+
+            // データベースに保存する
+            $monstercarddetail->card_master_id = $last_insert_id;
+            $monstercarddetail->property = $request->property;
+            $monstercarddetail->tribe = $request->tribe;
+            //$monstercarddetail->level = $request->level;
+            $monstercarddetail->rank = $request->rank;
+            $monstercarddetail->scale = $request->scale;
+            $monstercarddetail->pendulum_effect = $request->pendulum_effect;
+            //$monstercarddetail->link = $request->link;
+            //$monstercarddetail->link_marker = $request->link_marker;
+            $monstercarddetail->attack = $request->attack;
+            $monstercarddetail->defense = $request->defense;
+            $monstercarddetail->save();
+            $last_insert_id = $monstercarddetail->id;
+        }
 
     //モンスター種類テーブル
       // Varidationを行う
