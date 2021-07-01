@@ -44,11 +44,12 @@ class CardDetailController extends Controller
 
     //モンスターカードマスタ
     if($request->card_class == "select1"){
-dd($request);
+//dd($request);
+        $rules = MonsterCardDetail::getRules($request->class_id);
         $request->input("class_id");
         $monstercardclass = new MonsterCardClass;
 
-        if($request->class_id != "5" && $request->class_id != "12" && $request->class_id != "14" ){
+        /*if($request->class_id != "5" && $request->class_id != "12" && $request->class_id != "14" ){
         // Varidationを行う
             $this->validate($request, MonsterCardDetail::$rules1);
 
@@ -157,7 +158,7 @@ dd($request);
             $monstercarddetail->defense = $request->defense;
             $monstercarddetail->save();
             $last_insert_id = $monstercarddetail->id;
-        }
+        }*/
 
     //モンスター種類テーブル
       // Varidationを行う

@@ -450,7 +450,7 @@ function changeDisabled(value,checked){
                             <div class="form-group row">
                                 <label class="col-md-3" for="pendulum_effect">ペンデュラム効果</label>
                                 <div class="col-md-9">
-                                  <textarea class="form-control" name="pendulum_effect" rows="15">{{ old('pendulum_effect') }}</textarea>
+                                  <textarea class="form-control" name="pendulum_effect" rows="10">{{ old('pendulum_effect') }}</textarea>
 
                                 </div>
                             </div>
@@ -576,7 +576,7 @@ function changeDisabled(value,checked){
                   <div class="form-group row">
                       <label class="col-md-3" for="card_text">カードテキスト</label>
                       <div class="col-md-9">
-                        <textarea class="form-control" name="card_text" rows="15">{{ old('card_text') }}</textarea>
+                        <textarea class="form-control" name="card_text" rows="10">{{ old('card_text') }}</textarea>
 
                       </div>
                   </div>
