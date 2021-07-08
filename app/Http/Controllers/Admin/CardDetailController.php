@@ -22,7 +22,7 @@ class CardDetailController extends Controller
     public function create(Request $request)
     {
 //dd($request);
-        $request->input("card_class");
+        //$request->input("card_class");
 
         //カードマスタ
         // Varidationを行う
@@ -77,8 +77,8 @@ class CardDetailController extends Controller
             //$monstercardclass->class_id = $request->class_id;
 
             $classIdArr = $request->class_id;//$requestからclass_idを取り出して$classIdArrに代入
-            foreach ($classIdArr as $ $value) {
-              $monstercardclass->class_id = $classIdArr;
+            foreach ($classIdArr as $value) {//$classIdArrの値の数だけ
+              $monstercardclass->class_id = $classIdArr;//$monstercardclassからclass_idを取り出して$classIdArrを代入
               $monstercardclass->save();
             }
 
