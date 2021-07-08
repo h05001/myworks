@@ -16,9 +16,12 @@ class MonsterCardDetail extends Model
         );
 
       foreach ($classIdArr as $classId){
-        //エクシーズかつペンデュラム
+        //効果かつエクシーズかつペンデュラム
         if($classId == "1" && $classId == "5" && $classId == "12"){
-          array_push($rules, 'rank' => 'required', 'scale' => 'required', 'pendulum_effect' => 'required', 'defense' => 'required');
+          $rules += array(
+              'rank' => 'required', 'scale' => 'required', 'pendulum_effect' => 'required', 'defense' => 'required',
+        );
+
 
         }else{
 
@@ -35,19 +38,31 @@ class MonsterCardDetail extends Model
           case "10"://チューナー
           case "11"://リバース
           case "13"://特殊召喚
-              array_push($rules, 'level' => 'required', 'defense' => 'required');
-
+              $rules += array(
+                  'level' => 'required', 'defense' => 'required',
+              );
+              break;
           case "5"://エクシーズ
-              array_push($rules, 'rank' => 'required', 'defense' => 'required');
+              $rules += array(
+                  'rank' => 'required', 'defense' => 'required',
+              );
+              break;
 
           case "12"://ペンデュラム
-              array_push($rules, 'leval' => 'required', 'scale' => 'required', 'pendulum_effect' => 'required', 'defense' => 'required');
+              $rules += array(
+                  'leval' => 'required', 'scale' => 'required', 'pendulum_effect' => 'required', 'defense' => 'required',
+              );
+              break;
 
           case "14"://リンク
-              array_push($rules, 'link' => 'required', 'link_marker' => 'required');
+              $rules += array(
+                  'link' => 'required', 'link_marker' => 'required',
+              );
+              break;
+
         }
       }
-      returm $rules;
+      return $rules;
     }
   }
 }
