@@ -17,13 +17,13 @@ class MonsterCardDetail extends Model
 
       foreach ($classIdArr as $classId){
         //効果かつエクシーズかつペンデュラム
-        if($classId == "1" && $classId == "5" && $classId == "12"){
-          $rules += array(
-              'rank' => 'required', 'scale' => 'required', 'pendulum_effect' => 'required', 'defense' => 'required',
-        );
+        //if($classId == "1" && $classId == "5" && $classId == "12"){
+          //$rules += array(
+              //'rank' => 'required', 'scale' => 'required', 'pendulum_effect' => 'required', 'defense' => 'required',
+        //);
 
 
-        }else{
+        //}else{
 
         switch($classId){
           case "0"://通常
@@ -45,7 +45,16 @@ class MonsterCardDetail extends Model
           case "5"://エクシーズ
               $rules += array(
                   'rank' => 'required', 'defense' => 'required',
+
               );
+
+              //$rulesの中にlevalがないか検索して$searchに代入
+              //$keys = array_keys($rules);
+              $search = array_search('level',$rules);
+              //該当項目があればその項目を削除
+                  if ( $search !== false ) {
+                		  unset($rules['level']);
+                	}
               break;
 
           case "12"://ペンデュラム
@@ -57,14 +66,25 @@ class MonsterCardDetail extends Model
           case "14"://リンク
               $rules += array(
                   'link' => 'required', 'link_marker' => 'required',
+
               );
+              $search = array_search($rules,'level');
+                  if ( $search !== false ) {
+                		  //array_splice($rules, $search);
+                       unset($rules['level']);
+                	}
+              $search1 = array_search('defense',$rules);
+                  if ( $search1 !== false ) {
+                		  //array_splice($rules, $search1);
+                       unset($rules['defense']);
+                	}
               break;
 
         }
       }
       return $rules;
     }
-  }
+  //}
 }
 
 

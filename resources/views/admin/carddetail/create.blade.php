@@ -231,14 +231,7 @@ function changeDisabled(value,checked){
 
                     <!-- 表示非表示切り替え -->
                     <div id="firstBox">
-<!--
-                        <div class="form-group row">
-                            <label class="col-md-3" for="class_id">種類ID</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="class_id" value="{{ old('class_id') }}">
-                            </div>
-                        </div>
--->
+                        
                         <div class="form-group row">
                             <div class="col-md-3">
                               <label  for="monster_card_class">モンスターカード種類</label>

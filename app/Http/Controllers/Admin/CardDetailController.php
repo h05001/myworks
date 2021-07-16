@@ -21,7 +21,7 @@ class CardDetailController extends Controller
 
     public function create(Request $request)
     {
-//dd($request);
+//
         //$request->input("card_class");
 
         //カードマスタ
@@ -59,26 +59,31 @@ class CardDetailController extends Controller
             $monstercarddetail->scale = $request->scale;
             $monstercarddetail->pendulum_effect = $request->pendulum_effect;
             $monstercarddetail->link = $request->link;
-            $monstercarddetail->link_marker = $request->link_marker;
+
+            $linkMarkerArr = array($request->link_marker);
+            $linkMarkerIm = implode($linkMarkerArr);
+            $monstercarddetail->link_marker = $linkMarkerIm;
+
             $monstercarddetail->attack = $request->attack;
             $monstercarddetail->defense = $request->defense;
             $monstercarddetail->save();
-            $last_insert_id = $monstercarddetail->id;
+
 
 
             //モンスター種類テーブル
             // Varidationを行う
             $this->validate($request, MonsterCardClass::$rules);
 
-            $monstercardclass = new MonsterCardClass;
 
-            // データベースに保存する
-            $monstercardclass->card_master_id = $last_insert_id;
             //$monstercardclass->class_id = $request->class_id;
 
             $classIdArr = $request->class_id;//$requestからclass_idを取り出して$classIdArrに代入
             foreach ($classIdArr as $value) {//$classIdArrの値の数だけ
-              $monstercardclass->class_id = $classIdArr;//$monstercardclassからclass_idを取り出して$classIdArrを代入
+              $monstercardclass = new MonsterCardClass;
+
+              // データベースに保存する
+              $monstercardclass->card_master_id = $last_insert_id;
+              $monstercardclass->class_id = $value;//$monstercardclassからclass_idを取り出して$classIdArrを代入
               $monstercardclass->save();
             }
 
