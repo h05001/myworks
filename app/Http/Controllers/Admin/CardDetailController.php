@@ -23,7 +23,7 @@ class CardDetailController extends Controller
     {
 //
         //$request->input("card_class");
-
+//dd($request);
         //カードマスタ
         // Varidationを行う
         $this->validate($request, CardDetail::$rules);
@@ -46,7 +46,7 @@ class CardDetailController extends Controller
             $monstercardclass = new MonsterCardClass;
 
             // Varidationを行う
-            $this->validate($request, $rules);
+            //$this->validate($request, $rules);
 
             $monstercarddetail = new MonsterCardDetail;
 
@@ -54,16 +54,12 @@ class CardDetailController extends Controller
             $monstercarddetail->card_master_id = $last_insert_id;
             $monstercarddetail->property = $request->property;
             $monstercarddetail->tribe = $request->tribe;
-            $monstercarddetail->level = $request->level;
-            $monstercarddetail->rank = $request->rank;
+            $monstercarddetail->level_rank_link = $request->level_rank_link;
             $monstercarddetail->scale = $request->scale;
             $monstercarddetail->pendulum_effect = $request->pendulum_effect;
-            $monstercarddetail->link = $request->link;
-
-            $linkMarkerArr = array($request->link_marker);
-            $linkMarkerIm = implode($linkMarkerArr);
-            $monstercarddetail->link_marker = $linkMarkerIm;
-
+            if($request->has("link_marker")){
+                $monstercarddetail->link_marker = implode($request->link_marker);
+            }
             $monstercarddetail->attack = $request->attack;
             $monstercarddetail->defense = $request->defense;
             $monstercarddetail->save();

@@ -28,45 +28,86 @@ function entryChange(){
 window.onload = entryChange;
 
 function entryChangeClass(){
-    document.getElementById('level').style.display = "none";//レベル
-    document.getElementById('rank').style.display = "none";//ランク
+
     document.getElementById('scale').style.display = "none";//スケール
     document.getElementById('pendulum_effect').style.display = "none";//ペンデュラム効果テキスト
-    document.getElementById('link_leval').style.display = "none";//リンク
     document.getElementById('link_marker').style.display = "none";//マーカーの向き
     document.getElementById('defense').style.display = "none";//守備力
-    //changeDisabled(value,checked);
-    //var test=checkBoxsArr[i];
+    //document.getElementById('level').style.display = "none";//レベル
+    //document.getElementById('rank').style.display = "none";//ランク
+    //document.getElementById('link_level').style.display = "none";//リンク
+
     if(document.getElementById('xyz').checked === true && document.getElementById('pendulum').checked === true){
         //フォーム
-        document.getElementById('rank').style.display = "block";//ランク
+        //document.getElementById('rank').style.display = "block";//ランク
         document.getElementById('scale').style.display = "block";//スケール
         document.getElementById('pendulum_effect').style.display = "block";//ペンデュラム効果テキスト
         document.getElementById('defense').style.display = "block";//守備力
 
     }else if(document.getElementById('xyz').checked === true){
         //フォーム
-        document.getElementById('rank').style.display = "block";//ランク
+
+        //document.getElementById('rank').style.display = "block";//ランク
         document.getElementById('defense').style.display = "block";//守備力
 
     }else if(document.getElementById('pendulum').checked === true){
         //フォーム
-        document.getElementById('level').style.display = "block";//レベル
+        //document.getElementById('level').style.display = "block";//レベル
         document.getElementById('scale').style.display = "block";//スケール
         document.getElementById('pendulum_effect').style.display = "block";//ペンデュラム効果テキスト
         document.getElementById('defense').style.display = "block";//守備力
 
     }else if(document.getElementById('link').checked === true){
         //フォーム
-        document.getElementById('link_leval').style.display = "block";//リンク
+        //document.getElementById('link_level').style.display = "block";//リンク
         document.getElementById('link_marker').style.display = "block";//マーカーの向き
 
+
     }else{
-        document.getElementById('level').style.display = "block";//レベル
+        //document.getElementById('level').style.display = "block";//レベル
         document.getElementById('defense').style.display = "block";//守備力
     }
   //}
 }
+
+
+
+function setLevelSelectBox(){
+    var level = new Array("レベルを選択",1,2,3,4,5,6,7,8,9,10,11,12);
+    var rank = new Array("ランクを選択",0,1,2,3,4,5,6,7,8,9,10,11,12,13);
+    var link = new Array("リンクを選択",1,2,3,4,5,6,7,8);
+    // チェックボックスの一覧を取得
+    var checkBoxs = document.getElementsByClassName('changeCheck').value;
+    // 配列へ変換
+    var checkBoxsArr = Array.prototype.slice.call(checkBoxs);
+
+    // チェックボックス文繰り返す
+    for ( i = 0; i < checkBoxsArr.length ; i++) {
+        if(checkBoxsArr[i].checked){
+            if(checkBoxsArr[i].value == "5"){//xyz
+                for ( x=0; x<14; x++ ){
+                    //rankの配列を適応
+
+                }
+            }else if(checkBoxsArr[i].value == "14"){//link
+                for ( x=0; x<9; x++ ){
+                    //linkの配列を適応
+
+                }
+            }else{
+                for ( x=0; x<13; x++ ){
+                    //levelの配列を適応
+
+                }
+            }
+        }
+    }
+}
+
+//document.monster_card_class.level_rank_link.options[x].text=rank[x];
+//document.monster_card_class.level_rank_link.options[x].text=rank[x];
+//document.monster_card_class.level_rank_link.options[x].text=level[x];
+
 //オンロードさせ、リロード時に選択を保持
 window.onload = entryChangeClass;
 
@@ -91,8 +132,8 @@ function changeDisabled(value,checked){
     document.getElementById('special_summon').disabled = false;  // 有効にする
     document.getElementById('link').disabled = false;  // 有効にする
     checked = true;
+
     // チェックボックス文繰り返す
-    //あいうえお
     for ( i = 0; i < checkBoxsArr.length ; i++) {
       if(checkBoxsArr[i].checked){
         switch (checkBoxsArr[i].value){
@@ -231,10 +272,11 @@ function changeDisabled(value,checked){
 
                     <!-- 表示非表示切り替え -->
                     <div id="firstBox">
-                        
+
                         <div class="form-group row">
+                            <form name = "monster_card_class">
                             <div class="col-md-3">
-                              <label  for="monster_card_class">モンスターカード種類</label>
+                              <label for="monster_card_class">モンスターカード種類</label>
                             </div>
                             <div class="col-md-9 form-inline">
 
@@ -284,26 +326,8 @@ function changeDisabled(value,checked){
                                     <input class="form-check-input changeCheck" type="checkbox" onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]" value="14" id="link">リンク</label>
 
                                 </div>
-
+                              </form>
                           </div>
-
-                              <!--
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="normal">
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="effect">
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="ritual">
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="fusion">
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="synchro">
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="xyz">
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="toon">
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="spirit">
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="union">
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="gemini">
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="tuner">
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="flip">
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="pendulum">
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="special_summon">
-                                <input type="checkbox" name="monster_card_class" class="form-control"  value="link">
-                                -->
 
 
                         <div class="form-group row">
@@ -360,25 +384,28 @@ function changeDisabled(value,checked){
                             </div>
                         </div>
 
-                        <div id="level">
+
+                        <div id="level_rank_link">
                             <div class="form-group row">
-                                <label class="col-md-3" for="level">レベル</label>
+                                <label class="col-md-3" for="level_rank_link">レベル/ランク/リンク</label>
                                 <div class="col-md-9">
-                                <!--    <input type="text" class="form-control" name="level" value="{{ old('level') }}"> -->
-                                    <select name="level" class="form-control" value="{{ old('level') }}">
-                                        <option value="">レベルを選択</option>
-                                        <option value="one">1</option>
-                                        <option value="two">2</option>
-                                        <option value="three">3</option>
-                                        <option value="four">4</option>
-                                        <option value="five">5</option>
-                                        <option value="six">6</option>
-                                        <option value="seven">7</option>
-                                        <option value="eight">8</option>
-                                        <option value="nine">9</option>
-                                        <option value="ten">10</option>
-                                        <option value="eleven">11</option>
-                                        <option value="twelve">12</option>
+
+                                    <select name="level_rank_link" class="form-control" value="{{ old('level_rank_link') }}">
+
+                                        <option value="">  </option>
+                                        <option value=  >  </option>
+                                        <option value=  >  </option>
+                                        <option value=  >  </option>
+                                        <option value=  >  </option>
+                                        <option value=  >  </option>
+                                        <option value=  >  </option>
+                                        <option value=  >  </option>
+                                        <option value=  >  </option>
+                                        <option value=  >  </option>
+                                        <option value=  >  </option>
+                                        <option value=  >  </option>
+                                        <option value=  >  </option>
+                                        <option value=  >  </option>
 
 
                                     </select>
@@ -386,31 +413,7 @@ function changeDisabled(value,checked){
                             </div>
                         </div>
 
-                        <div id="rank">
-                            <div class="form-group row">
-                                <label class="col-md-3" for="rank">ランク</label>
-                                <div class="col-md-9">
-                                <!--    <input type="text" class="form-control" name="rank" value="{{ old('rank') }}"> -->
-                                    <select name="rank" class="form-control"  value="{{ old('rank') }}">
-                                        <option value="">ランクを選択</option>
-                                        <option value="zero">0</option>
-                                        <option value="one">1</option>
-                                        <option value="two">2</option>
-                                        <option value="three">3</option>
-                                        <option value="four">4</option>
-                                        <option value="five">5</option>
-                                        <option value="six">6</option>
-                                        <option value="seven">7</option>
-                                        <option value="eight">8</option>
-                                        <option value="nine">9</option>
-                                        <option value="ten">10</option>
-                                        <option value="eleven">11</option>
-                                        <option value="twelve">12</option>
-                                        <option value="thirteen">13</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+
 
                         <div id="scale">
                             <div class="form-group row">
@@ -449,26 +452,7 @@ function changeDisabled(value,checked){
                             </div>
                         </div>
 
-                        <div id="link_leval">
-                            <div class="form-group row">
-                                <label class="col-md-3" for="link">Link</label>
-                                <div class="col-md-9">
-                                  <!--  <input type="text" class="form-control" name="link" value="{{ old('link') }}"> -->
-                                    <select name="link" class="form-control"  value="{{ old('link') }}">
-                                        <option value="">Linkを選択</option>
-                                        <option value="one">1</option>
-                                        <option value="two">2</option>
-                                        <option value="three">3</option>
-                                        <option value="four">4</option>
-                                        <option value="five">5</option>
-                                        <option value="six">6</option>
-                                        <option value="seven">7</option>
-                                        <option value="eight">8</option>
 
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
 
                         <div id="link_marker">
                             <div class="form-group row">
