@@ -28,7 +28,7 @@ function entryChange(){
 window.onload = entryChange;
 
 function entryChangeClass(){
-
+    setLevelSelectBox();//level_rank_linkの値
     document.getElementById('scale').style.display = "none";//スケール
     document.getElementById('pendulum_effect').style.display = "none";//ペンデュラム効果テキスト
     document.getElementById('link_marker').style.display = "none";//マーカーの向き
@@ -73,40 +73,45 @@ function entryChangeClass(){
 
 
 function setLevelSelectBox(){
-    var level = new Array("レベルを選択",1,2,3,4,5,6,7,8,9,10,11,12);
-    var rank = new Array("ランクを選択",0,1,2,3,4,5,6,7,8,9,10,11,12,13);
-    var link = new Array("リンクを選択",1,2,3,4,5,6,7,8);
+    let month = document.getElementById('level_rank_link');
+    //var targetArray.length = 0;
+    //var targetArray = [];
+    //month.reset();
+    var targetArray = new Array();
+
+
     // チェックボックスの一覧を取得
-    var checkBoxs = document.getElementsByClassName('changeCheck').value;
+    var checkBoxs = document.getElementsByClassName('changeCheck');
+
     // 配列へ変換
     var checkBoxsArr = Array.prototype.slice.call(checkBoxs);
 
     // チェックボックス文繰り返す
     for ( i = 0; i < checkBoxsArr.length ; i++) {
+
         if(checkBoxsArr[i].checked){
+
             if(checkBoxsArr[i].value == "5"){//xyz
-                for ( x=0; x<14; x++ ){
-                    //rankの配列を適応
-
-                }
+                targetArray = new Array("ランクを選択",0,1,2,3,4,5,6,7,8,9,10,11,12,13);
             }else if(checkBoxsArr[i].value == "14"){//link
-                for ( x=0; x<9; x++ ){
-                    //linkの配列を適応
-
-                }
-            }else{
-                for ( x=0; x<13; x++ ){
-                    //levelの配列を適応
-
-                }
+                targetArray = new Array("リンクを選択",1,2,3,4,5,6,7,8);
+            }else if(checkBoxsArr[i].value != "5" && checkBoxsArr[i].value != "14"){//xyz,linkでない場合
+                targetArray = new Array("レベルを選択",1,2,3,4,5,6,7,8,9,10,11,12);
             }
         }
     }
+
+
+    for(let i = 0; i < targetArray.length; i++){
+      let option = document.createElement('option');
+      if(i != 0){
+          option.setAttribute('value', targetArray[i]);
+      }
+      option.innerHTML = targetArray[i];
+      month.appendChild(option);
+    }
 }
 
-//document.monster_card_class.level_rank_link.options[x].text=rank[x];
-//document.monster_card_class.level_rank_link.options[x].text=rank[x];
-//document.monster_card_class.level_rank_link.options[x].text=level[x];
 
 //オンロードさせ、リロード時に選択を保持
 window.onload = entryChangeClass;
@@ -384,35 +389,20 @@ function changeDisabled(value,checked){
                             </div>
                         </div>
 
-
-                        <div id="level_rank_link">
+                        <form name = "level_rank_link">
+                        <div>
                             <div class="form-group row">
                                 <label class="col-md-3" for="level_rank_link">レベル/ランク/リンク</label>
                                 <div class="col-md-9">
 
-                                    <select name="level_rank_link" class="form-control" value="{{ old('level_rank_link') }}">
-
-                                        <option value="">  </option>
-                                        <option value=  >  </option>
-                                        <option value=  >  </option>
-                                        <option value=  >  </option>
-                                        <option value=  >  </option>
-                                        <option value=  >  </option>
-                                        <option value=  >  </option>
-                                        <option value=  >  </option>
-                                        <option value=  >  </option>
-                                        <option value=  >  </option>
-                                        <option value=  >  </option>
-                                        <option value=  >  </option>
-                                        <option value=  >  </option>
-                                        <option value=  >  </option>
+                                    <select name="level_rank_link" id="level_rank_link" class="form-control" value="{{ old('level_rank_link') }}">
 
 
                                     </select>
                                 </div>
                             </div>
                         </div>
-
+                      </form>
 
 
                         <div id="scale">
