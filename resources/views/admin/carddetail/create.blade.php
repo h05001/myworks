@@ -74,11 +74,15 @@ function entryChangeClass(){
 
 function setLevelSelectBox(){
     let month = document.getElementById('level_rank_link');
-    //var targetArray.length = 0;
-    //var targetArray = [];
-    //month.reset();
-    var targetArray = new Array();
 
+
+  	while(month.lastChild)
+  	{
+  		month.removeChild(month.lastChild);
+  	}
+
+    var targetArray = new Array();
+    //var targetArray = [];
 
     // チェックボックスの一覧を取得
     var checkBoxs = document.getElementsByClassName('changeCheck');
@@ -93,12 +97,15 @@ function setLevelSelectBox(){
 
             if(checkBoxsArr[i].value == "5"){//xyz
                 targetArray = new Array("ランクを選択",0,1,2,3,4,5,6,7,8,9,10,11,12,13);
+                break;
             }else if(checkBoxsArr[i].value == "14"){//link
                 targetArray = new Array("リンクを選択",1,2,3,4,5,6,7,8);
-            }else if(checkBoxsArr[i].value != "5" && checkBoxsArr[i].value != "14"){//xyz,linkでない場合
-                targetArray = new Array("レベルを選択",1,2,3,4,5,6,7,8,9,10,11,12);
+                break;
             }
         }
+    }
+    if(targetArray.length === 0){//targetArrayの中身が空である場合
+        targetArray = new Array("レベルを選択",1,2,3,4,5,6,7,8,9,10,11,12);
     }
 
 
@@ -279,7 +286,7 @@ function changeDisabled(value,checked){
                     <div id="firstBox">
 
                         <div class="form-group row">
-                            <form name = "monster_card_class">
+
                             <div class="col-md-3">
                               <label for="monster_card_class">モンスターカード種類</label>
                             </div>
@@ -331,7 +338,7 @@ function changeDisabled(value,checked){
                                     <input class="form-check-input changeCheck" type="checkbox" onchange="changeDisabled(this.value,this.checked);entryChangeClass();" name="class_id[]" value="14" id="link">リンク</label>
 
                                 </div>
-                              </form>
+
                           </div>
 
 
@@ -389,7 +396,7 @@ function changeDisabled(value,checked){
                             </div>
                         </div>
 
-                        <form name = "level_rank_link">
+
                         <div>
                             <div class="form-group row">
                                 <label class="col-md-3" for="level_rank_link">レベル/ランク/リンク</label>
@@ -402,7 +409,7 @@ function changeDisabled(value,checked){
                                 </div>
                             </div>
                         </div>
-                      </form>
+
 
 
                         <div id="scale">
