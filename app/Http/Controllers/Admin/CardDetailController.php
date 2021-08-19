@@ -127,16 +127,38 @@ class CardDetailController extends Controller
 
   public function index(Request $request)
   {
-      $cond_title = $request->cond_title;
-      if ($cond_title != '') {
+      $cond_card_name = $request->cond_card_name;
+      $cond_card_class = $request->cond_card_class;
+
+      if ($cond_card_name != '') {
           // 検索されたら検索結果を取得する
-          $posts = CardDetail::where('card_name', $cond_title)->get();
+          $posts = CardDetail::where('card_name', 'LIKE', "%{$cond_card_name}%")->get();
+      }else if ($cond_card_class != '') {
+          // 検索されたら検索結果を取得する
+          $posts = CardDetail::where('card_class', $cond_card_class)->get();
       } else {
           // それ以外はすべてデータを取得する
           $posts = CardDetail::all();
       }
-      return view('admin.carddetail.index', ['posts' => $posts, 'cond_title' => $cond_title]);
-      //return view('admin.carddetail.index', ['posts' => $posts]);
+
+      //return view('admin.carddetail.index');
+      return view('admin.carddetail.index', ['posts' => $posts, 'cond_card_name' => $cond_card_name,'cond_card_class' => $cond_card_class]);
+
   }
+/*
+  public function search(Request $request)
+  {
+      $cond_card_class = $request->cond_card_class;
+      if ($cond_card_class != '') {
+          // 検索されたら検索結果を取得する
+          $posts = CardDetail::where('card_class', $cond_card_class)->get();
+      } else {
+          // それ以外はすべてデータを取得する
+          $posts = CardDetail::all();
+      }
+      //return view('admin.carddetail.index', compact('posts' => $posts, 'cond_card_class' => $card_class));
+      return view('admin.carddetail.index', ['posts' => $posts, 'cond_card_class' => $cond_card_class]);
+
+  }*/
 
 }

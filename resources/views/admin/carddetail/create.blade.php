@@ -443,7 +443,7 @@ function changeDisabled(value,checked){
                             <div class="form-group row">
                                 <label class="col-md-3" for="pendulum_effect">ペンデュラム効果</label>
                                 <div class="col-md-9">
-                                  <textarea class="form-control" name="pendulum_effect" rows="10">{{ old('pendulum_effect') }}</textarea>
+                                  <textarea class="form-control" name="pendulum_effect" rows="5">{{ old('pendulum_effect') }}</textarea>
 
                                 </div>
                             </div>

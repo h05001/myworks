@@ -7,15 +7,27 @@
             <h2>登録カード一覧</h2>
         </div>
         <div class="row">
-            <div class="col-md-4">
-                <a href="{{ action('Admin\CardDetailController@add') }}" role="button" class="btn btn-primary">新規作成</a>
-            </div>
-            <div class="col-md-8">
+
+            <div class="col-md-12">
                 <form action="{{ action('Admin\CardDetailController@index') }}" method="get">
-                    <div class="form-group row">
-                        <label class="col-md-2">タイトル</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="cond_title" value="{{ $cond_title }}">
+                   <div class="form-group row">
+                       <label class="col-md-3">検索：カード名</label>
+                       <div class="col-md-9">
+                          <input type="text" class="form-control" name="cond_card_name" value="{{ $cond_card_name }}">
+                       </div>
+                  </div>
+                  <div class="form-group row">
+                        <label class="col-md-3">検索：カード分類</label>
+                        <div class="col-md-9">
+                            <select class="form-control" name="cond_card_class" value="{{ $cond_card_class }}">
+                              <option value="">カード種類で検索</option>
+                              <option value="select1">モンスターカード</option>
+                              <option value="select2">魔法カード</option>
+                              <option value="select3">罠カード</option>
+                            </select>
+
+                          <!--  <input type="text" class="form-control" name="cond_card_class" value="{{ $cond_card_class }}">
+-->
                         </div>
                         <div class="col-md-2">
                             {{ csrf_field() }}
@@ -24,7 +36,10 @@
                     </div>
                 </form>
             </div>
+        <div class="col-md-4">
+            <a href="{{ action('Admin\CardDetailController@add') }}" role="button" class="btn btn-primary">新規作成</a>
         </div>
+
         <div class="row">
               <div class="list-news col-md-12 mx-auto">
                   <div class="row">
