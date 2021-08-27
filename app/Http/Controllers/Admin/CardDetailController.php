@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -127,26 +128,80 @@ class CardDetailController extends Controller
 
   public function index(Request $request)
   {
+
+
+      $query = CardDetail::query();
+      $query -> leftjoin('monster_card_details', 'card_details.card_master_id', '=', 'monster_card_details.card_master_id')
+             -> leftjoin('monster_card_classes', 'card_details.card_master_id', '=', 'monster_card_classes.card_master_id')
+             -> leftjoin('magic_card_details', 'card_details.card_master_id', '=', 'magic_card_details.card_master_id')
+             -> leftjoin('trap_card_details', 'card_details.card_master_id', '=', 'trap_card_details.card_master_id');
+
+
       $cond_card_name = $request->cond_card_name;
       $cond_card_class = $request->cond_card_class;
+      $cond_magic_card_class = $request->cond_magic_card_class;
+      $cond_trap_card_class = $request->cond_trap_card_class;
+
+      $cond_property = $request->cond_property;
+      $cond_tribe = $request->cond_tribe;
+      $cond_level_rank_link = $request->cond_level_rank_link;
+      $cond_scale = $request->cond_scale;
 
       if ($cond_card_name != '') {
           // 検索されたら検索結果を取得する
-          $posts = CardDetail::where('card_name', 'LIKE', "%{$cond_card_name}%")->get();
-      }else if ($cond_card_class != '') {
+          $query -> where('card_name', 'LIKE', "%{$cond_card_name}%");
+      }
+      if ($cond_card_class != '') {
           // 検索されたら検索結果を取得する
-          $posts = CardDetail::where('card_class', $cond_card_class)->get();
-      } else {
-          // それ以外はすべてデータを取得する
-          $posts = CardDetail::all();
+          $query -> where('card_class', $cond_card_class);
       }
 
-      //return view('admin.carddetail.index');
-      return view('admin.carddetail.index', ['posts' => $posts, 'cond_card_name' => $cond_card_name,'cond_card_class' => $cond_card_class]);
+      if ($cond_magic_card_class != '') {
+          // 検索されたら検索結果を取得する
+          $query -> where('magic_card_class', $cond_magic_card_class);
+      }
+
+      if ($cond_trap_card_class != '') {
+          // 検索されたら検索結果を取得する
+          $query -> where('trap_card_class', $cond_trap_card_class);
+      }
+
+      if ($cond_property != '') {
+          // 検索されたら検索結果を取得する
+          $query -> where('property', $cond_property);
+      }
+
+      if ($cond_tribe != '') {
+          // 検索されたら検索結果を取得する
+          $query -> where('tribe', $cond_tribe);
+      }
+
+      if ($cond_level_rank_link != '') {
+          // 検索されたら検索結果を取得する
+          $query -> where('level_rank_link', $cond_level_rank_link);
+      }
+
+      if ($cond_scale != '') {
+          // 検索されたら検索結果を取得する
+          $query -> where('scale', $cond_scale);
+      }
+
+      $posts = $query->get();
+
+      return view('admin.carddetail.index', ['posts' => $posts,
+                                             'cond_card_name' => $cond_card_name,
+                                             'cond_card_class' => $cond_card_class,
+                                             'cond_magic_card_class' => $cond_magic_card_class,
+                                             'cond_trap_card_class' => $cond_trap_card_class,
+                                             'property' => $cond_property,
+                                             'tribe' => $cond_tribe,
+                                             'level_rank_link' => $cond_level_rank_link,
+                                             'scale' => $cond_scale
+                                            ]);
 
   }
-/*
-  public function search(Request $request)
+
+  /*public function search(Request $request)
   {
       $cond_card_class = $request->cond_card_class;
       if ($cond_card_class != '') {
@@ -156,7 +211,7 @@ class CardDetailController extends Controller
           // それ以外はすべてデータを取得する
           $posts = CardDetail::all();
       }
-      //return view('admin.carddetail.index', compact('posts' => $posts, 'cond_card_class' => $card_class));
+
       return view('admin.carddetail.index', ['posts' => $posts, 'cond_card_class' => $cond_card_class]);
 
   }*/
