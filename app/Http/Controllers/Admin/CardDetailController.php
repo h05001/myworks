@@ -169,6 +169,11 @@ class CardDetailController extends Controller
       if ($cond_property != '') {
           // 検索されたら検索結果を取得する
           $query -> where('property', $cond_property);
+
+          /*$query -> whereExists(function ($data) {
+                $data -> whereRaw('card_detail.card_master_id = monster_card_class.card_master_id')
+                      -> where('monster_card_class.card_master_id' , '=' , 1);
+          });*/
       }
 
       if ($cond_tribe != '') {
@@ -176,10 +181,10 @@ class CardDetailController extends Controller
           $query -> where('tribe', $cond_tribe);
       }
 
-      if ($cond_level_rank_link != '') {
+      /*if ($cond_level_rank_link != '') {
           // 検索されたら検索結果を取得する
           $query -> where('level_rank_link', $cond_level_rank_link);
-      }
+      }*/
 
       if ($cond_scale != '') {
           // 検索されたら検索結果を取得する
@@ -193,10 +198,10 @@ class CardDetailController extends Controller
                                              'cond_card_class' => $cond_card_class,
                                              'cond_magic_card_class' => $cond_magic_card_class,
                                              'cond_trap_card_class' => $cond_trap_card_class,
-                                             'property' => $cond_property,
-                                             'tribe' => $cond_tribe,
-                                             'level_rank_link' => $cond_level_rank_link,
-                                             'scale' => $cond_scale
+                                             'cond_property' => $cond_property,
+                                             'cond_tribe' => $cond_tribe,
+                                             //'level_rank_link' => $cond_level_rank_link,
+                                             'cond_scale' => $cond_scale
                                             ]);
 
   }

@@ -21,9 +21,9 @@
                       <div class="col-md-9">
                           <select class="form-control" name="cond_card_class" >
                               <option value="">カード種類で検索</option>
-                              <option value="select1" <?php echo array_key_exists('cond_card_class', $_POST) && $_POST['cond_card_class'] == 'select1' ? 'selected' : ''; ?> >モンスターカード</option>
-                              <option value="select2" <?php echo array_key_exists('cond_card_class', $_POST) && $_POST['cond_card_class'] == 'select2' ? 'selected' : ''; ?> >魔法カード</option>
-                              <option value="select3" <?php echo array_key_exists('cond_card_class', $_POST) && $_POST['cond_card_class'] == 'select3' ? 'selected' : ''; ?> >罠カード</option>
+                              <option value="select1"  @if($cond_card_class == 'select1')selected @endif >モンスターカード</option>
+                              <option value="select2"  @if($cond_card_class == 'select2')selected @endif >魔法カード</option>
+                              <option value="select3"  @if($cond_card_class == 'select3')selected @endif >罠カード</option>
 
                           </select>
                       </div>
@@ -36,12 +36,12 @@
                       <!--    <input type="text" class="form-control" name="magic_class" value="{{ old('magic_class') }}"> -->
                           <select class="form-control" name="cond_magic_card_class">
                               <option value="">魔法カード種類で検索</option>
-                              <option value="normal">通常魔法</option>
-                              <option value="equip">装備魔法</option>
-                              <option value="field">フィールド魔法</option>
-                              <option value="quick">速攻魔法</option>
-                              <option value="ritual">儀式魔法</option>
-                              <option value="continuous">永続魔法</option>
+                              <option value="normal" @if($cond_magic_card_class == 'normal')selected @endif >通常魔法</option>
+                              <option value="equip" @if($cond_magic_card_class == 'equip')selected @endif >装備魔法</option>
+                              <option value="field" @if($cond_magic_card_class == 'field')selected @endif >フィールド魔法</option>
+                              <option value="quick" @if($cond_magic_card_class == 'quick')selected @endif >速攻魔法</option>
+                              <option value="ritual" @if($cond_magic_card_class == 'ritual')selected @endif >儀式魔法</option>
+                              <option value="continuous" @if($cond_magic_card_class == 'continuous')selected @endif >永続魔法</option>
 
                           </select>
                       </div>
@@ -53,9 +53,9 @@
                       <!--    <input type="text" class="form-control" name="trap_class" value="{{ old('trap_class') }}"> -->
                           <select class="form-control" name="cond_trap_card_class">
                               <option value="">罠カード種類で検索</option>
-                              <option value="normal">通常罠</option>
-                              <option value="continuous">永続罠</option>
-                              <option value="counter">カウンター罠</option>
+                              <option value="normal" @if($cond_trap_card_class == 'normal')selected @endif >通常罠</option>
+                              <option value="continuous" @if($cond_trap_card_class == 'continuous')selected @endif >永続罠</option>
+                              <option value="counter" @if($cond_trap_card_class == 'counter')selected @endif >カウンター罠</option>
 
                           </select>
                       </div>
@@ -67,13 +67,13 @@
                         <!--  <input type="text" class="form-control" name="property" value="{{ old('property') }}"> -->
                           <select class="form-control" name="cond_property">
                               <option value="">属性で検索</option>
-                              <option value="dark">闇属性</option>
-                              <option value="light">光属性</option>
-                              <option value="earth">地属性</option>
-                              <option value="water">水属性</option>
-                              <option value="fire">炎属性</option>
-                              <option value="wind">風属性</option>
-                              <option value="divine">神属性</option>
+                              <option value="dark" @if($cond_property == 'dark')selected @endif >闇属性</option>
+                              <option value="light" @if($cond_property == 'light')selected @endif >光属性</option>
+                              <option value="earth" @if($cond_property == 'earth')selected @endif >地属性</option>
+                              <option value="water" @if($cond_property == 'water')selected @endif >水属性</option>
+                              <option value="fire" @if($cond_property == 'fire')selected @endif >炎属性</option>
+                              <option value="wind" @if($cond_property == 'wind')selected @endif >風属性</option>
+                              <option value="divine" @if($cond_property == 'divine')selected @endif >神属性</option>
 
                           </select>
                       </div>
@@ -85,31 +85,31 @@
                       <!--    <input type="text" class="form-control" name="tribe" value="{{ old('tribe') }}"> -->
                           <select class="form-control" name="cond_tribe">
                               <option value="">種族で検索</option>
-                              <option value="spell_caster">魔法使い族</option>
-                              <option value="dragon">ドラゴン族</option>
-                              <option value="zombie">アンデット族</option>
-                              <option value="warrior">戦士族</option>
-                              <option value="beast_warrior">獣戦士族</option>
-                              <option value="beast">獣族</option>
-                              <option value="winged_beast">鳥獣族</option>
-                              <option value="fiend">悪魔族</option>
-                              <option value="fairy">天使族</option>
-                              <option value="insect">昆虫族</option>
-                              <option value="dinosaur">恐竜族</option>
-                              <option value="reptile">爬虫類族</option>
-                              <option value="fish">魚族</option>
-                              <option value="sea_serpent">海竜族</option>
-                              <option value="aqua">水族</option>
-                              <option value="pyro">炎族</option>
-                              <option value="thunder">雷族</option>
-                              <option value="rock">岩石族</option>
-                              <option value="plant">植物族</option>
-                              <option value="machine">機械族</option>
-                              <option value="psychic">サイキック族</option>
-                              <option value="wyrm">幻竜族</option>
-                              <option value="cyberse">サイバース族</option>
-                              <option value="divine_beast">幻神獣族</option>
-                              <option value="creator">創造神族</option>
+                              <option value="spell_caster" @if($cond_tribe == 'spell_caster')selected @endif >魔法使い族</option>
+                              <option value="dragon" @if($cond_tribe == 'dragon')selected @endif >ドラゴン族</option>
+                              <option value="zombie" @if($cond_tribe == 'zombie')selected @endif >アンデット族</option>
+                              <option value="warrior" @if($cond_tribe == 'warrior')selected @endif >戦士族</option>
+                              <option value="beast_warrior" @if($cond_tribe == 'beast_warrior')selected @endif >獣戦士族</option>
+                              <option value="beast" @if($cond_tribe == 'beast')selected @endif >獣族</option>
+                              <option value="winged_beast" @if($cond_tribe == 'winged_beast')selected @endif >鳥獣族</option>
+                              <option value="fiend" @if($cond_tribe == 'fiend')selected @endif >悪魔族</option>
+                              <option value="fairy" @if($cond_tribe == 'fairy')selected @endif >天使族</option>
+                              <option value="insect" @if($cond_tribe == 'insect')selected @endif >昆虫族</option>
+                              <option value="dinosaur" @if($cond_tribe == 'dinosaur')selected @endif >恐竜族</option>
+                              <option value="reptile" @if($cond_tribe == 'reptile')selected @endif >爬虫類族</option>
+                              <option value="fish" @if($cond_tribe == 'fish')selected @endif >魚族</option>
+                              <option value="sea_serpent" @if($cond_tribe == 'sea_serpent')selected @endif >海竜族</option>
+                              <option value="aqua" @if($cond_tribe == 'aqua')selected @endif >水族</option>
+                              <option value="pyro" @if($cond_tribe == 'pyro')selected @endif >炎族</option>
+                              <option value="thunder" @if($cond_tribe == 'thunder')selected @endif >雷族</option>
+                              <option value="rock" @if($cond_tribe == 'rock')selected @endif >岩石族</option>
+                              <option value="plant" @if($cond_tribe == 'plant')selected @endif >植物族</option>
+                              <option value="machine" @if($cond_tribe == 'machine')selected @endif >機械族</option>
+                              <option value="psychic" @if($cond_tribe == 'psychic')selected @endif >サイキック族</option>
+                              <option value="wyrm" @if($cond_tribe == 'wyrm')selected @endif >幻竜族</option>
+                              <option value="cyberse" @if($cond_tribe == 'cyberse')selected @endif >サイバース族</option>
+                              <option value="divine_beast" @if($cond_tribe == 'divine_beast')selected @endif >幻神獣族</option>
+                              <option value="creator" @if($cond_tribe == 'creator')selected @endif >創造神族</option>
 
                           </select>
                       </div>
@@ -144,6 +144,9 @@
                       <div class="col-md-2">
                           {{ csrf_field() }}
                           <input type="submit" class="btn btn-primary" value="検索">
+                      </div>
+                      <div>
+                          <input type="reset" class="btn btn-primary" name="reset" value="検索条件のリセット">
                       </div>
                   </div>
                 </form>
