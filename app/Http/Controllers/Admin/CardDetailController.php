@@ -132,7 +132,7 @@ class CardDetailController extends Controller
 
       $query = CardDetail::query();
       $query -> leftjoin('monster_card_details', 'card_details.card_master_id', '=', 'monster_card_details.card_master_id')
-             -> leftjoin('monster_card_classes', 'card_details.card_master_id', '=', 'monster_card_classes.card_master_id')
+
              -> leftjoin('magic_card_details', 'card_details.card_master_id', '=', 'magic_card_details.card_master_id')
              -> leftjoin('trap_card_details', 'card_details.card_master_id', '=', 'trap_card_details.card_master_id');
 
@@ -144,8 +144,16 @@ class CardDetailController extends Controller
 
       $cond_property = $request->cond_property;
       $cond_tribe = $request->cond_tribe;
-      $cond_level_rank_link = $request->cond_level_rank_link;
-      $cond_scale = $request->cond_scale;
+
+      $cond_level_rank_link_fr = $request->cond_level_rank_link_fr;
+      $cond_level_rank_link_to = $request->cond_level_rank_link_to;
+      $cond_scale_fr = $request->cond_scale_fr;
+      $cond_scale_to = $request->cond_scale_to;
+      $cond_attack_fr = $request->cond_attack_fr;
+      $cond_attack_to = $request->cond_attack_to;
+      $cond_defense_fr = $request->cond_defense_fr;
+      $cond_defense_to = $request->cond_defense_to;
+
 
       if ($cond_card_name != '') {
           // 検索されたら検索結果を取得する
@@ -169,11 +177,6 @@ class CardDetailController extends Controller
       if ($cond_property != '') {
           // 検索されたら検索結果を取得する
           $query -> where('property', $cond_property);
-
-          /*$query -> whereExists(function ($data) {
-                $data -> whereRaw('card_detail.card_master_id = monster_card_class.card_master_id')
-                      -> where('monster_card_class.card_master_id' , '=' , 1);
-          });*/
       }
 
       if ($cond_tribe != '') {
@@ -181,16 +184,47 @@ class CardDetailController extends Controller
           $query -> where('tribe', $cond_tribe);
       }
 
-      /*if ($cond_level_rank_link != '') {
+      if ($cond_level_rank_link_fr != '') {//以上
           // 検索されたら検索結果を取得する
-          $query -> where('level_rank_link', $cond_level_rank_link);
-      }*/
-
-      if ($cond_scale != '') {
-          // 検索されたら検索結果を取得する
-          $query -> where('scale', $cond_scale);
+          $query -> where('level_rank_link', '>=' ,$cond_level_rank_link_fr);
       }
 
+      if ($cond_level_rank_link_to != '') {//以下
+          // 検索されたら検索結果を取得する
+          $query -> where('level_rank_link', '<=' ,$cond_level_rank_link_to);
+      }
+
+      if ($cond_scale_fr != '') {//以上
+          // 検索されたら検索結果を取得する
+          $query -> where('scale', '>=' ,$cond_scale_fr);
+      }
+
+      if ($cond_scale_to != '') {//以下
+          // 検索されたら検索結果を取得する
+          $query -> where('scale', '<=' ,$cond_scale_to);
+      }
+
+      if ($cond_attack_fr != '') {//以上
+          // 検索されたら検索結果を取得する
+          $query -> where('attack', '>=' ,$cond_attack_fr);
+      }
+
+      if ($cond_attack_to != '') {//以下
+          // 検索されたら検索結果を取得する
+          $query -> where('attack', '<=' ,$cond_attack_to);
+      }
+
+      if ($cond_defense_fr != '') {//以上
+          // 検索されたら検索結果を取得する
+          $query -> where('defense', '>=' ,$cond_defense_fr);
+      }
+
+      if ($cond_defense_to != '') {//以下
+          // 検索されたら検索結果を取得する
+          $query -> where('defense', '<=' ,$cond_defense_to);
+      }
+
+//dd($query->toSql());
       $posts = $query->get();
 
       return view('admin.carddetail.index', ['posts' => $posts,
@@ -200,25 +234,15 @@ class CardDetailController extends Controller
                                              'cond_trap_card_class' => $cond_trap_card_class,
                                              'cond_property' => $cond_property,
                                              'cond_tribe' => $cond_tribe,
-                                             //'level_rank_link' => $cond_level_rank_link,
-                                             'cond_scale' => $cond_scale
+                                             'cond_level_rank_link_fr' => $cond_level_rank_link_fr,
+                                             'cond_level_rank_link_to' => $cond_level_rank_link_to,
+                                             'cond_scale_fr' => $cond_scale_fr,
+                                             'cond_scale_to' => $cond_scale_to,
+                                             'cond_attack_fr' => $cond_attack_fr,
+                                             'cond_attack_to' => $cond_attack_to,
+                                             'cond_defense_fr' => $cond_defense_fr,
+                                             'cond_defense_to' => $cond_defense_to,
                                             ]);
 
-  }
-
-  /*public function search(Request $request)
-  {
-      $cond_card_class = $request->cond_card_class;
-      if ($cond_card_class != '') {
-          // 検索されたら検索結果を取得する
-          $posts = CardDetail::where('card_class', $cond_card_class)->get();
-      } else {
-          // それ以外はすべてデータを取得する
-          $posts = CardDetail::all();
       }
-
-      return view('admin.carddetail.index', ['posts' => $posts, 'cond_card_class' => $cond_card_class]);
-
-  }*/
-
-}
+  }

@@ -1,3 +1,38 @@
+<script>
+function clearFormAll() {
+    for (var i=0; i<document.forms.length; ++i) {
+        clearForm(document.forms[i]);
+    }
+}
+
+function clearElement(element) {
+    switch(element.type) {
+        case "hidden":
+        case "submit":
+        case "reset":
+        case "button":
+        case "image":
+            return;
+        case "file":
+            return;
+        case "text":
+        case "password":
+        case "textarea":
+            element.value = "";
+            return;
+        case "checkbox":
+        case "radio":
+            element.checked = false;
+            return;
+        case "select-one":
+        case "select-multiple":
+            element.selectedIndex = 0;
+            return;
+        default:
+    }
+}
+
+</script>
 @extends('layouts.admin')
 @section('title', '登録済みカードの一覧')
 
@@ -11,14 +46,14 @@
             <div class="col-md-12">
                 <form action="{{ action('Admin\CardDetailController@index') }}" method="get">
                    <div class="form-group row">
-                       <label class="col-md-3">検索：カード名</label>
+                       <label class="col-md-2">検索：カード名</label>
                        <div class="col-md-9">
                           <input type="text" class="form-control" name="cond_card_name" value="{{ $cond_card_name }}">
                        </div>
                   </div>
                   <div class="form-group row">
-                      <label class="col-md-3">検索：カード分類</label>
-                      <div class="col-md-9">
+                      <label class="col-md-2">検索：カード分類</label>
+                      <div class="col-md-3">
                           <select class="form-control" name="cond_card_class" >
                               <option value="">カード種類で検索</option>
                               <option value="select1"  @if($cond_card_class == 'select1')selected @endif >モンスターカード</option>
@@ -31,8 +66,8 @@
                           <!--  <input type="text" class="form-control" name="cond_card_class" value="{{ $cond_card_class }}">
 -->
                   <div class="form-group row">
-                      <label class="col-md-3">検索：魔法カード種類</label>
-                      <div class="col-md-9">
+                      <label class="col-md-2">検索：魔法カード種類</label>
+                      <div class="col-md-3">
                       <!--    <input type="text" class="form-control" name="magic_class" value="{{ old('magic_class') }}"> -->
                           <select class="form-control" name="cond_magic_card_class">
                               <option value="">魔法カード種類で検索</option>
@@ -45,11 +80,11 @@
 
                           </select>
                       </div>
-                  </div>
+                  <!--</div>
 
-                  <div class="form-group row">
-                      <label class="col-md-3">検索：罠カード種類</label>
-                      <div class="col-md-9">
+                  <div class="form-group row">-->
+                      <label class="col-md-2">検索：罠カード種類</label>
+                      <div class="col-md-3">
                       <!--    <input type="text" class="form-control" name="trap_class" value="{{ old('trap_class') }}"> -->
                           <select class="form-control" name="cond_trap_card_class">
                               <option value="">罠カード種類で検索</option>
@@ -62,8 +97,8 @@
                   </div>
 
                   <div class="form-group row">
-                      <label class="col-md-3">検索：属性</label>
-                      <div class="col-md-9">
+                      <label class="col-md-2">検索：属性</label>
+                      <div class="col-md-3">
                         <!--  <input type="text" class="form-control" name="property" value="{{ old('property') }}"> -->
                           <select class="form-control" name="cond_property">
                               <option value="">属性で検索</option>
@@ -77,11 +112,11 @@
 
                           </select>
                       </div>
-                  </div>
+                  <!--</div>
 
-                  <div class="form-group row">
-                      <label class="col-md-3">検索：種族</label>
-                      <div class="col-md-9">
+                  <div class="form-group row">-->
+                      <label class="col-md-2">検索：種族</label>
+                      <div class="col-md-3">
                       <!--    <input type="text" class="form-control" name="tribe" value="{{ old('tribe') }}"> -->
                           <select class="form-control" name="cond_tribe">
                               <option value="">種族で検索</option>
@@ -116,29 +151,128 @@
                   </div>
 
                   <div class="form-group row">
-                      <label class="col-md-3">検索：スケール</label>
-                      <div class="col-md-9">
-                    <!--      <input type="text" class="form-control" name="scale" value="{{ old('scale') }}"> -->
-                          <select class="form-control" name="cond_scale">
-                              <option value="">スケールで検索</option>
-                              <option value="zero">0</option>
-                              <option value="one">1</option>
-                              <option value="two">2</option>
-                              <option value="three">3</option>
-                              <option value="four">4</option>
-                              <option value="five">5</option>
-                              <option value="six">6</option>
-                              <option value="seven">7</option>
-                              <option value="eight">8</option>
-                              <option value="nine">9</option>
-                              <option value="ten">10</option>
-                              <option value="eleven">11</option>
-                              <option value="twelve">12</option>
-                              <option value="thirteen">13</option>
+                      <label class="col-md-2">検索：レベル/ランク/リンク</label>
+                      <div class="col-md-3">
+
+                          <select class="form-control" name="cond_level_rank_link_fr">
+                              <option value="">レベル/ランク/リンクで検索(以上)</option>
+                              <option value="zero" @if($cond_level_rank_link_fr == 'zero')selected @endif >0</option>
+                              <option value="one" @if($cond_level_rank_link_fr == 'one')selected @endif >1</option>
+                              <option value="two" @if($cond_level_rank_link_fr == 'two')selected @endif >2</option>
+                              <option value="three" @if($cond_level_rank_link_fr == 'three')selected @endif >3</option>
+                              <option value="four" @if($cond_level_rank_link_fr == 'four')selected @endif >4</option>
+                              <option value="five" @if($cond_level_rank_link_fr == 'five')selected @endif >5</option>
+                              <option value="six" @if($cond_level_rank_link_fr == 'six')selected @endif >6</option>
+                              <option value="seven" @if($cond_level_rank_link_fr == 'seven')selected @endif >7</option>
+                              <option value="eight" @if($cond_level_rank_link_fr == 'eight')selected @endif >8</option>
+                              <option value="nine" @if($cond_level_rank_link_fr == 'nine')selected @endif >9</option>
+                              <option value="ten" @if($cond_level_rank_link_fr == 'ten')selected @endif >10</option>
+                              <option value="eleven" @if($cond_level_rank_link_fr == 'eleven')selected @endif >11</option>
+                              <option value="twelve" @if($cond_level_rank_link_fr == 'twelve')selected @endif >12</option>
+                              <option value="thirteen" @if($cond_level_rank_link_fr == 'thirteen')selected @endif >13</option>
+
+                          </select>
+                      </div>
+                  <!--</div>
+
+                  <div class="form-group row">
+                      <label class="col-md-3">検索：レベル/ランク/リンク(以下)</label>-->
+                      <div class="col-md-3">
+
+                          <select class="form-control" name="cond_level_rank_link_to">
+                              <option value="">レベル/ランク/リンクで検索(以下)</option>
+                              <option value="zero" @if($cond_level_rank_link_to == 'zero')selected @endif >0</option>
+                              <option value="one" @if($cond_level_rank_link_to == 'one')selected @endif >1</option>
+                              <option value="two" @if($cond_level_rank_link_to == 'two')selected @endif >2</option>
+                              <option value="three" @if($cond_level_rank_link_to == 'three')selected @endif >3</option>
+                              <option value="four" @if($cond_level_rank_link_to == 'four')selected @endif >4</option>
+                              <option value="five" @if($cond_level_rank_link_to == 'five')selected @endif >5</option>
+                              <option value="six" @if($cond_level_rank_link_to == 'six')selected @endif >6</option>
+                              <option value="seven" @if($cond_level_rank_link_to == 'seven')selected @endif >7</option>
+                              <option value="eight" @if($cond_level_rank_link_to == 'eight')selected @endif >8</option>
+                              <option value="nine" @if($cond_level_rank_link_to == 'nine')selected @endif >9</option>
+                              <option value="ten" @if($cond_level_rank_link_to == 'ten')selected @endif >10</option>
+                              <option value="eleven" @if($cond_level_rank_link_to == 'eleven')selected @endif >11</option>
+                              <option value="twelve" @if($cond_level_rank_link_to == 'twelve')selected @endif >12</option>
+                              <option value="thirteen" @if($cond_level_rank_link_to == 'thirteen')selected @endif >13</option>
 
                           </select>
                       </div>
                   </div>
+
+
+                  <div class="form-group row">
+                      <label class="col-md-2">検索：スケール</label>
+                      <div class="col-md-3">
+                    <!--      <input type="text" class="form-control" name="scale" value="{{ old('scale') }}"> -->
+                          <select class="form-control" name="cond_scale_fr">
+                              <option value="">スケールで検索(以上)</option>
+                              <option value="zero" @if($cond_scale_fr == 'zero')selected @endif >0</option>
+                              <option value="one" @if($cond_scale_fr == 'one')selected @endif >1</option>
+                              <option value="two" @if($cond_scale_fr == 'two')selected @endif >2</option>
+                              <option value="three" @if($cond_scale_fr == 'three')selected @endif >3</option>
+                              <option value="four" @if($cond_scale_fr == 'four')selected @endif >4</option>
+                              <option value="five" @if($cond_scale_fr == 'five')selected @endif >5</option>
+                              <option value="six" @if($cond_scale_fr == 'six')selected @endif >6</option>
+                              <option value="seven" @if($cond_scale_fr == 'seven')selected @endif >7</option>
+                              <option value="eight" @if($cond_scale_fr == 'eight')selected @endif >8</option>
+                              <option value="nine" @if($cond_scale_fr == 'nine')selected @endif >9</option>
+                              <option value="ten" @if($cond_scale_fr == 'ten')selected @endif >10</option>
+                              <option value="eleven" @if($cond_scale_fr == 'eleven')selected @endif >11</option>
+                              <option value="twelve" @if($cond_scale_fr == 'twelve')selected @endif >12</option>
+                              <option value="thirteen" @if($cond_scale_fr == 'thirteen')selected @endif >13</option>
+
+                          </select>
+                      </div>
+                  <!--</div>
+
+                  <div class="form-group row">
+                      <label class="col-md-3">検索：スケール(以下)</label>-->
+                      <div class="col-md-3">
+                    <!--      <input type="text" class="form-control" name="scale" value="{{ old('scale') }}"> -->
+                          <select class="form-control" name="cond_scale_to">
+                              <option value="">スケールで検索(以下)</option>
+                              <option value="zero" @if($cond_scale_to == 'zero')selected @endif >0</option>
+                              <option value="one" @if($cond_scale_to == 'one')selected @endif >1</option>
+                              <option value="two" @if($cond_scale_to == 'two')selected @endif >2</option>
+                              <option value="three" @if($cond_scale_to == 'three')selected @endif >3</option>
+                              <option value="four" @if($cond_scale_to == 'four')selected @endif >4</option>
+                              <option value="five" @if($cond_scale_to == 'five')selected @endif >5</option>
+                              <option value="six" @if($cond_scale_to == 'six')selected @endif >6</option>
+                              <option value="seven" @if($cond_scale_to == 'seven')selected @endif >7</option>
+                              <option value="eight" @if($cond_scale_to == 'eight')selected @endif >8</option>
+                              <option value="nine" @if($cond_scale_to == 'nine')selected @endif >9</option>
+                              <option value="ten" @if($cond_scale_to == 'ten')selected @endif >10</option>
+                              <option value="eleven" @if($cond_scale_to == 'eleven')selected @endif >11</option>
+                              <option value="twelve" @if($cond_scale_to == 'twelve')selected @endif >12</option>
+                              <option value="thirteen" @if($cond_scale_to == 'thirteen')selected @endif >13</option>
+
+                          </select>
+                      </div>
+                  </div>
+
+                  <div class="form-group row">
+                      <label class="col-md-2">検索：攻撃力(以上)</label>
+                      <div class="col-md-3">
+                         <input type="text" class="form-control" name="cond_attack_fr" value="{{ $cond_attack_fr }}">
+                      </div>
+                      <label class="col-md-2">検索：攻撃力(以下)</label>
+                      <div class="col-md-3">
+                         <input type="text" class="form-control" name="cond_attack_to" value="{{ $cond_attack_to }}">
+                      </div>
+                  </div>
+
+                  <div class="form-group row">
+                      <label class="col-md-2">検索：守備力(以上)</label>
+                      <div class="col-md-3">
+                         <input type="text" class="form-control" name="cond_defense_fr" value="{{ $cond_defense_fr }}">
+                      </div>
+                      <label class="col-md-2">検索：守備力(以下)</label>
+                      <div class="col-md-3">
+                         <input type="text" class="form-control" name="cond_defense_to" value="{{ $cond_defense_to }}">
+                      </div>
+                  </div>
+
 
                   <div class="form-group row">
                       <div class="col-md-2">
@@ -146,7 +280,7 @@
                           <input type="submit" class="btn btn-primary" value="検索">
                       </div>
                       <div>
-                          <input type="reset" class="btn btn-primary" name="reset" value="検索条件のリセット">
+                          <input type="button" class="btn btn-primary" value="リセット" onClick="clearFormAll(); "/>
                       </div>
                   </div>
                 </form>
