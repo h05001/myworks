@@ -4,7 +4,11 @@ function clearFormAll() {
         clearForm(document.forms[i]);
     }
 }
-
+function clearForm(form) {
+    for(var i=0; i<form.elements.length; ++i) {
+        clearElement(form.elements[i]);
+    }
+}
 function clearElement(element) {
     switch(element.type) {
         case "hidden":
@@ -21,6 +25,8 @@ function clearElement(element) {
             element.value = "";
             return;
         case "checkbox":
+            element.checked = false;
+            return;
         case "radio":
             element.checked = false;
             return;
@@ -95,7 +101,63 @@ function clearElement(element) {
                           </select>
                       </div>
                   </div>
+<!--
+                  <div class="form-group row">
 
+                      <div class="col-md-3">
+                          <label for="monster_card_class">検索：モンスターカード種類</label>
+                      </div>
+                      <div class="col-md-9 form-inline">
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="0" >通常</label>
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="1" >効果</label>
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="2" >儀式</label>
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="3" >融合</label>
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="4" >シンクロ</label>
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="5" >エクシーズ</label>
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="6" >トゥーン</label>
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="7" >スピリット</label>
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="8" >ユニオン</label>
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]"  value="9" >デュアル</label>
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]"  value="10" >チューナー</label>
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]"  value="11" >リバース</label>
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]"  value="12" >ペンデュラム</label>
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="13" >特殊召喚</label>
+
+                          <label class="checkbox-inline" >
+                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="14" >リンク</label>
+
+                          </div>
+
+                    </div>
+-->
                   <div class="form-group row">
                       <label class="col-md-2">検索：属性</label>
                       <div class="col-md-3">
@@ -156,20 +218,10 @@ function clearElement(element) {
 
                           <select class="form-control" name="cond_level_rank_link_fr">
                               <option value="">レベル/ランク/リンクで検索(以上)</option>
-                              <option value="zero" @if($cond_level_rank_link_fr == 'zero')selected @endif >0</option>
-                              <option value="one" @if($cond_level_rank_link_fr == 'one')selected @endif >1</option>
-                              <option value="two" @if($cond_level_rank_link_fr == 'two')selected @endif >2</option>
-                              <option value="three" @if($cond_level_rank_link_fr == 'three')selected @endif >3</option>
-                              <option value="four" @if($cond_level_rank_link_fr == 'four')selected @endif >4</option>
-                              <option value="five" @if($cond_level_rank_link_fr == 'five')selected @endif >5</option>
-                              <option value="six" @if($cond_level_rank_link_fr == 'six')selected @endif >6</option>
-                              <option value="seven" @if($cond_level_rank_link_fr == 'seven')selected @endif >7</option>
-                              <option value="eight" @if($cond_level_rank_link_fr == 'eight')selected @endif >8</option>
-                              <option value="nine" @if($cond_level_rank_link_fr == 'nine')selected @endif >9</option>
-                              <option value="ten" @if($cond_level_rank_link_fr == 'ten')selected @endif >10</option>
-                              <option value="eleven" @if($cond_level_rank_link_fr == 'eleven')selected @endif >11</option>
-                              <option value="twelve" @if($cond_level_rank_link_fr == 'twelve')selected @endif >12</option>
-                              <option value="thirteen" @if($cond_level_rank_link_fr == 'thirteen')selected @endif >13</option>
+                              @for($i = 0 ; $i <= 13 ; $i++)
+                                  <option value={{$i}} @if($cond_level_rank_link_fr ===(string)$i)selected @endif >{{$i}}</option>
+                              @endfor
+
 
                           </select>
                       </div>
@@ -181,20 +233,9 @@ function clearElement(element) {
 
                           <select class="form-control" name="cond_level_rank_link_to">
                               <option value="">レベル/ランク/リンクで検索(以下)</option>
-                              <option value="zero" @if($cond_level_rank_link_to == 'zero')selected @endif >0</option>
-                              <option value="one" @if($cond_level_rank_link_to == 'one')selected @endif >1</option>
-                              <option value="two" @if($cond_level_rank_link_to == 'two')selected @endif >2</option>
-                              <option value="three" @if($cond_level_rank_link_to == 'three')selected @endif >3</option>
-                              <option value="four" @if($cond_level_rank_link_to == 'four')selected @endif >4</option>
-                              <option value="five" @if($cond_level_rank_link_to == 'five')selected @endif >5</option>
-                              <option value="six" @if($cond_level_rank_link_to == 'six')selected @endif >6</option>
-                              <option value="seven" @if($cond_level_rank_link_to == 'seven')selected @endif >7</option>
-                              <option value="eight" @if($cond_level_rank_link_to == 'eight')selected @endif >8</option>
-                              <option value="nine" @if($cond_level_rank_link_to == 'nine')selected @endif >9</option>
-                              <option value="ten" @if($cond_level_rank_link_to == 'ten')selected @endif >10</option>
-                              <option value="eleven" @if($cond_level_rank_link_to == 'eleven')selected @endif >11</option>
-                              <option value="twelve" @if($cond_level_rank_link_to == 'twelve')selected @endif >12</option>
-                              <option value="thirteen" @if($cond_level_rank_link_to == 'thirteen')selected @endif >13</option>
+                              @for($i = 0 ; $i <= 13 ; $i++)
+                                  <option value={{$i}} @if($cond_level_rank_link_to ===(string)$i)selected @endif >{{$i}}</option>
+                              @endfor
 
                           </select>
                       </div>
@@ -207,20 +248,9 @@ function clearElement(element) {
                     <!--      <input type="text" class="form-control" name="scale" value="{{ old('scale') }}"> -->
                           <select class="form-control" name="cond_scale_fr">
                               <option value="">スケールで検索(以上)</option>
-                              <option value="zero" @if($cond_scale_fr == 'zero')selected @endif >0</option>
-                              <option value="one" @if($cond_scale_fr == 'one')selected @endif >1</option>
-                              <option value="two" @if($cond_scale_fr == 'two')selected @endif >2</option>
-                              <option value="three" @if($cond_scale_fr == 'three')selected @endif >3</option>
-                              <option value="four" @if($cond_scale_fr == 'four')selected @endif >4</option>
-                              <option value="five" @if($cond_scale_fr == 'five')selected @endif >5</option>
-                              <option value="six" @if($cond_scale_fr == 'six')selected @endif >6</option>
-                              <option value="seven" @if($cond_scale_fr == 'seven')selected @endif >7</option>
-                              <option value="eight" @if($cond_scale_fr == 'eight')selected @endif >8</option>
-                              <option value="nine" @if($cond_scale_fr == 'nine')selected @endif >9</option>
-                              <option value="ten" @if($cond_scale_fr == 'ten')selected @endif >10</option>
-                              <option value="eleven" @if($cond_scale_fr == 'eleven')selected @endif >11</option>
-                              <option value="twelve" @if($cond_scale_fr == 'twelve')selected @endif >12</option>
-                              <option value="thirteen" @if($cond_scale_fr == 'thirteen')selected @endif >13</option>
+                              @for($i = 0 ; $i <= 13 ; $i++)
+                                  <option value={{$i}} @if($cond_scale_fr ===(string)$i)selected @endif >{{$i}}</option>
+                              @endfor
 
                           </select>
                       </div>
@@ -232,21 +262,9 @@ function clearElement(element) {
                     <!--      <input type="text" class="form-control" name="scale" value="{{ old('scale') }}"> -->
                           <select class="form-control" name="cond_scale_to">
                               <option value="">スケールで検索(以下)</option>
-                              <option value="zero" @if($cond_scale_to == 'zero')selected @endif >0</option>
-                              <option value="one" @if($cond_scale_to == 'one')selected @endif >1</option>
-                              <option value="two" @if($cond_scale_to == 'two')selected @endif >2</option>
-                              <option value="three" @if($cond_scale_to == 'three')selected @endif >3</option>
-                              <option value="four" @if($cond_scale_to == 'four')selected @endif >4</option>
-                              <option value="five" @if($cond_scale_to == 'five')selected @endif >5</option>
-                              <option value="six" @if($cond_scale_to == 'six')selected @endif >6</option>
-                              <option value="seven" @if($cond_scale_to == 'seven')selected @endif >7</option>
-                              <option value="eight" @if($cond_scale_to == 'eight')selected @endif >8</option>
-                              <option value="nine" @if($cond_scale_to == 'nine')selected @endif >9</option>
-                              <option value="ten" @if($cond_scale_to == 'ten')selected @endif >10</option>
-                              <option value="eleven" @if($cond_scale_to == 'eleven')selected @endif >11</option>
-                              <option value="twelve" @if($cond_scale_to == 'twelve')selected @endif >12</option>
-                              <option value="thirteen" @if($cond_scale_to == 'thirteen')selected @endif >13</option>
-
+                              @for($i = 0 ; $i <= 13 ; $i++)
+                                  <option value={{$i}} @if($cond_scale_to ===(string)$i)selected @endif >{{$i}}</option>
+                              @endfor
                           </select>
                       </div>
                   </div>
@@ -273,6 +291,44 @@ function clearElement(element) {
                       </div>
                   </div>
 
+                  <div id="link_marker">
+                      <div class="form-group row">
+                          <label class="col-md-3" for="link_marker">検索:マーカーの向き</label>
+                            <div class="col-md-1">
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="1">
+                                  <label class="form-check-label" for="1">上</label>
+                            </div>
+                            <div class="col-md-1">
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="2">
+                                  <label class="form-check-label" for="2">右上</label>
+                            </div>
+                            <div class="col-md-1">
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="3">
+                                  <label class="form-check-label" for="3">右</label>
+                            </div>
+                            <div class="col-md-1">
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="4">
+                                  <label class="form-check-label" for="4">右下</label>
+                            </div>
+
+                            <div class="col-md-1">
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="5">
+                                  <label class="form-check-label" for="5">下</label>
+                            </div>
+                            <div class="col-md-1">
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="6">
+                                  <label class="form-check-label" for="6">左下</label>
+                            </div>
+                            <div class="col-md-1">
+                              <input class="form-check-input" type="checkbox" name="cond_link_marker[]" class="form-control"  value="7">
+                                  <label class="form-check-label" for="7">左</label>
+                            </div>
+                            <div class="col-md-1">
+                              <input class="form-check-input" type="checkbox" name="cond_link_marker[]" class="form-control"  value="8">
+                                  <label class="form-check-label" for="8">左上</label>
+                            </div>
+                        </div>
+                    </div>
 
                   <div class="form-group row">
                       <div class="col-md-2">

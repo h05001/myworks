@@ -73,12 +73,12 @@ function entryChangeClass(){
 
 
 function setLevelSelectBox(){
-    let month = document.getElementById('level_rank_link');
+    let lrl = document.getElementById('level_rank_link');
 
 
-  	while(month.lastChild)
+  	while(lrl.lastChild)
   	{
-  		month.removeChild(month.lastChild);
+  		lrl.removeChild(lrl.lastChild);
   	}
 
     var targetArray = new Array();
@@ -110,15 +110,45 @@ function setLevelSelectBox(){
 
 
     for(let i = 0; i < targetArray.length; i++){
-      let option = document.createElement('option');
-      if(i != 0){
-          option.setAttribute('value', targetArray[i]);
-      }
-      option.innerHTML = targetArray[i];
-      month.appendChild(option);
+        let option = document.createElement('option');
+        if(i != 0){
+            option.setAttribute('value', targetArray[i]);
+        }
+        option.innerHTML = targetArray[i];
+        lrl.appendChild(option);
     }
 }
 
+function scaleSelectBox(){
+    let s = document.getElementById('scale');
+    var scaleArray = new Array("スケールを選択",0,1,2,3,4,5,6,7,8,9,10,11,12,13);
+/*
+    var scaleArray = new Array();
+
+    var checkBoxs = document.getElementsByClassName('changeCheck');
+
+    // 配列へ変換
+    var checkBoxsArr = Array.prototype.slice.call(checkBoxs);
+
+    // チェックボックス文繰り返す
+    for ( i = 0; i < checkBoxsArr.length ; i++) {
+
+        if(checkBoxsArr[i].checked == '12'){
+            scaleArray = new Array("スケールを選択",0,1,2,3,4,5,6,7,8,9,10,11,12,13);
+        }else{
+        scaleArray = scale.selectedIndex = 0;
+        }
+    }*/
+    for(let i = 0; i < scaleArray.length; i++){
+        let option = document.createElement('option');
+
+        if(i != 0){
+            option.setAttribute('value', scaleArray[i]);
+        }
+        option.innerHTML = scaleArray[i];
+        scale.appendChild(option);
+    }
+}
 
 //オンロードさせ、リロード時に選択を保持
 window.onload = entryChangeClass;

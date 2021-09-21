@@ -128,7 +128,7 @@ class CardDetailController extends Controller
 
   public function index(Request $request)
   {
-
+//dd($request);
 
       $query = CardDetail::query();
       $query -> leftjoin('monster_card_details', 'card_details.card_master_id', '=', 'monster_card_details.card_master_id')
@@ -142,10 +142,13 @@ class CardDetailController extends Controller
       $cond_magic_card_class = $request->cond_magic_card_class;
       $cond_trap_card_class = $request->cond_trap_card_class;
 
+      //$cond_class_id = $request->cond_class_id;
+
       $cond_property = $request->cond_property;
       $cond_tribe = $request->cond_tribe;
 
       $cond_level_rank_link_fr = $request->cond_level_rank_link_fr;
+      //dd($cond_level_rank_link_fr);
       $cond_level_rank_link_to = $request->cond_level_rank_link_to;
       $cond_scale_fr = $request->cond_scale_fr;
       $cond_scale_to = $request->cond_scale_to;
@@ -153,8 +156,13 @@ class CardDetailController extends Controller
       $cond_attack_to = $request->cond_attack_to;
       $cond_defense_fr = $request->cond_defense_fr;
       $cond_defense_to = $request->cond_defense_to;
-
-
+      //$cond_link_marker = $request->cond_link_marker;
+      $cond_link_marker = implode($request->cond_link_marker);
+/*
+      if($request->has("link_marker")){
+          $cond_link_marker = implode($request->cond_link_marker);
+      }
+*/
       if ($cond_card_name != '') {
           // 検索されたら検索結果を取得する
           $query -> where('card_name', 'LIKE', "%{$cond_card_name}%");
@@ -173,7 +181,12 @@ class CardDetailController extends Controller
           // 検索されたら検索結果を取得する
           $query -> where('trap_card_class', $cond_trap_card_class);
       }
-
+/*
+      if ($cond_class_id != '') {
+          // 検索されたら検索結果を取得する
+          $query -> where('class_id', 'LIKE', "%{$cond_class_id}%");
+      }
+*/
       if ($cond_property != '') {
           // 検索されたら検索結果を取得する
           $query -> where('property', $cond_property);
@@ -224,6 +237,12 @@ class CardDetailController extends Controller
           $query -> where('defense', '<=' ,$cond_defense_to);
       }
 
+      if ($cond_link_marker != '') {
+          // 検索されたら検索結果を取得する
+          //$query -> where('link_marker', $cond_link_marker);
+          $query -> where('link_marker', 'LIKE', "%{$cond_link_marker}%");
+      }
+
 //dd($query->toSql());
       $posts = $query->get();
 
@@ -232,6 +251,7 @@ class CardDetailController extends Controller
                                              'cond_card_class' => $cond_card_class,
                                              'cond_magic_card_class' => $cond_magic_card_class,
                                              'cond_trap_card_class' => $cond_trap_card_class,
+                                             //'cond_class_id' => $cond_class_id,
                                              'cond_property' => $cond_property,
                                              'cond_tribe' => $cond_tribe,
                                              'cond_level_rank_link_fr' => $cond_level_rank_link_fr,
@@ -242,6 +262,7 @@ class CardDetailController extends Controller
                                              'cond_attack_to' => $cond_attack_to,
                                              'cond_defense_fr' => $cond_defense_fr,
                                              'cond_defense_to' => $cond_defense_to,
+                                             'cond_link_marker' => $cond_link_marker,
                                             ]);
 
       }
