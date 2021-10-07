@@ -142,7 +142,7 @@ class CardDetailController extends Controller
       $cond_magic_card_class = $request->cond_magic_card_class;
       $cond_trap_card_class = $request->cond_trap_card_class;
 
-      //$cond_class_id = $request->cond_class_id;
+      $cond_class_id = $request->cond_class_id;
 
       $cond_property = $request->cond_property;
       $cond_tribe = $request->cond_tribe;
@@ -157,12 +157,14 @@ class CardDetailController extends Controller
       $cond_defense_fr = $request->cond_defense_fr;
       $cond_defense_to = $request->cond_defense_to;
       //$cond_link_marker = $request->cond_link_marker;
-      $cond_link_marker = implode($request->cond_link_marker);
-/*
-      if($request->has("link_marker")){
+      //$cond_link_marker = implode($request->cond_link_marker);
+
+      $cond_link_marker = '';
+      if($request->has("cond_link_marker")){
           $cond_link_marker = implode($request->cond_link_marker);
       }
-*/
+
+
       if ($cond_card_name != '') {
           // 検索されたら検索結果を取得する
           $query -> where('card_name', 'LIKE', "%{$cond_card_name}%");
@@ -181,12 +183,33 @@ class CardDetailController extends Controller
           // 検索されたら検索結果を取得する
           $query -> where('trap_card_class', $cond_trap_card_class);
       }
-/*
+
       if ($cond_class_id != '') {
+//dd($cond_class_id);
+dd($request);
           // 検索されたら検索結果を取得する
-          $query -> where('class_id', 'LIKE', "%{$cond_class_id}%");
+          //$query -> where('class_id', 'LIKE', "%{$cond_class_id}%");
+          //-> where('class_id', 'LIKE', '%{$cond_class_id}%')
+          $query -> whereExists(function ($query1) {
+                $query1 -> select('monster_card_classes.card_master_id')
+                        -> from('monster_card_classes')
+                        -> whereColumn('card_details.card_master_id','=','monster_card_classes.card_master_id')
+                        -> where(function($query2) {
+                            $classIdArr = $request->cond_class_id;
+                            for ( $i = 0; $i < $classIdArr.length ; $i++){
+                                $query2 -> where('class_id', $cond_class_id[$i]);
+                            }
+
+                          //$query2 -> where('class_id', '=', 1 )
+                          //        -> orWhere('class_id', '=', 10 );
+                        })
+
+                        -> groupBy('monster_card_classes.card_master_id')
+                        //-> having('COUNT(`monster_card_classes`.`card_master_id`)' , '>=', 2);
+                        -> havingRaw("COUNT( `monster_card_classes`.`card_master_id`) >= ".'count($classIdArr)');
+                });
       }
-*/
+
       if ($cond_property != '') {
           // 検索されたら検索結果を取得する
           $query -> where('property', $cond_property);
@@ -243,9 +266,9 @@ class CardDetailController extends Controller
           $query -> where('link_marker', 'LIKE', "%{$cond_link_marker}%");
       }
 
-//dd($query->toSql());
+//dd($query->getBindings());
       $posts = $query->get();
-
+//dd($posts);
       return view('admin.carddetail.index', ['posts' => $posts,
                                              'cond_card_name' => $cond_card_name,
                                              'cond_card_class' => $cond_card_class,

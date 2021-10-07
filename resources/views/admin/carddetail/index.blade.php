@@ -101,7 +101,7 @@ function clearElement(element) {
                           </select>
                       </div>
                   </div>
-<!--
+
                   <div class="form-group row">
 
                       <div class="col-md-3">
@@ -110,54 +110,54 @@ function clearElement(element) {
                       <div class="col-md-9 form-inline">
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="0" >通常</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="0" >通常</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="1" >効果</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="1" >効果</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="2" >儀式</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="2" >儀式</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="3" >融合</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="3" >融合</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="4" >シンクロ</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="4" >シンクロ</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="5" >エクシーズ</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="5" >エクシーズ</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="6" >トゥーン</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="6" >トゥーン</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="7" >スピリット</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="7" >スピリット</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="8" >ユニオン</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="8" >ユニオン</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]"  value="9" >デュアル</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]"  value="9" >デュアル</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]"  value="10" >チューナー</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]"  value="10" >チューナー</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]"  value="11" >リバース</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]"  value="11" >リバース</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]"  value="12" >ペンデュラム</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]"  value="12" >ペンデュラム</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="13" >特殊召喚</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="13" >特殊召喚</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="class_id[]" value="14" >リンク</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="14" >リンク</label>
 
                           </div>
 
                     </div>
--->
+
                   <div class="form-group row">
                       <label class="col-md-2">検索：属性</label>
                       <div class="col-md-3">
@@ -295,40 +295,43 @@ function clearElement(element) {
                       <div class="form-group row">
                           <label class="col-md-3" for="link_marker">検索:マーカーの向き</label>
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="1">
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="1" @if(preg_match("/1/", $cond_link_marker)) checked @endif>
                                   <label class="form-check-label" for="1">上</label>
                             </div>
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="2">
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="2" @if(preg_match("/2/", $cond_link_marker)) checked @endif>
                                   <label class="form-check-label" for="2">右上</label>
                             </div>
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="3">
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="3" @if(preg_match("/3/", $cond_link_marker)) checked @endif>
                                   <label class="form-check-label" for="3">右</label>
                             </div>
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="4">
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="4" @if(preg_match("/4/", $cond_link_marker)) checked @endif>
                                   <label class="form-check-label" for="4">右下</label>
                             </div>
 
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="5">
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="5" @if(preg_match("/5/", $cond_link_marker)) checked @endif>
                                   <label class="form-check-label" for="5">下</label>
                             </div>
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="6">
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="6" @if(preg_match("/6/", $cond_link_marker)) checked @endif>
                                   <label class="form-check-label" for="6">左下</label>
                             </div>
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox" name="cond_link_marker[]" class="form-control"  value="7">
+                              <input class="form-check-input" type="checkbox" name="cond_link_marker[]" class="form-control"  value="7" @if(preg_match("/7/", $cond_link_marker)) checked @endif>
                                   <label class="form-check-label" for="7">左</label>
                             </div>
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox" name="cond_link_marker[]" class="form-control"  value="8">
+                              <input class="form-check-input" type="checkbox" name="cond_link_marker[]" class="form-control"  value="8" @if(preg_match("/8/", $cond_link_marker)) checked @endif>
                                   <label class="form-check-label" for="8">左上</label>
                             </div>
                         </div>
                     </div>
+
+
+
 
                   <div class="form-group row">
                       <div class="col-md-2">
