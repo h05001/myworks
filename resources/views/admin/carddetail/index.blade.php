@@ -110,49 +110,49 @@ function clearElement(element) {
                       <div class="col-md-9 form-inline">
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="0" >通常</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="0" @if(in_array('0', $cond_class_id, true)) checked @endif>通常</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="1" >効果</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="1" @if(in_array('1', $cond_class_id, true)) checked @endif>効果</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="2" >儀式</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="2" @if(in_array('2', $cond_class_id, true)) checked @endif>儀式</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="3" >融合</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="3" @if(in_array('3', $cond_class_id, true)) checked @endif>融合</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="4" >シンクロ</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="4" @if(in_array('4', $cond_class_id, true)) checked @endif>シンクロ</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="5" >エクシーズ</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="5" @if(in_array('5', $cond_class_id, true)) checked @endif>エクシーズ</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="6" >トゥーン</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="6" @if(in_array('6', $cond_class_id, true)) checked @endif>トゥーン</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="7" >スピリット</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="7" @if(in_array('7', $cond_class_id, true)) checked @endif>スピリット</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="8" >ユニオン</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="8" @if(in_array('8', $cond_class_id, true)) checked @endif>ユニオン</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]"  value="9" >デュアル</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]"  value="9" @if(in_array('9', $cond_class_id, true)) checked @endif>デュアル</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]"  value="10" >チューナー</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]"  value="10" @if(in_array('10', $cond_class_id, true)) checked @endif>チューナー</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]"  value="11" >リバース</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]"  value="11" @if(in_array('11', $cond_class_id, true)) checked @endif>リバース</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]"  value="12" >ペンデュラム</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]"  value="12" @if(in_array('12', $cond_class_id, true)) checked @endif>ペンデュラム</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="13" >特殊召喚</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="13" @if(in_array('13', $cond_class_id, true)) checked @endif>特殊召喚</label>
 
                           <label class="checkbox-inline" >
-                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="14" >リンク</label>
+                              <input class="form-check-input changeCheck" type="checkbox"  name="cond_class_id[]" value="14" @if(in_array('14', $cond_class_id, true)) checked @endif>リンク</label>
 
                           </div>
 
@@ -295,42 +295,47 @@ function clearElement(element) {
                       <div class="form-group row">
                           <label class="col-md-3" for="link_marker">検索:マーカーの向き</label>
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="1" @if(preg_match("/1/", $cond_link_marker)) checked @endif>
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="1" @if(in_array('1', $cond_link_marker, true)) checked @endif>
                                   <label class="form-check-label" for="1">上</label>
                             </div>
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="2" @if(preg_match("/2/", $cond_link_marker)) checked @endif>
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="2" @if(in_array('2', $cond_link_marker, true)) checked @endif>
                                   <label class="form-check-label" for="2">右上</label>
                             </div>
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="3" @if(preg_match("/3/", $cond_link_marker)) checked @endif>
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="3" @if(in_array('3', $cond_link_marker, true)) checked @endif>
                                   <label class="form-check-label" for="3">右</label>
                             </div>
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="4" @if(preg_match("/4/", $cond_link_marker)) checked @endif>
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="4" @if(in_array('4', $cond_link_marker, true)) checked @endif>
                                   <label class="form-check-label" for="4">右下</label>
                             </div>
 
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="5" @if(preg_match("/5/", $cond_link_marker)) checked @endif>
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="5" @if(in_array('5', $cond_link_marker, true)) checked @endif>
                                   <label class="form-check-label" for="5">下</label>
                             </div>
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="6" @if(preg_match("/6/", $cond_link_marker)) checked @endif>
+                              <input class="form-check-input" type="checkbox"  name="cond_link_marker[]" class="form-control"  value="6" @if(in_array('6', $cond_link_marker, true)) checked @endif>
                                   <label class="form-check-label" for="6">左下</label>
                             </div>
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox" name="cond_link_marker[]" class="form-control"  value="7" @if(preg_match("/7/", $cond_link_marker)) checked @endif>
+                              <input class="form-check-input" type="checkbox" name="cond_link_marker[]" class="form-control"  value="7" @if(in_array('7', $cond_link_marker, true)) checked @endif>
                                   <label class="form-check-label" for="7">左</label>
                             </div>
                             <div class="col-md-1">
-                              <input class="form-check-input" type="checkbox" name="cond_link_marker[]" class="form-control"  value="8" @if(preg_match("/8/", $cond_link_marker)) checked @endif>
+                              <input class="form-check-input" type="checkbox" name="cond_link_marker[]" class="form-control"  value="8" @if(in_array('8', $cond_link_marker, true)) checked @endif>
                                   <label class="form-check-label" for="8">左上</label>
                             </div>
                         </div>
                     </div>
 
-
+                    <div class="form-group row">
+                        <label class="col-md-2">検索：キーワード</label>
+                        <div class="col-md-9">
+                           <input type="text" class="form-control" name="cond_key_word" value="{{ $cond_key_word }}">
+                        </div>
+                    </div>
 
 
                   <div class="form-group row">
@@ -367,7 +372,7 @@ function clearElement(element) {
                         <tbody>
                             @foreach($posts as $carddetail)
                                 <tr>
-                                    <th>{{ $carddetail->card_master_id }}</th>
+                                    <th>{{ $carddetail->id }}</th>
                                     <td>{{ str_limit($carddetail->card_name, 50) }}</td>
                                     <td>{{ str_limit($carddetail->ruby, 50) }}</td>
                                     <td>{{ str_limit($carddetail->card_class, 50) }}</td>
@@ -376,6 +381,9 @@ function clearElement(element) {
 
 
                                     <td>
+                                      <div>
+                                          <a href="{{ action('Admin\CardDetailController@detail', ['id' => $carddetail->id]) }}">詳細</a>
+                                      </div>
                                       <div>
                                           <a href="{{ action('Admin\CardDetailController@edit', ['id' => $carddetail->id]) }}">編集</a>
                                       </div>

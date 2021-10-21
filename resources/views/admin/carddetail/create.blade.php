@@ -267,8 +267,8 @@ function changeDisabled(value,checked){
 }
 </script>
 
-{{-- admin.blade.phpの@yield('title')に'ニュースの新規作成'を埋め込む --}}
-@section('title', 'カード詳細情報')
+
+@section('title', 'カード詳細情報の登録')
 
 {{-- admin.blade.phpの@yield('content')に以下のタグを埋め込む --}}
 @section('content')

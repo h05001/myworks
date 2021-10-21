@@ -131,11 +131,17 @@ class CardDetailController extends Controller
 //dd($request);
 
       $query = CardDetail::query();
-      $query -> leftjoin('monster_card_details', 'card_details.card_master_id', '=', 'monster_card_details.card_master_id')
-
+      $query -> select('card_details.card_master_id as id','card_details.card_name','card_details.ruby','card_details.card_class','card_details.card_text')
+             //-> select('card_details.card_name')
+             //-> select('card_details.card_class')
+             //-> select('card_details.card_text')
+             -> leftjoin('monster_card_details', 'card_details.card_master_id', '=', 'monster_card_details.card_master_id')
              -> leftjoin('magic_card_details', 'card_details.card_master_id', '=', 'magic_card_details.card_master_id')
              -> leftjoin('trap_card_details', 'card_details.card_master_id', '=', 'trap_card_details.card_master_id');
 
+             //-> leftjoin('monster_card_details', 'card_details.card_master_id', '=', 'monster_card_details.card_master_id')
+             //-> leftjoin('magic_card_details', 'card_details.card_master_id', '=', 'magic_card_details.card_master_id')
+             //-> leftjoin('trap_card_details', 'card_details.card_master_id', '=', 'trap_card_details.card_master_id');
 
       $cond_card_name = $request->cond_card_name;
       $cond_card_class = $request->cond_card_class;
@@ -156,14 +162,14 @@ class CardDetailController extends Controller
       $cond_attack_to = $request->cond_attack_to;
       $cond_defense_fr = $request->cond_defense_fr;
       $cond_defense_to = $request->cond_defense_to;
-      //$cond_link_marker = $request->cond_link_marker;
-      //$cond_link_marker = implode($request->cond_link_marker);
-
+      $cond_link_marker = $request->cond_link_marker;
+      $cond_key_word = $request->cond_key_word;
+/*
       $cond_link_marker = '';
       if($request->has("cond_link_marker")){
           $cond_link_marker = implode($request->cond_link_marker);
       }
-
+*/
 
       if ($cond_card_name != '') {
           // 検索されたら検索結果を取得する
@@ -186,18 +192,18 @@ class CardDetailController extends Controller
 
       if ($cond_class_id != '') {
 //dd($cond_class_id);
-dd($request);
+//dd($request);
           // 検索されたら検索結果を取得する
           //$query -> where('class_id', 'LIKE', "%{$cond_class_id}%");
           //-> where('class_id', 'LIKE', '%{$cond_class_id}%')
-          $query -> whereExists(function ($query1) {
+          $query -> whereExists(function ($query1) use ($cond_class_id){
                 $query1 -> select('monster_card_classes.card_master_id')
                         -> from('monster_card_classes')
                         -> whereColumn('card_details.card_master_id','=','monster_card_classes.card_master_id')
-                        -> where(function($query2) {
-                            $classIdArr = $request->cond_class_id;
-                            for ( $i = 0; $i < $classIdArr.length ; $i++){
-                                $query2 -> where('class_id', $cond_class_id[$i]);
+                        -> where(function($query2) use ($cond_class_id){
+
+                            foreach ( $cond_class_id as $classId){
+                                $query2 -> orWhere('class_id', $classId);
                             }
 
                           //$query2 -> where('class_id', '=', 1 )
@@ -206,8 +212,10 @@ dd($request);
 
                         -> groupBy('monster_card_classes.card_master_id')
                         //-> having('COUNT(`monster_card_classes`.`card_master_id`)' , '>=', 2);
-                        -> havingRaw("COUNT( `monster_card_classes`.`card_master_id`) >= ".'count($classIdArr)');
+                        -> havingRaw("COUNT( `monster_card_classes`.`card_master_id`) >= ".count($cond_class_id));
                 });
+      }else{
+          $cond_class_id = array();
       }
 
       if ($cond_property != '') {
@@ -262,19 +270,33 @@ dd($request);
 
       if ($cond_link_marker != '') {
           // 検索されたら検索結果を取得する
-          //$query -> where('link_marker', $cond_link_marker);
-          $query -> where('link_marker', 'LIKE', "%{$cond_link_marker}%");
+          foreach ($cond_link_marker as $link_markers) {
+              $query -> where('link_marker', 'LIKE', "%{$link_markers}%");
+          }
+
+          //$query -> where('link_marker', 'LIKE', "%{$cond_link_marker}%");
+      }else{
+          $cond_link_marker = array();
       }
 
+      if ($cond_key_word != '') {
+          // 検索されたら検索結果を取得する
+          $query -> orWhere('card_name', 'LIKE', "%{$cond_key_word}%")
+                 -> orWhere('ruby', 'LIKE', "%{$cond_key_word}%")
+                 -> orWhere('card_text', 'LIKE', "%{$cond_key_word}%");
+      }
+//dd($cond_link_marker);
 //dd($query->getBindings());
-      $posts = $query->get();
+      $posts = $query //-> select('card_master_id as id')
+                      //-> from('card_details')
+                      -> get();
 //dd($posts);
       return view('admin.carddetail.index', ['posts' => $posts,
                                              'cond_card_name' => $cond_card_name,
                                              'cond_card_class' => $cond_card_class,
                                              'cond_magic_card_class' => $cond_magic_card_class,
                                              'cond_trap_card_class' => $cond_trap_card_class,
-                                             //'cond_class_id' => $cond_class_id,
+                                             'cond_class_id' => $cond_class_id,
                                              'cond_property' => $cond_property,
                                              'cond_tribe' => $cond_tribe,
                                              'cond_level_rank_link_fr' => $cond_level_rank_link_fr,
@@ -286,7 +308,16 @@ dd($request);
                                              'cond_defense_fr' => $cond_defense_fr,
                                              'cond_defense_to' => $cond_defense_to,
                                              'cond_link_marker' => $cond_link_marker,
+                                             'cond_key_word' => $cond_key_word,
                                             ]);
 
       }
+
+      public function detail(Request $request)
+      {
+        $post = CardDetail::find($request);
+        dd($posts);
+        return view('admin.carddetail.detail', ['posts' => $posts]);
+      }
+
   }

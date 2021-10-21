@@ -57,7 +57,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('carddetail/edit', 'Admin\CardDetailController@update');
     Route::get('carddetail', 'Admin\CardDetailController@index');
     //Route::post('carddetail/search', 'Admin\CardDetailController@search');
-    //Route::get('carddetail/index', 'Admin\CardDetailController@index');
+    Route::get('carddetail/detail', 'Admin\CardDetailController@detail');
 
     Route::get('carddetail/delete', 'Admin\CardDetailController@delete');
 
