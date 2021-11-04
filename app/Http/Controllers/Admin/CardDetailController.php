@@ -130,11 +130,9 @@ class CardDetailController extends Controller
   {
 //dd($request);
 
-      $query = CardDetail::query();
+      $query = CardDetail::query();//CardDetail Modelを使って、データベースに保存されている、card_detailsテーブルの情報を取得し、変数$postsに代入
       $query -> select('card_details.card_master_id as id','card_details.card_name','card_details.ruby','card_details.card_class','card_details.card_text')
-             //-> select('card_details.card_name')
-             //-> select('card_details.card_class')
-             //-> select('card_details.card_text')
+
              -> leftjoin('monster_card_details', 'card_details.card_master_id', '=', 'monster_card_details.card_master_id')
              -> leftjoin('magic_card_details', 'card_details.card_master_id', '=', 'magic_card_details.card_master_id')
              -> leftjoin('trap_card_details', 'card_details.card_master_id', '=', 'trap_card_details.card_master_id');
@@ -281,16 +279,18 @@ class CardDetailController extends Controller
 
       if ($cond_key_word != '') {
           // 検索されたら検索結果を取得する
-          $query -> orWhere('card_name', 'LIKE', "%{$cond_key_word}%")
-                 -> orWhere('ruby', 'LIKE', "%{$cond_key_word}%")
-                 -> orWhere('card_text', 'LIKE', "%{$cond_key_word}%");
+          $query -> where(function($query2) use ($cond_key_word) {
+                  $query2 -> orWhere('card_name', 'LIKE', "%{$cond_key_word}%")
+                          -> orWhere('ruby', 'LIKE', "%{$cond_key_word}%")
+                          -> orWhere('card_text', 'LIKE', "%{$cond_key_word}%");
+                  });
+
       }
 //dd($cond_link_marker);
 //dd($query->getBindings());
-      $posts = $query //-> select('card_master_id as id')
-                      //-> from('card_details')
-                      -> get();
-//dd($posts);
+      $posts = $query -> get();
+
+dd($posts);
       return view('admin.carddetail.index', ['posts' => $posts,
                                              'cond_card_name' => $cond_card_name,
                                              'cond_card_class' => $cond_card_class,
@@ -315,9 +315,49 @@ class CardDetailController extends Controller
 
       public function detail(Request $request)
       {
-        $post = CardDetail::find($request);
-        dd($posts);
-        return view('admin.carddetail.detail', ['posts' => $posts]);
+        $query = CardDetail::query();
+        $query -> select('card_details.card_master_id as id','card_details.card_name','card_details.ruby','card_details.card_class','card_details.card_text')
+               -> leftjoin('monster_card_details', 'card_details.card_master_id', '=', 'monster_card_details.card_master_id')
+               -> leftjoin('magic_card_details', 'card_details.card_master_id', '=', 'magic_card_details.card_master_id')
+               -> leftjoin('trap_card_details', 'card_details.card_master_id', '=', 'trap_card_details.card_master_id');
+
+        $posts = $query -> find($request -> id);
+        //dd($posts);
+  /*
+        $posts = CardDetail::find($request -> id);
+//
+        //モンスターカード
+        if($posts->card_class == "select1"){
+
+        }
+
+        //魔法カード
+        if($posts->card_class == "select2"){
+            $posts_m = MagicCardDetail::find($request -> id);
+        //  dd($posts_m);
+        //return view('admin.carddetail.detail', ['posts' => $posts,
+                                            //    'posts_m' => $posts_m,
+                                          //     ]);
+        }
+
+        //罠カード
+        if($posts->card_class == "select3"){
+            $posts_t = TrapCardDetail::find($request -> id);
+            //return view('admin.carddetail.detail', ['posts' => $posts,
+                                                //    'posts_t' => $posts_t,
+                                                //   ]);
+        }
+
+        /*$posts -> select('card_details.card_master_id as id','card_details.card_name','card_details.ruby','card_details.card_class','card_details.card_text')
+               -> leftjoin('monster_card_details', 'card_details.card_master_id', '=', 'monster_card_details.card_master_id')
+               -> leftjoin('magic_card_details', 'card_details.card_master_id', '=', 'magic_card_details.card_master_id')
+               -> leftjoin('trap_card_details', 'card_details.card_master_id', '=', 'trap_card_details.card_master_id');
+        */
+        //dd($posts_m);
+        return view('admin.carddetail.detail', ['posts' => $posts,
+                                              //  'posts_m' => $posts_m,
+                                              //  'posts_t' => $posts_t,
+                                               ]);
       }
 
   }

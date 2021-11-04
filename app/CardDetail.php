@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class CardDetail extends Model
 {
     //
-    protected $guarded = array('id');
-
+    protected $guarded = array('card_master_id');
+    protected $primaryKey = 'card_master_id';
     // 以下を追記
     public static $rules = array(
         //'id' => 'required',

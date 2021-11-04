@@ -10,9 +10,26 @@
             <h2>カード詳細情報</h2>
             <form action="{{ action('Admin\CardDetailController@detail') }}" method="post" enctype="multipart/form-data">
 
+                <div>
+                    <div>{{ $posts->card_name }}</div>
+                </div>
+                <div>
+                    <div>{{ $posts->ruby }}</div>
+                </div>
+                <div>
+                    <div>{{ $posts->card_class }}</div>
+                </div>
+                <div>
+                    <div>{{ $posts->card_text }}</div>
+                </div>
 
+                <div>
+                    <div>{{ $posts->magic_card_class }}</div>
+                </div>
 
-
+                <div>
+                    <div>{{ $posts->trap_card_class }}</div>
+                </div>
 
         </div>
     </div>
