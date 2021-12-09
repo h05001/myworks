@@ -23,26 +23,40 @@ class CardDetail extends Model
     // CardDetail Modelに関連付けを行う
     public function monstercarddetails()
     {
-      return $this->hasMany('App\MonsterCardDetail');
+      return $this->hasone('App\MonsterCardDetail', 'card_master_id');
 
     }
 
+    /*public function monstercardclasses()
+    {
+      return $this->hasManyThrough('App\MonsterClassMaster',
+                                   'App\MonsterCardClass',
+                                   'class_id',
+                                   'id',
+                                   'card_master_id',
+                                   'card_master_id');
+      //return $this->hasMany('App\MonsterCardClass','App\MonsterClassMaster','id');
+    }*/
+
     public function monstercardclasses()
     {
-      return $this->hasMany('App\MonsterCardClass');
-
+      return $this->hasManyThrough('App\MonsterClassMaster',
+                                   'App\MonsterCardClass',
+                                   'card_master_id',
+                                   'id',
+                                   null,
+                                   'class_id');
     }
 
     public function magiccarddetails()
     {
-      return $this->hasMany('App\MagicCardDetail');
+      return $this->hasone('App\MagicCardDetail', 'card_master_id');
 
     }
 
     public function trapcarddetails()
     {
-      return $this->hasMany('App\trapCardDetail');
-
+        return $this->hasOne('App\trapCardDetail', 'card_master_id');
     }
 
 }

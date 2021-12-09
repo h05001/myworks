@@ -13,6 +13,11 @@ class MonsterCardClass extends Model
   public static $rules = array(
 
       'class_id' => 'required',
-      
+
   );
+  public function monsterClassMaster()
+  {
+    return $this->hasone('App\MonsterClassMaster','id','class_id');
+
+  }
 }

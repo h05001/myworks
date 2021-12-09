@@ -12,6 +12,8 @@ use App\MonsterCardClass;
 use App\MagicCardDetail;
 use App\TrapCardDetail;
 
+
+
 class CardDetailController extends Controller
 {
     public function add()
@@ -290,7 +292,7 @@ class CardDetailController extends Controller
 //dd($query->getBindings());
       $posts = $query -> get();
 
-dd($posts);
+
       return view('admin.carddetail.index', ['posts' => $posts,
                                              'cond_card_name' => $cond_card_name,
                                              'cond_card_class' => $cond_card_class,
@@ -315,15 +317,24 @@ dd($posts);
 
       public function detail(Request $request)
       {
+          $posts = CardDetail::find($request -> id);
+          //dd(get_class($posts->monstercardclasses));
+          return view('admin.carddetail.detail', ['posts' => $posts]);
+      }
+  }
+/*
+      public function detail(Request $request)
+      {
         $query = CardDetail::query();
-        $query -> select('card_details.card_master_id as id','card_details.card_name','card_details.ruby','card_details.card_class','card_details.card_text')
+        $query //-> select('card_details.card_master_id as id','card_details.card_name','card_details.ruby','card_details.card_class','card_details.card_text')
+               -> select('*')
                -> leftjoin('monster_card_details', 'card_details.card_master_id', '=', 'monster_card_details.card_master_id')
                -> leftjoin('magic_card_details', 'card_details.card_master_id', '=', 'magic_card_details.card_master_id')
                -> leftjoin('trap_card_details', 'card_details.card_master_id', '=', 'trap_card_details.card_master_id');
 
         $posts = $query -> find($request -> id);
-        //dd($posts);
-  /*
+
+
         $posts = CardDetail::find($request -> id);
 //
         //モンスターカード
@@ -352,12 +363,11 @@ dd($posts);
                -> leftjoin('monster_card_details', 'card_details.card_master_id', '=', 'monster_card_details.card_master_id')
                -> leftjoin('magic_card_details', 'card_details.card_master_id', '=', 'magic_card_details.card_master_id')
                -> leftjoin('trap_card_details', 'card_details.card_master_id', '=', 'trap_card_details.card_master_id');
-        */
+
         //dd($posts_m);
         return view('admin.carddetail.detail', ['posts' => $posts,
                                               //  'posts_m' => $posts_m,
                                               //  'posts_t' => $posts_t,
                                                ]);
       }
-
-  }
+*/
