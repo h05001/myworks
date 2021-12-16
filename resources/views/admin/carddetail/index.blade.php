@@ -180,33 +180,33 @@ function clearElement(element) {
                       <label class="col-md-2">検索：種族</label>
                       <div class="col-md-3">
                       <!--    <input type="text" class="form-control" name="tribe" value="{{ old('tribe') }}"> -->
-                          <select class="form-control" name="cond_tribe">
+                          <select class="form-control" name="cond_tribe_id">
                               <option value="">種族で検索</option>
-                              <option value="spell_caster" @if($cond_tribe == 'spell_caster')selected @endif >魔法使い族</option>
-                              <option value="dragon" @if($cond_tribe == 'dragon')selected @endif >ドラゴン族</option>
-                              <option value="zombie" @if($cond_tribe == 'zombie')selected @endif >アンデット族</option>
-                              <option value="warrior" @if($cond_tribe == 'warrior')selected @endif >戦士族</option>
-                              <option value="beast_warrior" @if($cond_tribe == 'beast_warrior')selected @endif >獣戦士族</option>
-                              <option value="beast" @if($cond_tribe == 'beast')selected @endif >獣族</option>
-                              <option value="winged_beast" @if($cond_tribe == 'winged_beast')selected @endif >鳥獣族</option>
-                              <option value="fiend" @if($cond_tribe == 'fiend')selected @endif >悪魔族</option>
-                              <option value="fairy" @if($cond_tribe == 'fairy')selected @endif >天使族</option>
-                              <option value="insect" @if($cond_tribe == 'insect')selected @endif >昆虫族</option>
-                              <option value="dinosaur" @if($cond_tribe == 'dinosaur')selected @endif >恐竜族</option>
-                              <option value="reptile" @if($cond_tribe == 'reptile')selected @endif >爬虫類族</option>
-                              <option value="fish" @if($cond_tribe == 'fish')selected @endif >魚族</option>
-                              <option value="sea_serpent" @if($cond_tribe == 'sea_serpent')selected @endif >海竜族</option>
-                              <option value="aqua" @if($cond_tribe == 'aqua')selected @endif >水族</option>
-                              <option value="pyro" @if($cond_tribe == 'pyro')selected @endif >炎族</option>
-                              <option value="thunder" @if($cond_tribe == 'thunder')selected @endif >雷族</option>
-                              <option value="rock" @if($cond_tribe == 'rock')selected @endif >岩石族</option>
-                              <option value="plant" @if($cond_tribe == 'plant')selected @endif >植物族</option>
-                              <option value="machine" @if($cond_tribe == 'machine')selected @endif >機械族</option>
-                              <option value="psychic" @if($cond_tribe == 'psychic')selected @endif >サイキック族</option>
-                              <option value="wyrm" @if($cond_tribe == 'wyrm')selected @endif >幻竜族</option>
-                              <option value="cyberse" @if($cond_tribe == 'cyberse')selected @endif >サイバース族</option>
-                              <option value="divine_beast" @if($cond_tribe == 'divine_beast')selected @endif >幻神獣族</option>
-                              <option value="creator" @if($cond_tribe == 'creator')selected @endif >創造神族</option>
+                              <option value="spell_caster" @if($cond_tribe_id == 'spell_caster')selected @endif >魔法使い族</option>
+                              <option value="dragon" @if($cond_tribe_id == 'dragon')selected @endif >ドラゴン族</option>
+                              <option value="zombie" @if($cond_tribe_id == 'zombie')selected @endif >アンデット族</option>
+                              <option value="warrior" @if($cond_tribe_id == 'warrior')selected @endif >戦士族</option>
+                              <option value="beast_warrior" @if($cond_tribe_id == 'beast_warrior')selected @endif >獣戦士族</option>
+                              <option value="beast" @if($cond_tribe_id == 'beast')selected @endif >獣族</option>
+                              <option value="winged_beast" @if($cond_tribe_id == 'winged_beast')selected @endif >鳥獣族</option>
+                              <option value="fiend" @if($cond_tribe_id == 'fiend')selected @endif >悪魔族</option>
+                              <option value="fairy" @if($cond_tribe_id == 'fairy')selected @endif >天使族</option>
+                              <option value="insect" @if($cond_tribe_id == 'insect')selected @endif >昆虫族</option>
+                              <option value="dinosaur" @if($cond_tribe_id == 'dinosaur')selected @endif >恐竜族</option>
+                              <option value="reptile" @if($cond_tribe_id == 'reptile')selected @endif >爬虫類族</option>
+                              <option value="fish" @if($cond_tribe_id == 'fish')selected @endif >魚族</option>
+                              <option value="sea_serpent" @if($cond_tribe_id == 'sea_serpent')selected @endif >海竜族</option>
+                              <option value="aqua" @if($cond_tribe_id == 'aqua')selected @endif >水族</option>
+                              <option value="pyro" @if($cond_tribe_id == 'pyro')selected @endif >炎族</option>
+                              <option value="thunder" @if($cond_tribe_id == 'thunder')selected @endif >雷族</option>
+                              <option value="rock" @if($cond_tribe_id == 'rock')selected @endif >岩石族</option>
+                              <option value="plant" @if($cond_tribe_id == 'plant')selected @endif >植物族</option>
+                              <option value="machine" @if($cond_tribe_id == 'machine')selected @endif >機械族</option>
+                              <option value="psychic" @if($cond_tribe_id == 'psychic')selected @endif >サイキック族</option>
+                              <option value="wyrm" @if($cond_tribe_id == 'wyrm')selected @endif >幻竜族</option>
+                              <option value="cyberse" @if($cond_tribe_id == 'cyberse')selected @endif >サイバース族</option>
+                              <option value="divine_beast" @if($cond_tribe_id == 'divine_beast')selected @endif >幻神獣族</option>
+                              <option value="creator" @if($cond_tribe_id == 'creator')selected @endif >創造神族</option>
 
                           </select>
                       </div>

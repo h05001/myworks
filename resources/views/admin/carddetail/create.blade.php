@@ -391,42 +391,71 @@ function changeDisabled(value,checked){
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3" for="tribe">種族</label>
+                            <label class="col-md-3" for="tribe_id">種族</label>
                             <div class="col-md-9">
                             <!--    <input type="text" class="form-control" name="tribe" value="{{ old('tribe') }}"> -->
-                                <select name="tribe" class="form-control"  value="{{ old('tribe') }}">
+                                <select name="tribe_id" class="form-control"  value="{{ old('tribe_id') }}">
                                     <option value="">種族を選択</option>
-                                    <option value="spell_caster">魔法使い族</option>
-                                    <option value="dragon">ドラゴン族</option>
-                                    <option value="zombie">アンデット族</option>
-                                    <option value="warrior">戦士族</option>
-                                    <option value="beast_warrior">獣戦士族</option>
-                                    <option value="beast">獣族</option>
-                                    <option value="winged_beast">鳥獣族</option>
-                                    <option value="fiend">悪魔族</option>
-                                    <option value="fairy">天使族</option>
-                                    <option value="insect">昆虫族</option>
-                                    <option value="dinosaur">恐竜族</option>
-                                    <option value="reptile">爬虫類族</option>
-                                    <option value="fish">魚族</option>
-                                    <option value="sea_serpent">海竜族</option>
-                                    <option value="aqua">水族</option>
-                                    <option value="pyro">炎族</option>
-                                    <option value="thunder">雷族</option>
-                                    <option value="rock">岩石族</option>
-                                    <option value="plant">植物族</option>
-                                    <option value="machine">機械族</option>
-                                    <option value="psychic">サイキック族</option>
-                                    <option value="wyrm">幻竜族</option>
-                                    <option value="cyberse">サイバース族</option>
-                                    <option value="divine_beast">幻神獣族</option>
-                                    <option value="creator">創造神族</option>
+                                    <option value="1">魔法使い族</option>
+                                    <option value="2">ドラゴン族</option>
+                                    <option value="3">アンデット族</option>
+                                    <option value="4">戦士族</option>
+                                    <option value="5">獣戦士族</option>
+                                    <option value="6">獣族</option>
+                                    <option value="7">鳥獣族</option>
+                                    <option value="8">悪魔族</option>
+                                    <option value="9">天使族</option>
+                                    <option value="10">昆虫族</option>
+                                    <option value="11">恐竜族</option>
+                                    <option value="12">爬虫類族</option>
+                                    <option value="13">魚族</option>
+                                    <option value="14">海竜族</option>
+                                    <option value="15">水族</option>
+                                    <option value="16">炎族</option>
+                                    <option value="17">雷族</option>
+                                    <option value="18">岩石族</option>
+                                    <option value="19">植物族</option>
+                                    <option value="20">機械族</option>
+                                    <option value="21">サイキック族</option>
+                                    <option value="22">幻竜族</option>
+                                    <option value="23">サイバース族</option>
+                                    <option value="24">幻神獣族</option>
+                                    <option value="25">創造神族</option>
 
                                 </select>
                             </div>
                         </div>
+<!--
+                        <select name="tribe_id" class="form-control"  value="{{ old('tribe_id') }}">
+                            <option value="">種族を選択</option>
+                            <option value="spell_caster">魔法使い族</option>
+                            <option value="dragon">ドラゴン族</option>
+                            <option value="zombie">アンデット族</option>
+                            <option value="warrior">戦士族</option>
+                            <option value="beast_warrior">獣戦士族</option>
+                            <option value="beast">獣族</option>
+                            <option value="winged_beast">鳥獣族</option>
+                            <option value="fiend">悪魔族</option>
+                            <option value="fairy">天使族</option>
+                            <option value="insect">昆虫族</option>
+                            <option value="dinosaur">恐竜族</option>
+                            <option value="reptile">爬虫類族</option>
+                            <option value="fish">魚族</option>
+                            <option value="sea_serpent">海竜族</option>
+                            <option value="aqua">水族</option>
+                            <option value="pyro">炎族</option>
+                            <option value="thunder">雷族</option>
+                            <option value="rock">岩石族</option>
+                            <option value="plant">植物族</option>
+                            <option value="machine">機械族</option>
+                            <option value="psychic">サイキック族</option>
+                            <option value="wyrm">幻竜族</option>
+                            <option value="cyberse">サイバース族</option>
+                            <option value="divine_beast">幻神獣族</option>
+                            <option value="creator">創造神族</option>
 
-
+                        </select>
+-->
                         <div>
                             <div class="form-group row">
                                 <label class="col-md-3" for="level_rank_link">レベル/ランク/リンク</label>

@@ -97,6 +97,13 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('monsterclassmaster', 'Admin\MonsterClassMasterController@index');
     Route::get('monsterclassmaster/delete', 'Admin\MonsterClassMasterController@delete');
 
+    
+    Route::get('tribemaster/create', 'Admin\TribeMasterController@add');
+    Route::post('tribemaster/create', 'Admin\TribeMasterController@create');
+    Route::get('tribemaster/edit', 'Admin\TribeMasterController@edit');
+    Route::post('tribemaster/edit', 'Admin\TribeMasterController@update');
+    Route::get('tribemaster', 'Admin\TribeMasterController@index');
+    Route::get('tribemaster/delete', 'Admin\TribeMasterController@delete');
     /*
     Route::get('pendulummonstercarddetail/create', 'Admin\PendulumMonsterCardDetailController@add');
     Route::post('pendulummonstercarddetail/create', 'Admin\PendulumMonsterCardDetailController@create');

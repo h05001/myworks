@@ -27,16 +27,6 @@ class CardDetail extends Model
 
     }
 
-    /*public function monstercardclasses()
-    {
-      return $this->hasManyThrough('App\MonsterClassMaster',
-                                   'App\MonsterCardClass',
-                                   'class_id',
-                                   'id',
-                                   'card_master_id',
-                                   'card_master_id');
-      //return $this->hasMany('App\MonsterCardClass','App\MonsterClassMaster','id');
-    }*/
 
     public function monstercardclasses()
     {
@@ -47,6 +37,13 @@ class CardDetail extends Model
                                    null,
                                    'class_id');
     }
+
+    public function tribemasters()
+    {
+      return $this->hasone('App\TribeMaster', 'card_master_id');
+      
+    }
+
 
     public function magiccarddetails()
     {

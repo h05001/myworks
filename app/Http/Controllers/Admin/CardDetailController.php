@@ -151,7 +151,7 @@ class CardDetailController extends Controller
       $cond_class_id = $request->cond_class_id;
 
       $cond_property = $request->cond_property;
-      $cond_tribe = $request->cond_tribe;
+      $cond_tribe_id = $request->cond_tribe_id;
 
       $cond_level_rank_link_fr = $request->cond_level_rank_link_fr;
       //dd($cond_level_rank_link_fr);
@@ -223,9 +223,9 @@ class CardDetailController extends Controller
           $query -> where('property', $cond_property);
       }
 
-      if ($cond_tribe != '') {
+      if ($cond_tribe_id != '') {
           // 検索されたら検索結果を取得する
-          $query -> where('tribe', $cond_tribe);
+          $query -> where('tribe_id', $cond_tribe_id);
       }
 
       if ($cond_level_rank_link_fr != '') {//以上
@@ -300,7 +300,7 @@ class CardDetailController extends Controller
                                              'cond_trap_card_class' => $cond_trap_card_class,
                                              'cond_class_id' => $cond_class_id,
                                              'cond_property' => $cond_property,
-                                             'cond_tribe' => $cond_tribe,
+                                             'cond_tribe_id' => $cond_tribe_id,
                                              'cond_level_rank_link_fr' => $cond_level_rank_link_fr,
                                              'cond_level_rank_link_to' => $cond_level_rank_link_to,
                                              'cond_scale_fr' => $cond_scale_fr,

@@ -11,7 +11,7 @@ class MonsterCardDetail extends Model
     {
         $rules = array(
             'property' => 'required',//属性
-            'tribe' => 'required',//種族
+            'tribe_id' => 'required',//種族
             'level_rank_link' => 'required', //レベル,ランク、リンク
             'attack' => 'required',//攻撃力
             'defense' => 'required',//守備力
