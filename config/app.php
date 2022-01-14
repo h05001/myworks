@@ -147,6 +147,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Weidner\Goutte\GoutteServiceProvider::class, // 追記
+
         /*
          * Package Service Providers...
          */
@@ -162,6 +163,8 @@ return [
 
         //スクレイピング
         Weidner\Goutte\GoutteServiceProvider::class,
+        // 追記1227
+        //Collective\Html\HtmlServiceProvider::class, 
 
     ],
 
@@ -214,6 +217,9 @@ return [
 
         //スクレイピング
         'Goutte' => Weidner\Goutte\GoutteFacade::class,
+        //追記1227
+        //'Form' => Collective\Html\FormFacade::class,
+        //'Html' => Collective\Html\HtmlFacade::class,
 
     ],
 

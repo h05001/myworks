@@ -393,8 +393,16 @@ function changeDisabled(value,checked){
                         <div class="form-group row">
                             <label class="col-md-3" for="tribe_id">種族</label>
                             <div class="col-md-9">
-                            <!--    <input type="text" class="form-control" name="tribe" value="{{ old('tribe') }}"> -->
-                                <select name="tribe_id" class="form-control"  value="{{ old('tribe_id') }}">
+                            <!--    <input type="text" class="form-control" name="tribe" value="{{ old('tribe') }}">
+                                -->
+                                {{Form::select('tribe_id', $tribelist, null, ['class' => 'form-control'])}}
+                                {{--<select name="tribe_id" class="form-control"  value="{{ old('tribe_id') }}">
+                                    <option value="">種族を選択</option>
+                                    @foreach ($tribelist as $lists) {
+                                        echo '<option value="{{ $lists->tribe_id }}">{{ $lists->tribe }}</option>';
+                                    }
+                                    @endforeach --}}
+<!--
                                     <option value="">種族を選択</option>
                                     <option value="1">魔法使い族</option>
                                     <option value="2">ドラゴン族</option>
@@ -421,7 +429,7 @@ function changeDisabled(value,checked){
                                     <option value="23">サイバース族</option>
                                     <option value="24">幻神獣族</option>
                                     <option value="25">創造神族</option>
-
+-->
                                 </select>
                             </div>
                         </div>
@@ -478,20 +486,20 @@ function changeDisabled(value,checked){
                               <!--      <input type="text" class="form-control" name="scale" value="{{ old('scale') }}"> -->
                                     <select name="scale" class="form-control"  value="{{ old('scale') }}">
                                         <option value="">スケールを選択</option>
-                                        <option value="zero">0</option>
-                                        <option value="one">1</option>
-                                        <option value="two">2</option>
-                                        <option value="three">3</option>
-                                        <option value="four">4</option>
-                                        <option value="five">5</option>
-                                        <option value="six">6</option>
-                                        <option value="seven">7</option>
-                                        <option value="eight">8</option>
-                                        <option value="nine">9</option>
-                                        <option value="ten">10</option>
-                                        <option value="eleven">11</option>
-                                        <option value="twelve">12</option>
-                                        <option value="thirteen">13</option>
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
 
                                     </select>
                                 </div>

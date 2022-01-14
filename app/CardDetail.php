@@ -40,8 +40,13 @@ class CardDetail extends Model
 
     public function tribemasters()
     {
-      return $this->hasone('App\TribeMaster', 'card_master_id');
-      
+      return $this->hasManyThrough('App\Tribe',
+                                   'App\MonsterCardDetail',
+                                   'card_master_id',
+                                   'tribe_id',
+                                   'card_master_id',
+                                   'tribe_id');
+
     }
 
 

@@ -11,14 +11,33 @@ use App\MonsterCardDetail;
 use App\MonsterCardClass;
 use App\MagicCardDetail;
 use App\TrapCardDetail;
-
+use App\Tribe;
 
 
 class CardDetailController extends Controller
 {
     public function add()
     {
-        return view('admin.carddetail.create');
+        //$tribelist = tribe::all();
+        //$tribelist = DB::table('tribes')->select('tribe_id', 'tribe')->get();
+        //dd($tribelist);
+/*
+        $listarr = array();
+        $listarr += array( "" => "種族を選択" ); //listの先頭に追加
+        //
+        foreach ($tribelist as $lists) {
+           $listarr += array( $lists->tribe_id => $lists->tribe );
+
+        }
+
+        dd($listarr);
+*/
+
+        $tribelist = \App\Tribe::pluck('tribe', 'tribe_id');
+        $tribelist = $tribelist -> prepend('種族を選択', '');
+
+        return view('admin.carddetail.create', [ "tribelist" => $tribelist ]);
+
     }
 
 
@@ -40,7 +59,7 @@ class CardDetailController extends Controller
         $carddetail->image_path = $request->image_path;
         $carddetail->card_text = $request->card_text;
         $carddetail->save();
-        $last_insert_id = $carddetail->id;
+        $last_insert_id = $carddetail->card_master_id;
 
         //モンスターカードマスタ
         if($request->card_class == "select1"){
@@ -56,9 +75,10 @@ class CardDetailController extends Controller
             // データベースに保存する
             $monstercarddetail->card_master_id = $last_insert_id;
             $monstercarddetail->property = $request->property;
-            $monstercarddetail->tribe = $request->tribe;
+            $monstercarddetail->tribe_id = $request->tribe_id;
             $monstercarddetail->level_rank_link = $request->level_rank_link;
             $monstercarddetail->scale = $request->scale;
+            //$monstercarddetail->scale = $request->CONVERT(int,scale);
             $monstercarddetail->pendulum_effect = $request->pendulum_effect;
             if($request->has("link_marker")){
                 $monstercarddetail->link_marker = implode($request->link_marker);
@@ -79,7 +99,7 @@ class CardDetailController extends Controller
             $classIdArr = $request->class_id;//$requestからclass_idを取り出して$classIdArrに代入
             foreach ($classIdArr as $value) {//$classIdArrの値の数だけ
               $monstercardclass = new MonsterCardClass;
-
+//dd($last_insert_id);
               // データベースに保存する
               $monstercardclass->card_master_id = $last_insert_id;
               $monstercardclass->class_id = $value;//$monstercardclassからclass_idを取り出して$classIdArrを代入
@@ -321,53 +341,13 @@ class CardDetailController extends Controller
           //dd(get_class($posts->monstercardclasses));
           return view('admin.carddetail.detail', ['posts' => $posts]);
       }
+
+      /*public function getTribeList() {
+
+          $tribelist = tribes::all();   // Eloquent"Member"で全データ取得
+          return view('list', [
+              "members" => $members
+          ]);
+      }*/
+
   }
-/*
-      public function detail(Request $request)
-      {
-        $query = CardDetail::query();
-        $query //-> select('card_details.card_master_id as id','card_details.card_name','card_details.ruby','card_details.card_class','card_details.card_text')
-               -> select('*')
-               -> leftjoin('monster_card_details', 'card_details.card_master_id', '=', 'monster_card_details.card_master_id')
-               -> leftjoin('magic_card_details', 'card_details.card_master_id', '=', 'magic_card_details.card_master_id')
-               -> leftjoin('trap_card_details', 'card_details.card_master_id', '=', 'trap_card_details.card_master_id');
-
-        $posts = $query -> find($request -> id);
-
-
-        $posts = CardDetail::find($request -> id);
-//
-        //モンスターカード
-        if($posts->card_class == "select1"){
-
-        }
-
-        //魔法カード
-        if($posts->card_class == "select2"){
-            $posts_m = MagicCardDetail::find($request -> id);
-        //  dd($posts_m);
-        //return view('admin.carddetail.detail', ['posts' => $posts,
-                                            //    'posts_m' => $posts_m,
-                                          //     ]);
-        }
-
-        //罠カード
-        if($posts->card_class == "select3"){
-            $posts_t = TrapCardDetail::find($request -> id);
-            //return view('admin.carddetail.detail', ['posts' => $posts,
-                                                //    'posts_t' => $posts_t,
-                                                //   ]);
-        }
-
-        /*$posts -> select('card_details.card_master_id as id','card_details.card_name','card_details.ruby','card_details.card_class','card_details.card_text')
-               -> leftjoin('monster_card_details', 'card_details.card_master_id', '=', 'monster_card_details.card_master_id')
-               -> leftjoin('magic_card_details', 'card_details.card_master_id', '=', 'magic_card_details.card_master_id')
-               -> leftjoin('trap_card_details', 'card_details.card_master_id', '=', 'trap_card_details.card_master_id');
-
-        //dd($posts_m);
-        return view('admin.carddetail.detail', ['posts' => $posts,
-                                              //  'posts_m' => $posts_m,
-                                              //  'posts_t' => $posts_t,
-                                               ]);
-      }
-*/

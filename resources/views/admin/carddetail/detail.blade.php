@@ -64,11 +64,10 @@
 
 
                         <div class="col-md-3">種族</div>
-                        <div class="col-md-3">( $posts->tribemaster->tribe )</div>
+                        <div class="col-md-3">{{ $posts->tribemasters[0]->tribe }}</div>
 
 
                         <div class="col-md-3">モンスターカード種類</div>
-
                         <div class="col-md-3"> @foreach ($posts->monstercardclasses as $class )
                                                     <div>{{ $class->monster_class }}</div>
 
