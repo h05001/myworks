@@ -16,9 +16,10 @@ class CreateRecordingCardTable extends Migration
         Schema::create('recording_cards', function (Blueprint $table) {
             $table->increments('id');
             $table->string('cardname'); //カード名を保存するカラム
+            $table->integer('card_master_id'); //カードマスタIDを保存するカラム
             $table->string('recordingpackid'); //収録パックIDを保存するカラム
             $table->string('recordingcardid'); //収録カードIDを保存するカラム
-            $table->string('rarity'); //レアリティを保存するカラム
+            $table->integer('rarity_id'); //レアリティIDを保存するカラム
             $table->timestamps();
         });
     }

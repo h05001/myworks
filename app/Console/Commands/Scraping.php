@@ -42,101 +42,41 @@ class Scraping extends Command
     public function handle()
     {
 
-        //$keyword = DB::table('recording_cards')->select('recordingcardid')->get();
-        //$keyword = DB::table('recording_cards')->select('recordingcardid')->first();
-        //$keyword = RecordingCard::select('recordingcardid')->get();
-        //$keyword = RecordingCard::select('recordingcardid')->first();
+        $keyword = RecordingCard::select('recordingcardid')->get();
 
-        //$column = array_column($keyword, 'recordingcardid');
-//dd($keyword);
-//dd($);
-        //$valuearr = array_values($keyword);
-//dd($valuearr);
-        //foreach ($keyword as $keywords) {
-            //$url = "https://www.c-labo-online.jp/product-list?keyword="."$keyword";
-//dd($url);
-        //}
+        $keyword = $keyword->unique('recordingcardid');
 
-        $goutte = GoutteFacade::request('GET', 'https://www.c-labo-online.jp/product-list?keyword=BLVO-JP002');
-        //$goutte = GoutteFacade::request('GET', $url);
-        $goutte ->text();
+        foreach ($keyword as  $keywords) {
 
-        $goutte ->filter('div.list_item_data')->each(function ($div) {
-            $card_name = $div->filter('span.goods_name')->text();
-                $card_names = mb_substr($card_name, 5, )
-            $rarity = $div->filter('span.goods_name')->text();
-                $rarities =
-            $price = $div->filter('span.figure')->text();
+            $url = "https://www.c-labo-online.jp/product-list?keyword=".$keywords->recordingcardid;
 
-                echo "-------------\n";
-
-                echo 'カード名：' . $card_name . "\n";
-                echo 'レアリティ：' . $rarity . "\n";
-                echo '価格：' . $price . "\n";
-
-                echo "-------------\n";
-
-        });
-
-
-/*
-        {
-            echo "start1\n";
-              //ここにコマンドの実行処理を書く
-            $goutte = GoutteFacade::request('GET', 'https://www.c-labo-online.jp/product/148044');
+            $goutte = GoutteFacade::request('GET', $url);
             $goutte ->text();
 
-            $goutte->filter('div.product_name_inside')->each(function ($div) {
+            $goutte ->filter('div.list_item_data')->each(function ($div) {
 
-                      echo "-------------\n";
 
-                      echo 'カード名：' . $div->filter('span.goods_name')->text() . "\n";
+                $rarity = $div->filter('span.goods_name')->text();
+                $rarity_start = mb_strpos($rarity, "【", 4)+1;
+                $rarity_end = mb_strpos($rarity, "/" , 4)-$rarity_start;
+                $rarities = mb_substr($rarity, $rarity_start , $rarity_end);
 
-                      echo "-------------\n";
+                $price = $div->filter('span.figure')->text();
+
+
+                // データベースに保存する
+                $check = RecordingCard::where('recordingcardid',$keywords->recordingcardid)
+                       -> where('rarity_id',$rarities);
+
+
+
+                $cardprice = new CardPrice;
+
+                $cardprice->cardprice = $price;
+
+                $cardprice->save();
 
             });
-
-            echo '価格：' . $goutte->filter('#pricech')->text() . "\n";
         }
-
-        {
-        echo "start2\n";
-          //ここにコマンドの実行処理を書く
-         $goutte = GoutteFacade::request('GET', 'https://www.amenitydream.com/product/112710');
-         $goutte ->text();
-
-         $goutte->filter('div.product_name_inside')->each(function ($div) {
-
-                  echo "-------------\n";
-
-                  echo 'カード名：' . $div->filter('span.goods_name')->text() . "\n";
-
-                  echo "-------------\n";
-
-          });
-
-          echo '価格：' . $goutte->filter('#pricech')->text() . "\n";
-        }
-
-        {
-        echo "start3\n";
-          //ここにコマンドの実行処理を書く
-         $goutte = GoutteFacade::request('GET', 'https://yuyu-tei.jp/game_ygo/carddetail/cardpreview.php?VER=blvo&CID=10004&MODE=sell');
-         $goutte ->text();
-
-         $goutte->filter('div.product_name_inside')->each(function ($div) {
-
-                  echo "-------------\n";
-
-                  echo 'カード名：' . $div->filter('span.group_ruby')->text() . "\n";
-
-                  echo "-------------\n";
-
-          });
-
-          echo '価格：' . $goutte->filter('p.price')->text() . "\n";
-        }*/
-
-
-      }
+    }
 }

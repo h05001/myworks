@@ -385,6 +385,9 @@ function clearElement(element) {
                                           <a href="{{ action('Admin\CardDetailController@detail', ['id' => $carddetail->id]) }}">詳細</a>
                                       </div>
                                       <div>
+                                          <a href="{{ action('Admin\CardDetailController@price', ['id' => $carddetail->id]) }}">価格</a>
+                                      </div>
+                                      <div>
                                           <a href="{{ action('Admin\CardDetailController@edit', ['id' => $carddetail->id]) }}">編集</a>
                                       </div>
                                       <div>

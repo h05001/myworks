@@ -339,15 +339,17 @@ class CardDetailController extends Controller
       {
           $posts = CardDetail::find($request -> id);
           //dd(get_class($posts->monstercardclasses));
+          //dd($posts->trapcarddetails);
           return view('admin.carddetail.detail', ['posts' => $posts]);
+
       }
 
-      /*public function getTribeList() {
+      public function price(Request $request)
+      {
+          $posts = CardDetail::find($request -> id);
+          
+          return view('admin.carddetail.price', ['posts' => $posts]);
 
-          $tribelist = tribes::all();   // Eloquent"Member"で全データ取得
-          return view('list', [
-              "members" => $members
-          ]);
-      }*/
+      }
 
   }

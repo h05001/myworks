@@ -6,13 +6,32 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\RecordingCard;
+use App\Rarity;
 
 class RecordingCardController extends Controller
 {
     //
-    public function add()
+    //public function add()
+  //{
+      //return view('admin.recordingcard.create');
+  //}
+
+  public function add()
   {
-      return view('admin.recordingcard.create');
+
+      $packlist = \App\RecordingPack::pluck('recordingpackid', 'id');//pluck('バリュー', 'キー')
+      //dd($packlist);
+      $packlist = $packlist -> prepend('収録パックを選択', '');
+
+
+      $raritylist = \App\Rarity::pluck('rarity_jp', 'id');
+      //dd($raritylist);
+      $raritylist = $raritylist -> prepend('レアリティを選択', '');
+
+
+      return view('admin.recordingcard.create',[ "packlist" => $packlist ,
+                                                 "raritylist" => $raritylist
+                                               ]);
   }
 
     public function create(Request $request)

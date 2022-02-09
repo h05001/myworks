@@ -11,16 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+  //  return view('welcome');
+//});
 
 Route::group(['prefix' => 'admin'], function() {
-    Route::get('cardinfomation/create', 'Admin\CardInfomationController@add');
-    Route::post('cardinfomation/create', 'Admin\CardInfomationController@create');
-    Route::get('cardinfomation/edit', 'Admin\CardInfomationController@edit');
-    Route::post('cardinfomation/edit', 'Admin\CardInfomationController@update');
-
 
     Route::get('cardprice/create', 'Admin\CardPriceController@add');
     Route::post('cardprice/create', 'Admin\CardPriceController@create');
@@ -56,25 +51,11 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('carddetail/edit', 'Admin\CardDetailController@edit');
     Route::post('carddetail/edit', 'Admin\CardDetailController@update');
     Route::get('carddetail', 'Admin\CardDetailController@index');
-    //Route::post('carddetail/search', 'Admin\CardDetailController@search');
+    Route::post('carddetail/price', 'Admin\CardDetailController@price');
     Route::get('carddetail/detail', 'Admin\CardDetailController@detail');
 
     Route::get('carddetail/delete', 'Admin\CardDetailController@delete');
 
-    Route::get('magiccarddetail/create', 'Admin\MagicCardDetailController@add');
-    Route::post('magiccarddetail/create', 'Admin\MagicCardDetailController@create');
-    Route::get('magiccarddetail/edit', 'Admin\MagicCardDetailController@edit');
-    Route::post('magiccarddetail/edit', 'Admin\MagicCardDetailController@update');
-    Route::get('magiccarddetail', 'Admin\MagicCardDetailController@index');
-    Route::get('magiccarddetail/delete', 'Admin\MagicCardDetailController@delete');
-
-
-    Route::get('trapcarddetail/create', 'Admin\TrapCardDetailController@add');
-    Route::post('trapcarddetail/create', 'Admin\TrapCardDetailController@create');
-    Route::get('trapcarddetail/edit', 'Admin\TrapCardDetailController@edit');
-    Route::post('trapcarddetail/edit', 'Admin\TrapCardDetailController@update');
-    Route::get('trapcarddetail', 'Admin\TrapCardDetailController@index');
-    Route::get('trapcarddetail/delete', 'Admin\TrapCardDetailController@delete');
 
     Route::get('monstercarddetail/create', 'Admin\MonsterCardDetailController@add');
     Route::post('monstercarddetail/create', 'Admin\MonsterCardDetailController@create');
@@ -97,14 +78,42 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('monsterclassmaster', 'Admin\MonsterClassMasterController@index');
     Route::get('monsterclassmaster/delete', 'Admin\MonsterClassMasterController@delete');
 
-    
+
     Route::get('tribemaster/create', 'Admin\TribeMasterController@add');
     Route::post('tribemaster/create', 'Admin\TribeMasterController@create');
     Route::get('tribemaster/edit', 'Admin\TribeMasterController@edit');
     Route::post('tribemaster/edit', 'Admin\TribeMasterController@update');
     Route::get('tribemaster', 'Admin\TribeMasterController@index');
     Route::get('tribemaster/delete', 'Admin\TribeMasterController@delete');
+
+    Route::get('rarity/create', 'Admin\RarityController@add');
+    Route::post('rarity/create', 'Admin\RarityController@create');
+
+    Route::get('rarityconvert/create', 'Admin\RarityConvertController@add');
+    Route::post('rarityconvert/create', 'Admin\RarityConvertController@create');
+
     /*
+
+    Route::get('cardinfomation/create', 'Admin\CardInfomationController@add');
+    Route::post('cardinfomation/create', 'Admin\CardInfomationController@create');
+    Route::get('cardinfomation/edit', 'Admin\CardInfomationController@edit');
+    Route::post('cardinfomation/edit', 'Admin\CardInfomationController@update');
+
+    Route::get('magiccarddetail/create', 'Admin\MagicCardDetailController@add');
+    Route::post('magiccarddetail/create', 'Admin\MagicCardDetailController@create');
+    Route::get('magiccarddetail/edit', 'Admin\MagicCardDetailController@edit');
+    Route::post('magiccarddetail/edit', 'Admin\MagicCardDetailController@update');
+    Route::get('magiccarddetail', 'Admin\MagicCardDetailController@index');
+    Route::get('magiccarddetail/delete', 'Admin\MagicCardDetailController@delete');
+
+
+    Route::get('trapcarddetail/create', 'Admin\TrapCardDetailController@add');
+    Route::post('trapcarddetail/create', 'Admin\TrapCardDetailController@create');
+    Route::get('trapcarddetail/edit', 'Admin\TrapCardDetailController@edit');
+    Route::post('trapcarddetail/edit', 'Admin\TrapCardDetailController@update');
+    Route::get('trapcarddetail', 'Admin\TrapCardDetailController@index');
+    Route::get('trapcarddetail/delete', 'Admin\TrapCardDetailController@delete');
+
     Route::get('pendulummonstercarddetail/create', 'Admin\PendulumMonsterCardDetailController@add');
     Route::post('pendulummonstercarddetail/create', 'Admin\PendulumMonsterCardDetailController@create');
     Route::get('pendulummonstercarddetail/edit', 'Admin\PendulumMonsterCardDetailController@edit');
