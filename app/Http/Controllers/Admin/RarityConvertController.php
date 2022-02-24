@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Rarity;
 use App\RarityConvert;
 
 class RarityConvertController extends Controller
 {
-
     //
     public function add()
     {

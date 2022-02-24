@@ -15,6 +15,11 @@ class CardPriceController extends Controller
 
     public function create(Request $request)
   {
+    // Varidationを行う
+          $this->validate($request, CardPrice::$rules);
+
+
+          
       return redirect('admin/cardprice/create');
   }
 

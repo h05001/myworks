@@ -2,7 +2,7 @@
 @extends('layouts.admin')
 
 
-{{-- admin.blade.phpの@yield('title')に'収録カード情報'を埋め込む --}}
+{{-- admin.blade.phpの@yield('title')に'レアリティの変換'を埋め込む --}}
 @section('title', 'レアリティの変換情報の登録')
 
 {{-- admin.blade.phpの@yield('content')に以下のタグを埋め込む --}}
@@ -21,17 +21,19 @@
                         </ul>
                     @endif
                     <div class="form-group row">
-                        <label class="col-md-3" for="shop_id">ショップID</label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" name="shop_id" value="{{ old('shop_id') }}">
-                        </div>
-                    </div>
-                    <div class="form-group row">
                         <label class="col-md-3" for="rarity_id">レアリティID</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="rarity_id" value="{{ old('rarity_id') }}">
+                            <input type="number" class="form-control" name="rarity_id" value="{{ old('rarity_id') }}">
                         </div>
                     </div>
+                    
+                    <div class="form-group row">
+                        <label class="col-md-3" for="shop_id">ショップID</label>
+                        <div class="col-md-9">
+                            <input type="number" class="form-control" name="shop_id" value="{{ old('shop_id') }}">
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <label class="col-md-3" for="rarity_convert">レアリティの変換</label>
                         <div class="col-md-9">
