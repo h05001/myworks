@@ -114,7 +114,7 @@
                         <div class="col-md-3">{{ $posts->trapcarddetails->trap_card_class }}</div>
                     </div>
                 @endif
-
+            </form>
         </div>
     </div>
 </div>

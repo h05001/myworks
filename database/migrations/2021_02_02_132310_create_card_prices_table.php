@@ -16,8 +16,7 @@ class CreateCardPricesTable extends Migration
         Schema::create('card_prices', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('cardshop_id'); //カードショップIDを保存するカラム
-            $table->string('recordingcard_id'); //収録カードマスタIDを保存するカラム
-            $table->string('rarity_convert'); //レアリティ変換を保存するカラム
+            $table->integer('recordingcard_id'); //収録カードマスタIDを保存するカラム
             $table->integer('cardprice');  // カード価格を保存するカラム
             $table->string('notes')->nullable(); //備考欄
             $table->timestamps();

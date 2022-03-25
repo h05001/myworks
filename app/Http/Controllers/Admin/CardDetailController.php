@@ -12,7 +12,8 @@ use App\MonsterCardClass;
 use App\MagicCardDetail;
 use App\TrapCardDetail;
 use App\Tribe;
-
+use App\CardPrice;
+use App\RecordingCard;
 
 class CardDetailController extends Controller
 {
@@ -346,10 +347,42 @@ class CardDetailController extends Controller
 
       public function price(Request $request)
       {
-          $posts = CardDetail::find($request -> id);
-          
-          return view('admin.carddetail.price', ['posts' => $posts]);
+          $carddetail = Carddetail::find($request -> id);
+          $posts = RecordingCard::leftjoin('card_prices','recording_cards.id', '=', 'card_prices.recordingcard_id')
+                                ->leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
+                                ->leftjoin('card_shops', 'card_prices.cardshop_id', '=', 'card_shops.id')
+                                ->leftjoin('recording_packs','recording_cards.recordingpackid', '=', 'recording_packs.recordingpackid')
+                                ->select('recording_cards.id',
+                                         'recording_cards.cardname',
+                                         'recording_cards.recordingcardid',
+                                         'recording_cards.recordingpackid',
+                                         'recording_cards.rarity_id',
+                                         'card_prices.cardprice',
+                                         'card_prices.notes',
+                                         'card_prices.created_at',
+                                         'rarities.rarity_jp',
+                                         'card_shops.cardshop',
+                                         'recording_packs.recordingpack')
+                                ->where('recording_cards.card_master_id',$request -> id)
+                                ->get();
+//dd($posts);
+          return view('admin.carddetail.price', ['carddetail' => $carddetail,
+                                                 'posts' => $posts]);
 
       }
 
   }
+/*
+card_details:card_master_id
+recording_cards.id(収録カードマスタ)
+recording_cards.cardname
+recording_cards.recordingcardid
+recording_cards.recordingpackid
+recording_cards.rarity_id
+card_prices.cardprice
+card_prices.notes
+card_prices.created_at
+rarities.rarity_jp
+card_shops.cardshop
+recording_packs.recordingpack
+*/

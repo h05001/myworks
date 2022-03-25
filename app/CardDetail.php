@@ -58,7 +58,17 @@ class CardDetail extends Model
 
     public function trapcarddetails()
     {
-        return $this->hasOne('App\trapCardDetail', 'card_master_id');
+        return $this->hasOne('App\TrapCardDetail', 'card_master_id');
+    }
+
+    public function cardprices()
+    {
+        return $this->hasManyThrough('App\CardPrice',
+                                     'App\RecordingCard',
+                                     'card_master_id',
+                                     'recordingcard_id',
+                                     'card_master_id',
+                                     'id');
     }
 
 }

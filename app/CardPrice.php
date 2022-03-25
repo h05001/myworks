@@ -12,7 +12,7 @@ class CardPrice extends Model
     public static $rules = array(
         'cardshop_id' => 'required',
         'recordingcard_id' => 'required',
-        'rarity_convert' => 'required',
+        'rarity_id' => 'required',
         'cardprice' => 'required',
     );
 

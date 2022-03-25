@@ -17,6 +17,7 @@ class RecordingCard extends Model
         'rarity_id' => 'required',
     );
 
+
     public function rarity()
     {
       //return $this->hasone('App\rarity', 'id');
