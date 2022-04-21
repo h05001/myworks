@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\ScrapeCommand::scraping//コマンドの登録
     ];
 
     /**
@@ -26,6 +26,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        // スケジュールの登録（「->daily()」は毎日深夜１２時に実行）
+        //everyTenMinutes();
+        $schedule->command('command:scrapecommand')->dailyAt('21:00');
     }
 
     /**

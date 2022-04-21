@@ -348,30 +348,70 @@ class CardDetailController extends Controller
       public function price(Request $request)
       {
           $carddetail = Carddetail::find($request -> id);
-          $posts = RecordingCard::leftjoin('card_prices','recording_cards.id', '=', 'card_prices.recordingcard_id')
-                                ->leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
-                                ->leftjoin('card_shops', 'card_prices.cardshop_id', '=', 'card_shops.id')
-                                ->leftjoin('recording_packs','recording_cards.recordingpackid', '=', 'recording_packs.recordingpackid')
-                                ->select('recording_cards.id',
-                                         'recording_cards.cardname',
-                                         'recording_cards.recordingcardid',
-                                         'recording_cards.recordingpackid',
-                                         'recording_cards.rarity_id',
-                                         'card_prices.cardprice',
-                                         'card_prices.notes',
-                                         'card_prices.created_at',
-                                         'rarities.rarity_jp',
-                                         'card_shops.cardshop',
-                                         'recording_packs.recordingpack')
-                                ->where('recording_cards.card_master_id',$request -> id)
-                                ->get();
+
+          $subquery = RecordingCard::leftjoin('card_prices','recording_cards.id', '=', 'card_prices.recordingcard_id')
+                                   ->select('recording_cards.id','card_prices.notes',DB::raw('MAX(card_prices.created_at) as created_at'))
+                                   ->groupBy('recording_cards.id','card_prices.notes');
+
+          $lastprice =  RecordingCard::leftjoin('card_prices','recording_cards.id', '=', 'card_prices.recordingcard_id')
+                                     ->leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
+                                     ->leftjoin('card_shops', 'card_prices.cardshop_id', '=', 'card_shops.id')
+                                     ->leftjoin('recording_packs','recording_cards.recordingpackid', '=', 'recording_packs.id')
+
+                                     //-> join(function($query) use ($request){
+                                     -> joinsub($subquery,'T1',function($join){
+                                         $join->on('recording_cards.id', '=', 'T1.id')
+                                              ->whereRaw('T1.created_at = card_prices.created_at')
+                                              ->whereRaw('IFNULL(T1.notes,0) = IFNULL(card_prices.notes,0)')
+                                         ;})
+                                      ->select('recording_cards.id',
+                                               'recording_cards.cardname',
+                                               'recording_cards.recordingcardid',
+                                               'recording_cards.recordingpackid',
+                                               'recording_cards.rarity_id',
+                                               'card_prices.cardprice',
+                                               'card_prices.notes',
+                                               'card_prices.created_at',
+                                               'rarities.rarity_jp',
+                                               'card_shops.cardshop',
+                                               'recording_packs.recordingpack')
+                                    ->where('recording_cards.card_master_id',$request -> id)
+                                    ->get();
+//dd($lastprice);
+      $rarity_tab = array_column((array)json_decode($lastprice), 'rarity_jp');
+      $rarity_tab =array_unique($rarity_tab);
+
+//dd($rarity_tab);
+
+      $priceHistory = CardPrice::leftjoin('recording_cards','card_prices.recordingcard_id', '=', 'recording_cards.id')
+                               ->leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
+
+                               ->select('card_prices.id',
+                                       'recording_cards.cardname',
+                                       'recording_cards.rarity_id',
+                                       'card_prices.cardprice',
+                                       'card_prices.notes',
+                                       'card_prices.created_at',
+                                       'rarities.rarity_jp')
+                               ->where('recording_cards.card_master_id',$request -> id)
+                               ->whereNull('notes')
+                               ->get();
+//dd($priceHistory);
+
+//dd($lastprice);
+//dd($query);
+
 //dd($posts);
           return view('admin.carddetail.price', ['carddetail' => $carddetail,
-                                                 'posts' => $posts]);
+                                                 'lastprice' => $lastprice,
+                                                 'rarity_tab' => $rarity_tab,
+                                                 'priceHistory' => $priceHistory
+                                                 ]);
 
       }
 
-  }
+
+}
 /*
 card_details:card_master_id
 recording_cards.id(収録カードマスタ)
@@ -385,4 +425,23 @@ card_prices.created_at
 rarities.rarity_jp
 card_shops.cardshop
 recording_packs.recordingpack
+
+RecordingCard::leftjoin('card_prices','recording_cards.id', '=', 'card_prices.recordingcard_id')
+                      ->leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
+                      ->leftjoin('card_shops', 'card_prices.cardshop_id', '=', 'card_shops.id')
+                      ->leftjoin('recording_packs','recording_cards.recordingpackid', '=', 'recording_packs.id')
+                      ->select('recording_cards.id',
+                               'recording_cards.cardname',
+                               'recording_cards.recordingcardid',
+                               'recording_cards.recordingpackid',
+                               'recording_cards.rarity_id',
+                               'card_prices.cardprice',
+                               'card_prices.notes',
+                               'card_prices.created_at',
+                               'rarities.rarity_jp',
+                               'card_shops.cardshop',
+                               'recording_packs.recordingpack')
+                      ->where('recording_cards.card_master_id',$request -> id)
+                      ->whereNull('notes')
+                      ->get();
 */
