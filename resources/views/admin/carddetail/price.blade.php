@@ -66,7 +66,7 @@ const config = {
 @section('content')
 <div class="container">
 
-        <div class="list-news col-md-12 mx-auto">
+        <div class="col-md-12 mx-auto">
             <div class="row">
 
                 <table class="table table-dark">
@@ -99,8 +99,9 @@ const config = {
                       @endforeach
                     </tbody>
                 </table>
-
+            </div>
 <!-- レアリティ毎にグラフ -->
+            <div class="flex-row">
                 <div class="wrap-tab">
                     @foreach($rarity_tab as $rarity_t)
                         <ul id="js-tab" class="list-tab">
@@ -112,20 +113,15 @@ const config = {
                             <li>{{$rarity_t}}</li>
                             <div class="tab-content">
                                 <p>{{$rarity_t}}価格変動歴</p>
+                                <canvas id="myChart" width="400px" height="400px"></canvas>
                             </div>
                         </div>
                     @endforeach
 
-
-
-
-
                 </div>
             </div>
         </div>
-<div>
-  <canvas id="myChart"></canvas>
-</div>
+
 
 
 
@@ -137,4 +133,9 @@ const config = {
 <!--<li class="active">タブ1</li>
 <div class="tab-content active">
 <p>タブ1タブ1タブ1</p>
-</div>-->
+</div>
+
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+-->
