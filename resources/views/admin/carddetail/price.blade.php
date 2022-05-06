@@ -77,7 +77,7 @@ const config = {
                             <th width="10%">収録パック</th>
                             <th width="10%">収録カードID</th>
                             <th width="20%">レアリティ</th>
-                            <th width="10%">価格</th>
+                            <th width="5%">価格</th>
                             <th width="10%">備考</th>
                             <th width="15%">情報取得日</th>
                         </tr>
@@ -96,11 +96,17 @@ const config = {
 
 
                           </tr>
+                          <td>
+                              <div>
+                                  <a href="{{ action('Admin\CardDetailController@history', ['id' => $priceHistory->id]) }}">変動歴</a>
+                              </div>
+                          </td>
                       @endforeach
                     </tbody>
                 </table>
             </div>
-<!-- レアリティ毎にグラフ -->
+
+<!-- レアリティ毎にグラフ
             <div class="flex-row">
                 <div class="wrap-tab">
                     @foreach($rarity_tab as $rarity_t)
@@ -114,6 +120,7 @@ const config = {
                             <div class="tab-content">
                                 <p>{{$rarity_t}}価格変動歴</p>
                                 <canvas id="myChart" width="400px" height="400px"></canvas>
+                                <script src="{{ mix('js/test.js') }}"></script>
                             </div>
                         </div>
                     @endforeach
@@ -121,7 +128,7 @@ const config = {
                 </div>
             </div>
         </div>
-
+-->
 
 
 

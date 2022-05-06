@@ -387,12 +387,7 @@ function clearElement(element) {
                                       <div>
                                           <a href="{{ action('Admin\CardDetailController@price', ['id' => $carddetail->id]) }}">価格</a>
                                       </div>
-                                      <div>
-                                          <a href="{{ action('Admin\CardDetailController@edit', ['id' => $carddetail->id]) }}">編集</a>
-                                      </div>
-                                      <div>
-                                          <a href="{{ action('Admin\CardDetailController@delete', ['id' => $carddetail->id]) }}">削除</a>
-                                      </div>
+                                      
                                     </td>
                                 </tr>
                             @endforeach
@@ -403,3 +398,13 @@ function clearElement(element) {
         </div>
     </div>
 @endsection
+<!--
+<td>
+    <div>
+        <a href="{{ action('Admin\CardDetailController@edit', ['id' => $carddetail->id]) }}">編集</a>
+    </div>
+    <div>
+        <a href="{{ action('Admin\CardDetailController@delete', ['id' => $carddetail->id]) }}">削除</a>
+    </div>
+</td>
+ -->

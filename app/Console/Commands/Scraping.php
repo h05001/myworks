@@ -42,8 +42,8 @@ class Scraping extends Command
      */
     public function handle()
     {
-\Log::info('バッチテスト');
-/*
+//\Log::info('バッチテスト');
+
         $start = microtime(true);
         $shop_id = 1;
 
@@ -112,12 +112,12 @@ var_dump($check);
             });
             $end = microtime(true);
             print_r( '処理時間 = ' . ($end - $start) . '秒'."\n" );
-*/
-            //if($keywords->recordingcardid == "BLVO-JP003"){
+
+            if($keywords->recordingcardid == "BLVO-JP003"){
                 //return;
-                //break;
-            //}
-        //}
+                break;
+            }
+        }
     }
 }
 /*

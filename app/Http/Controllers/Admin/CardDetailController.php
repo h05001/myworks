@@ -379,23 +379,11 @@ class CardDetailController extends Controller
                                     ->get();
 //dd($lastprice);
       $rarity_tab = array_column((array)json_decode($lastprice), 'rarity_jp');
-      $rarity_tab =array_unique($rarity_tab);
+      $rarity_tab = array_unique($rarity_tab);
 
 //dd($rarity_tab);
 
-      $priceHistory = CardPrice::leftjoin('recording_cards','card_prices.recordingcard_id', '=', 'recording_cards.id')
-                               ->leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
 
-                               ->select('card_prices.id',
-                                       'recording_cards.cardname',
-                                       'recording_cards.rarity_id',
-                                       'card_prices.cardprice',
-                                       'card_prices.notes',
-                                       'card_prices.created_at',
-                                       'rarities.rarity_jp')
-                               ->where('recording_cards.card_master_id',$request -> id)
-                               ->whereNull('notes')
-                               ->get();
 //dd($priceHistory);
 
 //dd($lastprice);
@@ -405,12 +393,31 @@ class CardDetailController extends Controller
           return view('admin.carddetail.price', ['carddetail' => $carddetail,
                                                  'lastprice' => $lastprice,
                                                  'rarity_tab' => $rarity_tab,
-                                                 'priceHistory' => $priceHistory
+                                                 //'priceHistory' => $priceHistory
                                                  ]);
 
       }
 
+      public function history(Request $request)
+      {
 
+          $priceHistory = CardPrice::leftjoin('recording_cards','card_prices.recordingcard_id', '=', 'recording_cards.id')
+                                   ->leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
+
+                                   ->select('card_prices.id',
+                                           'recording_cards.cardname',
+                                           'recording_cards.rarity_id',
+                                           'card_prices.cardprice',
+                                           'card_prices.notes',
+                                           'card_prices.created_at',
+                                           'rarities.rarity_jp')
+                                   ->where('recording_cards.card_master_id',$request -> id)
+                                   ->whereNull('notes')
+                                   ->get();
+dd($priceHistory);
+           //return view('admin.carddetail.history');
+           return view('admin.carddetail.history', ['priceHistory' => $priceHistory]);
+      }
 }
 /*
 card_details:card_master_id

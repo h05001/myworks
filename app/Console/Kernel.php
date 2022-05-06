@@ -27,8 +27,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         // スケジュールの登録（「->daily()」は毎日深夜１２時に実行）
-        //everyTenMinutes();
-        $schedule->command('command:scrapecommand')->everyMinute();
+        //everyTenMinutes();->everyTenMinutes()->between('23:00', '23:30')->withoutOverlapping()
+        $schedule->command('command:scraping')->everyFiveMinutes();
     }
 
     /**
