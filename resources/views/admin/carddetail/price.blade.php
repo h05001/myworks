@@ -98,7 +98,7 @@ const config = {
                           </tr>
                           <td>
                               <div>
-                                  <a href="{{ action('Admin\CardDetailController@history', ['id' => $priceHistory->id]) }}">変動歴</a>
+                                  <a href="{{ action('Admin\CardDetailController@history', ['id' => $lastprices->id]) }}">変動歴</a>
                               </div>
                           </td>
                       @endforeach

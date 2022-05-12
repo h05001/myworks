@@ -2,6 +2,7 @@ import 'chart.js';
 
 window.make_chart = function make_chart(id, labels, data)
 {
+   var ctx1 = document.getElementById(id);
    var ctx = document.getElementById(id).getContext('2d');
    var myChart = new Chart(ctx, {
        type: 'pie',

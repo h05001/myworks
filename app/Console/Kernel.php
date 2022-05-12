@@ -26,9 +26,12 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        //everyFiveMinutes();->weeklyOn(4, '18:53');
         // スケジュールの登録（「->daily()」は毎日深夜１２時に実行）
         //everyTenMinutes();->everyTenMinutes()->between('23:00', '23:30')->withoutOverlapping()
-        $schedule->command('command:scraping')->everyFiveMinutes();
+        //->weeklyOn(1, '8:00');->weekly()->wednesdays()->at('21:30');
+        $schedule->command('command:scraping')->weeklyOn(4, '20:50');
+
     }
 
     /**

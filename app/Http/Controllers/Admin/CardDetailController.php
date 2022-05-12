@@ -400,23 +400,25 @@ class CardDetailController extends Controller
 
       public function history(Request $request)
       {
-
+/*
           $priceHistory = CardPrice::leftjoin('recording_cards','card_prices.recordingcard_id', '=', 'recording_cards.id')
-                                   ->leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
+
 
                                    ->select('card_prices.id',
-                                           'recording_cards.cardname',
-                                           'recording_cards.rarity_id',
-                                           'card_prices.cardprice',
-                                           'card_prices.notes',
-                                           'card_prices.created_at',
-                                           'rarities.rarity_jp')
-                                   ->where('recording_cards.card_master_id',$request -> id)
+                                            'card_prices.cardprice',
+                                            'card_prices.notes',
+                                            'card_prices.created_at')
+                                   ->where('recording_cards.id',$request -> id)
                                    ->whereNull('notes')
                                    ->get();
-dd($priceHistory);
+//dd($priceHistory);
            //return view('admin.carddetail.history');
            return view('admin.carddetail.history', ['priceHistory' => $priceHistory]);
+           */
+                  // ソート済みの配列を返す
+       $keys = ['家','研究室','外出','学内','長期不在'];
+       $counts = [10,4,3,2,1];
+       return view('admin.carddetail.history',compact('keys','counts'));
       }
 }
 /*

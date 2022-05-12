@@ -92,6 +92,7 @@ class Scraping extends Command
                                        -> where('shop_id',$shop_id)
                                        -> where('rarity_convert',$rarities)
                                        -> first();
+/*
 echo "--------------------------------------------------------------------------------------\n";
 echo $keywords->recordingcardid;
 echo"\n";
@@ -100,7 +101,7 @@ echo"\n";
 echo $rarities;
 echo"\n";
 var_dump($check);
-
+*/
                 $cardprice = new CardPrice;
                 $cardprice->cardshop_id = $shop_id;
                 $cardprice->recordingcard_id = $check->id;
@@ -112,11 +113,11 @@ var_dump($check);
             });
             $end = microtime(true);
             print_r( '処理時間 = ' . ($end - $start) . '秒'."\n" );
-
+/*
             if($keywords->recordingcardid == "BLVO-JP003"){
                 //return;
                 break;
-            }
+            }*/
         }
     }
 }
