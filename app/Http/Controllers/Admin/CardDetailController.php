@@ -378,8 +378,8 @@ class CardDetailController extends Controller
                                     ->where('recording_cards.card_master_id',$request -> id)
                                     ->get();
 //dd($lastprice);
-      $rarity_tab = array_column((array)json_decode($lastprice), 'rarity_jp');
-      $rarity_tab = array_unique($rarity_tab);
+      //$rarity_tab = array_column((array)json_decode($lastprice), 'rarity_jp');
+      //$rarity_tab = array_unique($rarity_tab);
 
 //dd($rarity_tab);
 
@@ -392,7 +392,7 @@ class CardDetailController extends Controller
 //dd($posts);
           return view('admin.carddetail.price', ['carddetail' => $carddetail,
                                                  'lastprice' => $lastprice,
-                                                 'rarity_tab' => $rarity_tab,
+                                                 //'rarity_tab' => $rarity_tab,
                                                  //'priceHistory' => $priceHistory
                                                  ]);
 
@@ -416,8 +416,10 @@ class CardDetailController extends Controller
            return view('admin.carddetail.history', ['priceHistory' => $priceHistory]);
            */
                   // ソート済みの配列を返す
-       $keys = ['家','研究室','外出','学内','長期不在'];
-       $counts = [10,4,3,2,1];
+       //$keys = ['家','研究室','外出','学内','長期不在'];
+       //$counts = [10,4,3,2,1];
+       $keys = ['3/18','3/25','4/1','4/8','4/15'];
+       $counts = [2780,2730,2340,2580,219];
        return view('admin.carddetail.history',compact('keys','counts'));
       }
 }

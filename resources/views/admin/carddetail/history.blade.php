@@ -4,12 +4,13 @@
 @section('script')
 <script src="{{ mix('js/test.js') }}"></script>
 <script>
+    window.onload = function(){
+      id = 'allChart';
+      labels = @json($keys);
+      data = @json($counts);
+      make_chart(id,labels,data);
+  };
 
-    id = 'allChart';
-    var ctx = document.getElementById(id);
-    labels = @json($keys);
-    data = @json($counts);
-    make_chart(id,labels,data);
 </script>
 @endsection
 
@@ -18,14 +19,5 @@
        <div class="content">
            <canvas id="allChart"></canvas>
        </div>
-
-
-
-
-
-
-
-
-
 
 @endsection
