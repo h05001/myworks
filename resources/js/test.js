@@ -12,6 +12,7 @@ window.make_chart = function make_chart(id, labels, data)
                label: '価格変動歴',
                data: data,
                borderColor: 'rgba(255, 100, 100, 1)',
+
                lineTension: 0,
                fill: false,
                borderWidth: 3
@@ -19,6 +20,34 @@ window.make_chart = function make_chart(id, labels, data)
            }]
        },
        options: {
+          responsive: false,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          scales: {
+              xAxes: [{
+                  scaleLabel: {
+                      display: true,
+                      labelString: '日付',
+                      fontSize: 14                  // フォントサイズ
+                  },
+
+                  gridLines: {                   // 補助線
+                      display: true,
+                      color: "rgba(255, 0, 0, 0.2)", // 補助線の色
+                  }
+              }],
+              yAxes: [{
+
+                  scaleLabel: {
+                    　display: true,
+                    　labelString: '価格',
+                      fontSize: 14                  // フォントサイズ
+                  },
+                  gridLines: {                   // 補助線
+                      display: true,
+                      color: "rgba(255, 0, 0, 0.2)", // 補助線の色
+                  },
+              }]
+          },
        }
    });
 };

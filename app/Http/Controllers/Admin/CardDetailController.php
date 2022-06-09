@@ -14,6 +14,7 @@ use App\TrapCardDetail;
 use App\Tribe;
 use App\CardPrice;
 use App\RecordingCard;
+use Carbon\Carbon;
 
 class CardDetailController extends Controller
 {
@@ -400,27 +401,43 @@ class CardDetailController extends Controller
 
       public function history(Request $request)
       {
-/*
+//dd($request);
+          $month = 1;
+          if($request-> term != null){
+              $month = $request-> term;
+          }
+          $date = Carbon::today()->subMonth($month);
           $priceHistory = CardPrice::leftjoin('recording_cards','card_prices.recordingcard_id', '=', 'recording_cards.id')
-
 
                                    ->select('card_prices.id',
                                             'card_prices.cardprice',
-                                            'card_prices.notes',
-                                            'card_prices.created_at')
+                                            'card_prices.notes')
+                                            //'card_prices.created_at')
+                                   //->selectRaw('DATE_FORMAT(card_prices.created_at, "%Y%m%d") AS date')
+                                   ->selectRaw('DATE_FORMAT(card_prices.created_at, "%Y/%m/%d")')
                                    ->where('recording_cards.id',$request -> id)
                                    ->whereNull('notes')
+                                   ->whereDate('card_prices.created_at', '>=', $date)
+                                   //->groupBy('date')
+                                   //->groupBy('card_prices.created_at')
+
                                    ->get();
-//dd($priceHistory);
+dd($priceHistory);
            //return view('admin.carddetail.history');
-           return view('admin.carddetail.history', ['priceHistory' => $priceHistory]);
-           */
+           //return view('admin.carddetail.history', ['priceHistory' => $priceHistory]);
+
                   // ソート済みの配列を返す
        //$keys = ['家','研究室','外出','学内','長期不在'];
        //$counts = [10,4,3,2,1];
-       $keys = ['3/18','3/25','4/1','4/8','4/15'];
-       $counts = [2780,2730,2340,2580,219];
-       return view('admin.carddetail.history',compact('keys','counts'));
+       $id = $request -> id;
+       $keys = array_column((array)json_decode($priceHistory),'created_at');
+       //$keys = date('Y/m/d', $keys->created_at);
+
+       //$keys = $keys->unique('created_at');
+
+       $counts = array_column((array)json_decode($priceHistory),'cardprice');
+       //dd($keys);
+       return view('admin.carddetail.history',compact('keys','counts','id'));
       }
 }
 /*
