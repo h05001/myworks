@@ -310,10 +310,13 @@ class CardDetailController extends Controller
                   });
 
       }
-//dd($cond_link_marker);
+//dd($cond_tribe_id);
 //dd($query->getBindings());
+//dd($query->toSql(), $query->getBindings());
       $posts = $query -> get();
 
+      $tribelist = \App\Tribe::pluck('tribe', 'tribe_id');
+      $tribelist = $tribelist -> prepend('種族を選択', '');
 
       return view('admin.carddetail.index', ['posts' => $posts,
                                              'cond_card_name' => $cond_card_name,
@@ -333,6 +336,7 @@ class CardDetailController extends Controller
                                              'cond_defense_to' => $cond_defense_to,
                                              'cond_link_marker' => $cond_link_marker,
                                              'cond_key_word' => $cond_key_word,
+                                              "tribelist" => $tribelist
                                             ]);
 
       }
@@ -411,18 +415,15 @@ class CardDetailController extends Controller
 
                                    ->select('card_prices.id',
                                             'card_prices.cardprice',
-                                            'card_prices.notes')
-                                            //'card_prices.created_at')
+                                            'card_prices.notes',
+                                            'card_prices.created_at')
                                    //->selectRaw('DATE_FORMAT(card_prices.created_at, "%Y%m%d") AS date')
-                                   ->selectRaw('DATE_FORMAT(card_prices.created_at, "%Y/%m/%d")')
+                                   //->selectRaw('DATE_FORMAT(card_prices.created_at, "%Y/%m/%d") AS get_date')
                                    ->where('recording_cards.id',$request -> id)
                                    ->whereNull('notes')
                                    ->whereDate('card_prices.created_at', '>=', $date)
-                                   //->groupBy('date')
-                                   //->groupBy('card_prices.created_at')
-
                                    ->get();
-dd($priceHistory);
+//dd($priceHistory);
            //return view('admin.carddetail.history');
            //return view('admin.carddetail.history', ['priceHistory' => $priceHistory]);
 
@@ -430,6 +431,7 @@ dd($priceHistory);
        //$keys = ['家','研究室','外出','学内','長期不在'];
        //$counts = [10,4,3,2,1];
        $id = $request -> id;
+       //$keys = array_column((array)json_decode($priceHistory),'get_date');
        $keys = array_column((array)json_decode($priceHistory),'created_at');
        //$keys = date('Y/m/d', $keys->created_at);
 

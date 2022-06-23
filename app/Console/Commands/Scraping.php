@@ -54,6 +54,9 @@ class Scraping extends Command
         $keyword = $keyword->unique('recordingcardid');
 
         foreach ($keyword as  $keywords) {
+            if($keywords->recordingcardid == "AC02-JP000" || $keywords->recordingcardid == "AC02-JP010" || $keywords->recordingcardid =="AC02-JP016"){
+                //return;
+                //break;
 
             $url = "https://www.c-labo-online.jp/product-list?keyword=".$keywords->recordingcardid;
 
@@ -118,6 +121,7 @@ var_dump($check);
                 //return;
                 break;
             }*/
+          }
         }
     }
 }

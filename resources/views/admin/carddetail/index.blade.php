@@ -179,11 +179,18 @@ function clearElement(element) {
                   <div class="form-group row">-->
                       <label class="col-md-2">検索：種族</label>
                       <div class="col-md-3">
-                      <!--    <input type="text" class="form-control" name="tribe" value="{{ old('tribe') }}"> -->
+                        {{Form::select('tribe_id', $tribelist, null, ['class' => 'form-control'])}}
+                        {{--<select name="cond_tribe_id" class="form-control"  value="{{ 'tribe_id' }}">
+                            <option value="">種族を選択</option>
+                            @foreach ($tribelist as $lists) {
+                                echo '<option value="{{ $lists->tribe_id }}">{{ $lists->tribe }}</option>';
+                            }
+                            @endforeach --}}
+                      <!--    <input type="text" class="form-control" name="tribe" value="{{ old('tribe') }}">
                           <select class="form-control" name="cond_tribe_id">
                               <option value="">種族で検索</option>
                               <option value="spell_caster" @if($cond_tribe_id == 'spell_caster')selected @endif >魔法使い族</option>
-                              <option value="dragon" @if($cond_tribe_id == 'dragon')selected @endif >ドラゴン族</option>
+                              <option value="2" @if($cond_tribe_id == '2')selected @endif >ドラゴン族</option>
                               <option value="zombie" @if($cond_tribe_id == 'zombie')selected @endif >アンデット族</option>
                               <option value="warrior" @if($cond_tribe_id == 'warrior')selected @endif >戦士族</option>
                               <option value="beast_warrior" @if($cond_tribe_id == 'beast_warrior')selected @endif >獣戦士族</option>
@@ -208,7 +215,7 @@ function clearElement(element) {
                               <option value="divine_beast" @if($cond_tribe_id == 'divine_beast')selected @endif >幻神獣族</option>
                               <option value="creator" @if($cond_tribe_id == 'creator')selected @endif >創造神族</option>
 
-                          </select>
+                          </select>-->
                       </div>
                   </div>
 
@@ -376,7 +383,7 @@ function clearElement(element) {
                                     <td>{{ str_limit($carddetail->card_name, 50) }}</td>
                                     <td>{{ str_limit($carddetail->ruby, 50) }}</td>
                                     <td>{{ str_limit($carddetail->card_class, 50) }}</td>
-                          <!--      <td>{{ str_limit($carddetail->image_path, 50) }}</td> -->
+
                                     <td>{{ str_limit($carddetail->card_text, 300) }}</td>
 
 
@@ -387,7 +394,7 @@ function clearElement(element) {
                                       <div>
                                           <a href="{{ action('Admin\CardDetailController@price', ['id' => $carddetail->id]) }}">価格</a>
                                       </div>
-                                      
+
                                     </td>
                                 </tr>
                             @endforeach
@@ -398,13 +405,3 @@ function clearElement(element) {
         </div>
     </div>
 @endsection
-<!--
-<td>
-    <div>
-        <a href="{{ action('Admin\CardDetailController@edit', ['id' => $carddetail->id]) }}">編集</a>
-    </div>
-    <div>
-        <a href="{{ action('Admin\CardDetailController@delete', ['id' => $carddetail->id]) }}">削除</a>
-    </div>
-</td>
- -->

@@ -24,6 +24,7 @@ window.make_chart = function make_chart(id, labels, data)
           backgroundColor: 'rgba(54, 162, 235, 0.2)',
           scales: {
               xAxes: [{
+
                   scaleLabel: {
                       display: true,
                       labelString: '日付',
@@ -33,6 +34,20 @@ window.make_chart = function make_chart(id, labels, data)
                   gridLines: {                   // 補助線
                       display: true,
                       color: "rgba(255, 0, 0, 0.2)", // 補助線の色
+                  },
+                  ticks: {                       // 目盛り
+                    minRotation: 0,   // ┐表示角度水平
+                    maxRotation: 0,   // ┘
+                    // autoSkip: true,  なくてもよい
+                    maxTicksLimit: 6,  // 最大表示数
+                    callback: function(value, index, values) {
+                      var today = new Date( value );
+                      var year = today.getFullYear();
+                      var month = today.getMonth() + 1;
+                      var day = today.getDate();
+                        return year + "年" + month + "月" + day +"日";
+                    }
+
                   }
               }],
               yAxes: [{
