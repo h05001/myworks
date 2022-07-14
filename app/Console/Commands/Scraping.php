@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Weidner\Goutte\GoutteFacade as GoutteFacade;
 use App\RecordingCard;
 use App\CardPrice;
+use App\CardShop;
 
 class Scraping extends Command
 {
@@ -42,163 +43,184 @@ class Scraping extends Command
      */
     public function handle()
     {
-//\Log::info('バッチテスト');
 
         $start = microtime(true);
-        $shop_id = 1;
 
+        $shop_list = CardShop::get();
+
+        $shop_id = 2;
         $keyword = RecordingCard::select('recordingcardid')->get();
-
-        //$keywords = $keyword->unique('recordingcardid');
-
         $keyword = $keyword->unique('recordingcardid');
+        //$recordingcardid = "BLVO-JP039";
 
         foreach ($keyword as  $keywords) {
-            if($keywords->recordingcardid == "AC02-JP000" || $keywords->recordingcardid == "AC02-JP010" || $keywords->recordingcardid =="AC02-JP016"){
-                //return;
-                //break;
+            $recordingcardid = $keywords->recordingcardid;
+            //$url = "https://www.amenitydream.com/product-list?keyword=".$recordingcardid;
+            $url = "https://www.amenitydream.com/product-list?keyword=".$recordingcardid;
 
-            $url = "https://www.c-labo-online.jp/product-list?keyword=".$keywords->recordingcardid;
-
-            //$goutte = GoutteFacade::request('GET','https://www.c-labo-online.jp/product-list?keyword=BLVO-JP002' );
             $goutte = GoutteFacade::request('GET', $url);
             $goutte ->text();
 
-            $goutte ->filter('div.list_item_data')->each(function ($div)use ($keywords,$shop_id) {
+            $goutte ->filter('div.item_data')->each(function ($div)use ($shop_id,$recordingcardid) {
 
                 $rarity = $div->filter('span.goods_name')->text();
-                $rarity_s = mb_strpos($rarity, "】");
+                $rarity_s = mb_strpos($rarity, "【");
                 $rarity_start = mb_strpos($rarity, "【",$rarity_s )+1;
-                $rarity_end = mb_strpos($rarity, "/" , $rarity_s)-$rarity_start;
+                $rarity_end = mb_strpos($rarity, "】" , $rarity_s)-$rarity_start;
                 $rarities = mb_substr($rarity, $rarity_start , $rarity_end);
 
                 $price = $div->filter('span.figure')->text();
                 $prices = str_replace("円","",$price);
                 $prices = (int)str_replace(",","",$prices);
 
-                $note = $div->filter('span.goods_name')->text();
-                $note_start = mb_strpos($note, "《",1)+1;
-                $note_end = mb_strpos($note, "》" , 1)-$note_start;
-                $notes = null;
-
-                if(1 <= $note_end){
-                    $notes = mb_substr($note, $note_start , $note_end);
-                }
-
-
-
-                // データベースに保存する
-                $check = RecordingCard :: leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
-                                       -> leftjoin('rarity_converts', 'recording_cards.rarity_id', '=', 'rarity_converts.rarity_id')
-                                       -> select('recording_cards.*')
-                                       -> where('recordingcardid',$keywords->recordingcardid)
-                                       -> where('shop_id',$shop_id)
-                                       -> where('rarity_convert',$rarities)
-                                       -> first();
-/*
-echo "--------------------------------------------------------------------------------------\n";
-echo $keywords->recordingcardid;
-echo"\n";
-echo $shop_id;
-echo"\n";
-echo $rarities;
-echo"\n";
-var_dump($check);
-*/
-                $cardprice = new CardPrice;
-                $cardprice->cardshop_id = $shop_id;
-                $cardprice->recordingcard_id = $check->id;
-                //$cardprice->rarity_id = $check->rarity_id;
-                $cardprice->cardprice = $prices;
-                $cardprice->notes = $notes;
-                $cardprice->save();
-
+                echo "--------------------------------------------------------------------------------------\n";
+                echo $recordingcardid;
+                echo"\n";
+                echo $shop_id;
+                echo"\n";
+                echo $rarities;
+                echo"\n";
+                echo $prices;
+                echo"\n";
             });
-            $end = microtime(true);
-            print_r( '処理時間 = ' . ($end - $start) . '秒'."\n" );
-/*
-            if($keywords->recordingcardid == "BLVO-JP003"){
-                //return;
-                break;
-            }*/
-          }
         }
-    }
-}
+
 /*
-                $start = microtime(true);
+        foreach ($shop_list as $shop) {
 
-                $goutte = GoutteFacade::request('GET','https://www.c-labo-online.jp/product-list?keyword=BLVO-JP002' );
-                $goutte ->text();
+            $site_url = $shop->URL;
 
-                $goutte ->filter('div.list_item_data')->each(function ($div) {
+            $keyword = RecordingCard::select('recordingcardid')->get();
+            $keyword = $keyword->unique('recordingcardid');
 
-                    $note = $div->filter('span.goods_name')->text();
-                    $note_start = mb_strpos($note, "《",1)+1;
+            foreach ($keyword as  $keywords) {
+                //if($keywords->recordingcardid == "AC02-JP000" || $keywords->recordingcardid == "AC02-JP010" || $keywords->recordingcardid =="AC02-JP016"){
+                    //return;
+                    //break;
 
-                    $note_end = mb_strpos($note, "》" , 1)-$note_start;
-                    $notes = null;
+                    $url = $site_url.$keywords->recordingcardid;
+                    //$url = "https://www.c-labo-online.jp/product-list?keyword=".$keywords->recordingcardid;
 
-                    if(1 <= $note_end){
-                        $notes = mb_substr($note, $note_start , $note_end);
+                    $goutte = GoutteFacade::request('GET', $url);
+                    $goutte ->text();
+
+                    if($shop ->id == 1){
+                        continue;
+
+                        $this->scraping_c_labo($goutte,$shop ->id,$keywords->recordingcardid);
+
+                        $end = microtime(true);
+                        print_r( '処理時間 = ' . ($end - $start) . '秒'."\n" );
+
                     }
 
-                    $keywords = "BLVO-JP002";
-                    $shop_id = 1;
+                    if($shop ->id == 2){
+                        $this->scraping_amenityDream($goutte,$shop ->id,$keywords->recordingcardid);
 
-                    $card_name = $div->filter('span.goods_name')->text();
-                    $card_name_start = mb_strpos($card_name, "】",1)+1;
-                    $card_name_end = mb_strpos($card_name, "【" , 10)-$card_name_start;
-                    //$card_name_end = mb_strpos($card_name, "【" , 4)-$card_name_start;
-                    $card_names = mb_substr($card_name, $card_name_start , $card_name_end);
-
-
-                    $rarity = $div->filter('span.goods_name')->text();
-                    $rarity_start = mb_strpos($rarity, "【", 10)+1;
-                    //$rarity_start = mb_strpos($rarity, "【", 4)+1;
-                    $rarity_end = mb_strpos($rarity, "/" , 4)-$rarity_start;
-                    $rarities = mb_substr($rarity, $rarity_start , $rarity_end);
-
-                    $price = $div->filter('span.figure')->text();
-                    $prices = str_replace("円","",$price);
-                    $prices = (int)str_replace(",","",$prices);
-
-
-                    // データベースに保存する
-                    $check = RecordingCard :: leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
-                                           -> leftjoin('rarity_converts', 'recording_cards.rarity_id', '=', 'rarity_converts.rarity_id')
-                                           -> where('recordingcardid',$keywords)
-                                           -> where('shop_id',$shop_id)
-                                           -> where('rarity_convert',$rarities)
-                                           -> first();
-                    //var_dump($check);
-
-
-                    $cardprice = new CardPrice;
-                    $cardprice->cardshop_id = $shop_id;
-                    $cardprice->recordingcard_id = $check->id;
-                    //$cardprice->rarity_id = $check->rarity_id;
-                    $cardprice->cardprice = $prices;
-                    $cardprice->notes = $notes;
-                    $cardprice->save();
-/*
-                    echo "-----------------------------------------\n";
-                    echo $card_names;
-                    echo "\n";
-                    echo $rarities;
-                    echo "\n";
-                    echo $price;
-                    echo "\n";
-                    //if(1 < $note_start && 1 < $note_end){
-                        echo $notes;
-                        echo "\n";
-                    //}
-                    echo "-----------------------------------------\n";
-
-
-                   });
-              $end = microtime(true);
-              print_r( '処理時間 = ' . ($end - $start) . '秒'."\n" );
+                        //if($keywords->recordingcardid == "BLVO-JP002"){
+                            //break;
+                        //}
+                        //break;
+                    }
+              }
           }
-}
 */
+    }
+
+
+    public function save_card_price($shop_id,$recordingcardid,$rarities,$prices,$notes)
+    {
+        // データベースに保存する
+        $check = RecordingCard :: leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
+                               -> leftjoin('rarity_converts', 'recording_cards.rarity_id', '=', 'rarity_converts.rarity_id')
+                               -> select('recording_cards.*')
+                               -> where('recordingcardid',$recordingcardid)
+                               -> where('shop_id',$shop_id)
+                               -> where('rarity_convert',$rarities)
+                               -> first();
+
+        $cardprice = new CardPrice;
+        $cardprice->cardshop_id = $shop_id;
+        $cardprice->recordingcard_id = $check->id;
+        $cardprice->cardprice = $prices;
+        $cardprice->notes = $notes;
+        $cardprice->save();
+
+    }
+
+    /***
+    * カードラボ用のスクレイビング処理
+    *
+    * @param int $shop_id 店舗のid(int)
+    */
+    public function scraping_c_labo($goutte,$shop_id,$recordingcardid)
+    {
+      // 無名関数(クロージャ)
+      $goutte ->filter('div.item_data')->each(function ($div)use ($shop_id,$recordingcardid) {
+
+          $rarity = $div->filter('span.goods_name')->text();
+          $rarity_s = mb_strpos($rarity, "【");
+          $rarity_start = mb_strpos($rarity, "【",$rarity_s )+1;
+          $rarity_end = mb_strpos($rarity, "/" , $rarity_s)-$rarity_start;
+          $rarities = mb_substr($rarity, $rarity_start , $rarity_end);
+
+          $price = $div->filter('span.figure')->text();
+          $prices = str_replace("円","",$price);
+          $prices = (int)str_replace(",","",$prices);
+
+            $note = $div->filter('span.goods_name')->text();
+            $note_start = mb_strpos($note, "《",1)+1;
+            $note_end = mb_strpos($note, "》" , 1)-$note_start;
+            $notes = null;
+
+            if(1 <= $note_end){
+                $notes = mb_substr($note, $note_start , $note_end);
+            }
+
+            $this->save_card_price($shop_id,$recordingcardid,$rarities,$prices,$notes);
+
+        });
+
+    }
+
+    //アメニティードリームのスクレイピング
+    public function scraping_amenityDream($goutte,$shop_id,$recordingcardid)
+    {
+      // 無名関数(クロージャ)
+      $goutte ->filter('div.item_data')->each(function ($div)use ($shop_id,$recordingcardid) {
+
+          $rarity = $div->filter('span.goods_name')->text();
+          $rarity_s = mb_strpos($rarity, "【");
+          $rarity_start = mb_strpos($rarity, "【",$rarity_s )+1;
+          $rarity_end = mb_strpos($rarity, "】" , $rarity_s)-$rarity_start;
+          $rarities = mb_substr($rarity, $rarity_start , $rarity_end);
+
+          $price = $div->filter('span.figure')->text();
+          $prices = str_replace("円","",$price);
+          $prices = (int)str_replace(",","",$prices);
+/*
+            $note = $div->filter('span.goods_name')->text();
+            $note_start = mb_strpos($note, "《",1)+1;
+            $note_end = mb_strpos($note, "》" , 1)-$note_start;
+            $notes = null;
+
+            if(1 <= $note_end){
+                $notes = mb_substr($note, $note_start , $note_end);
+            }
+*/
+            //$this->save_card_price($shop_id,$recordingcardid,$rarities,$prices,$notes);
+            echo "--------------------------------------------------------------------------------------\n";
+            echo $recordingcardid;
+            echo"\n";
+            echo $shop_id;
+            echo"\n";
+            echo $rarities;
+            echo"\n";
+            echo $prices;
+            echo"\n";
+
+
+        });
+
+    }
+}

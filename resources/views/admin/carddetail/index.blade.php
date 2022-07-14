@@ -179,7 +179,7 @@ function clearElement(element) {
                   <div class="form-group row">-->
                       <label class="col-md-2">検索：種族</label>
                       <div class="col-md-3">
-                        {{Form::select('tribe_id', $tribelist, null, ['class' => 'form-control'])}}
+                        {{Form::select('cond_tribe_id', $tribelist, null, ['class' => 'form-control'])}}
                         {{--<select name="cond_tribe_id" class="form-control"  value="{{ 'tribe_id' }}">
                             <option value="">種族を選択</option>
                             @foreach ($tribelist as $lists) {
