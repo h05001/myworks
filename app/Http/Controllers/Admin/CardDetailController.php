@@ -355,19 +355,23 @@ class CardDetailController extends Controller
           $carddetail = Carddetail::find($request -> id);
 
           $subquery = RecordingCard::leftjoin('card_prices','recording_cards.id', '=', 'card_prices.recordingcard_id')
-                                   ->select('recording_cards.id','card_prices.notes',DB::raw('MAX(card_prices.created_at) as created_at'))
-                                   ->groupBy('recording_cards.id','card_prices.notes');
+                                   ->select('recording_cards.id',
+                                            'card_prices.notes',
+                                             DB::raw('MAX(card_prices.created_at) as created_at'),
+                                            'card_prices.cardshop_id'
+                                           )
+                                   ->groupBy('recording_cards.id','card_prices.notes','card_prices.cardshop_id');
 
           $lastprice =  RecordingCard::leftjoin('card_prices','recording_cards.id', '=', 'card_prices.recordingcard_id')
                                      ->leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
                                      ->leftjoin('card_shops', 'card_prices.cardshop_id', '=', 'card_shops.id')
                                      ->leftjoin('recording_packs','recording_cards.recordingpackid', '=', 'recording_packs.id')
 
-                                     //-> join(function($query) use ($request){
                                      -> joinsub($subquery,'T1',function($join){
                                          $join->on('recording_cards.id', '=', 'T1.id')
                                               ->whereRaw('T1.created_at = card_prices.created_at')
                                               ->whereRaw('IFNULL(T1.notes,0) = IFNULL(card_prices.notes,0)')
+                                              ->whereRaw('T1. cardshop_id = card_prices.cardshop_id')
                                          ;})
                                       ->select('recording_cards.id',
                                                'recording_cards.cardname',
@@ -375,29 +379,22 @@ class CardDetailController extends Controller
                                                'recording_cards.recordingpackid',
                                                'recording_cards.rarity_id',
                                                'card_prices.cardprice',
+                                               'card_prices.cardshop_id',
                                                'card_prices.notes',
                                                'card_prices.created_at',
                                                'rarities.rarity_jp',
                                                'card_shops.cardshop',
                                                'recording_packs.recordingpack')
                                     ->where('recording_cards.card_master_id',$request -> id)
+                                    ->orderby('rarities.id','desc')
                                     ->get();
+
+          $rarity_list = array_column((array)json_decode($lastprice), 'rarity_jp','id');
+          //dd($rarity_list);
 //dd($lastprice);
-      //$rarity_tab = array_column((array)json_decode($lastprice), 'rarity_jp');
-      //$rarity_tab = array_unique($rarity_tab);
-
-//dd($rarity_tab);
-
-
-//dd($priceHistory);
-
-//dd($lastprice);
-//dd($query);
-
-//dd($posts);
           return view('admin.carddetail.price', ['carddetail' => $carddetail,
                                                  'lastprice' => $lastprice,
-                                                 //'rarity_tab' => $rarity_tab,
+                                                 'rarity_list' => $rarity_list,
                                                  //'priceHistory' => $priceHistory
                                                  ]);
 
@@ -405,56 +402,80 @@ class CardDetailController extends Controller
 
       public function history(Request $request)
       {
+
 //dd($request);
           $month = 1;
           if($request-> term != null){
               $month = $request-> term;
           }
           $date = Carbon::today()->subMonth($month);
+
           $priceHistory = CardPrice::leftjoin('recording_cards','card_prices.recordingcard_id', '=', 'recording_cards.id')
 
                                    ->select('card_prices.id',
                                             'card_prices.cardprice',
                                             'card_prices.notes',
-                                            'card_prices.created_at')
-                                   //->selectRaw('DATE_FORMAT(card_prices.created_at, "%Y%m%d") AS date')
-                                   //->selectRaw('DATE_FORMAT(card_prices.created_at, "%Y/%m/%d") AS get_date')
+                                            'card_prices.created_at',
+                                            'card_prices.cardshop_id')
+
                                    ->where('recording_cards.id',$request -> id)
+                                   ->where('card_prices.cardshop_id',$request -> cardshop_id)
                                    ->whereNull('notes')
                                    ->whereDate('card_prices.created_at', '>=', $date)
                                    ->get();
+                                   //->toSql();
+//var_dump($priceHistory);
 //dd($priceHistory);
-           //return view('admin.carddetail.history');
-           //return view('admin.carddetail.history', ['priceHistory' => $priceHistory]);
-
+//dd($priceHistory->getBindings());
                   // ソート済みの配列を返す
-       //$keys = ['家','研究室','外出','学内','長期不在'];
-       //$counts = [10,4,3,2,1];
-       $id = $request -> id;
-       //$keys = array_column((array)json_decode($priceHistory),'get_date');
-       $keys = array_column((array)json_decode($priceHistory),'created_at');
-       //$keys = date('Y/m/d', $keys->created_at);
 
-       //$keys = $keys->unique('created_at');
+         $id = $request -> id;
+         //$keys = array_column((array)json_decode($priceHistory),'get_date');
+         $keys = array_column((array)json_decode($priceHistory),'created_at');
 
-       $counts = array_column((array)json_decode($priceHistory),'cardprice');
-       //dd($keys);
-       return view('admin.carddetail.history',compact('keys','counts','id'));
+         $counts = array_column((array)json_decode($priceHistory),'cardprice');
+
+         $cardshop_id = $request -> cardshop_id;
+
+         return view('admin.carddetail.history',compact('keys','counts','id','cardshop_id'));
+      }
+
+      public function historyAvg(Request $request)
+      {
+
+//dd($request);
+          $month = 1;
+          if($request-> term != null){
+              $month = $request-> term;
+          }
+          $date = Carbon::today()->subMonth($month);
+
+          $priceHistoryAvg = CardPrice::selectRaw('DATE_FORMAT(created_at, "%Y/%m/%d") AS date')
+                                      ->selectRaw('MAX(cardprice) as max')
+                                      ->selectRaw('ROUND(AVG(cardprice)) as avg')
+                                      ->selectRaw('MIN(cardprice) as min')
+                                      ->groupBy('date')
+
+                                      ->where('card_prices.recordingcard_id',$request -> id)
+
+                                      ->whereNull('notes')
+                                      ->whereDate('card_prices.created_at', '>=', $date)
+                                      ->get();
+//dd($priceHistoryAvg);
+                  // ソート済みの配列を返す
+
+         $id = $request -> id;
+         //$keys = array_column((array)json_decode($priceHistory),'get_date');
+         $keys = array_column((array)json_decode($priceHistoryAvg),'date');
+
+         $maxPrices = array_column((array)json_decode($priceHistoryAvg),'max');
+         $avgPrices = array_column((array)json_decode($priceHistoryAvg),'avg');
+         $minPrices = array_column((array)json_decode($priceHistoryAvg),'min');
+
+         return view('admin.carddetail.historyAvg',compact('keys','maxPrices','avgPrices','minPrices','id'));
       }
 }
 /*
-card_details:card_master_id
-recording_cards.id(収録カードマスタ)
-recording_cards.cardname
-recording_cards.recordingcardid
-recording_cards.recordingpackid
-recording_cards.rarity_id
-card_prices.cardprice
-card_prices.notes
-card_prices.created_at
-rarities.rarity_jp
-card_shops.cardshop
-recording_packs.recordingpack
 
 RecordingCard::leftjoin('card_prices','recording_cards.id', '=', 'card_prices.recordingcard_id')
                       ->leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')

@@ -47,84 +47,38 @@ class Scraping extends Command
         $start = microtime(true);
 
         $shop_list = CardShop::get();
-
-        $shop_id = 2;
-        $keyword = RecordingCard::select('recordingcardid')->get();
-        $keyword = $keyword->unique('recordingcardid');
-        //$recordingcardid = "BLVO-JP039";
-
-        foreach ($keyword as  $keywords) {
-            $recordingcardid = $keywords->recordingcardid;
-            //$url = "https://www.amenitydream.com/product-list?keyword=".$recordingcardid;
-            $url = "https://www.amenitydream.com/product-list?keyword=".$recordingcardid;
-
-            $goutte = GoutteFacade::request('GET', $url);
-            $goutte ->text();
-
-            $goutte ->filter('div.item_data')->each(function ($div)use ($shop_id,$recordingcardid) {
-
-                $rarity = $div->filter('span.goods_name')->text();
-                $rarity_s = mb_strpos($rarity, "【");
-                $rarity_start = mb_strpos($rarity, "【",$rarity_s )+1;
-                $rarity_end = mb_strpos($rarity, "】" , $rarity_s)-$rarity_start;
-                $rarities = mb_substr($rarity, $rarity_start , $rarity_end);
-
-                $price = $div->filter('span.figure')->text();
-                $prices = str_replace("円","",$price);
-                $prices = (int)str_replace(",","",$prices);
-
-                echo "--------------------------------------------------------------------------------------\n";
-                echo $recordingcardid;
-                echo"\n";
-                echo $shop_id;
-                echo"\n";
-                echo $rarities;
-                echo"\n";
-                echo $prices;
-                echo"\n";
-            });
-        }
-
-/*
         foreach ($shop_list as $shop) {
-
+/*
+          // TODO: テスト用 ショップid2の開発が終わったら消す
+          if ($shop ->id == 1) {
+            continue;
+          }
+*/
             $site_url = $shop->URL;
-
             $keyword = RecordingCard::select('recordingcardid')->get();
             $keyword = $keyword->unique('recordingcardid');
 
             foreach ($keyword as  $keywords) {
-                //if($keywords->recordingcardid == "AC02-JP000" || $keywords->recordingcardid == "AC02-JP010" || $keywords->recordingcardid =="AC02-JP016"){
-                    //return;
-                    //break;
 
                     $url = $site_url.$keywords->recordingcardid;
-                    //$url = "https://www.c-labo-online.jp/product-list?keyword=".$keywords->recordingcardid;
 
                     $goutte = GoutteFacade::request('GET', $url);
                     $goutte ->text();
 
                     if($shop ->id == 1){
-                        continue;
-
                         $this->scraping_c_labo($goutte,$shop ->id,$keywords->recordingcardid);
-
                         $end = microtime(true);
                         print_r( '処理時間 = ' . ($end - $start) . '秒'."\n" );
-
                     }
 
                     if($shop ->id == 2){
                         $this->scraping_amenityDream($goutte,$shop ->id,$keywords->recordingcardid);
-
-                        //if($keywords->recordingcardid == "BLVO-JP002"){
-                            //break;
-                        //}
-                        //break;
+                        $end = microtime(true);
+                        print_r( '処理時間 = ' . ($end - $start) . '秒'."\n" );
                     }
               }
           }
-*/
+
     }
 
 
@@ -159,7 +113,7 @@ class Scraping extends Command
       $goutte ->filter('div.item_data')->each(function ($div)use ($shop_id,$recordingcardid) {
 
           $rarity = $div->filter('span.goods_name')->text();
-          $rarity_s = mb_strpos($rarity, "【");
+          $rarity_s = mb_strpos($rarity, "】");
           $rarity_start = mb_strpos($rarity, "【",$rarity_s )+1;
           $rarity_end = mb_strpos($rarity, "/" , $rarity_s)-$rarity_start;
           $rarities = mb_substr($rarity, $rarity_start , $rarity_end);
@@ -188,16 +142,26 @@ class Scraping extends Command
     {
       // 無名関数(クロージャ)
       $goutte ->filter('div.item_data')->each(function ($div)use ($shop_id,$recordingcardid) {
-
+          $prices = null;
           $rarity = $div->filter('span.goods_name')->text();
           $rarity_s = mb_strpos($rarity, "【");
           $rarity_start = mb_strpos($rarity, "【",$rarity_s )+1;
           $rarity_end = mb_strpos($rarity, "】" , $rarity_s)-$rarity_start;
           $rarities = mb_substr($rarity, $rarity_start , $rarity_end);
+          if(count($div->filter('span.figure'))){
+              $price = $div->filter('span.figure')->text();
+              $prices = str_replace("円","",$price);
+              $prices = (int)str_replace(",","",$prices);
+          }else{
+              return;
+          }
+          $notes = null;
 
-          $price = $div->filter('span.figure')->text();
-          $prices = str_replace("円","",$price);
-          $prices = (int)str_replace(",","",$prices);
+            $this->save_card_price($shop_id,$recordingcardid,$rarities,$prices,$notes);
+      });
+
+    }
+}
 /*
             $note = $div->filter('span.goods_name')->text();
             $note_start = mb_strpos($note, "《",1)+1;
@@ -208,19 +172,14 @@ class Scraping extends Command
                 $notes = mb_substr($note, $note_start , $note_end);
             }
 */
-            //$this->save_card_price($shop_id,$recordingcardid,$rarities,$prices,$notes);
-            echo "--------------------------------------------------------------------------------------\n";
-            echo $recordingcardid;
-            echo"\n";
-            echo $shop_id;
-            echo"\n";
-            echo $rarities;
-            echo"\n";
-            echo $prices;
-            echo"\n";
-
-
-        });
-
-    }
-}
+/*
+          echo "--------------------------------------------------------------------------------------\n";
+          echo $recordingcardid;
+          echo"\n";
+          echo $shop_id;
+          echo"\n";
+          echo $rarities;
+          echo"\n";
+          echo $prices;
+          echo"\n";
+*/

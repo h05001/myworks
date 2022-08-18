@@ -21034,6 +21034,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_chart_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_chart_js__);
 
 
+//window.make_chart = function make_chart(id, labels, data)
 window.make_chart = function make_chart(id, labels, data) {
     var ctx = document.getElementById(id).getContext('2d');
     var myChart = new Chart(ctx, {
@@ -21042,14 +21043,26 @@ window.make_chart = function make_chart(id, labels, data) {
         data: {
             labels: labels,
             datasets: [{
-                label: '価格変動歴',
+                label: '最大値変動歴',
                 data: data,
-                borderColor: 'rgba(255, 100, 100, 1)',
-
+                borderColor: 'rgba(54, 162, 235, 1)',
                 lineTension: 0,
                 fill: false,
                 borderWidth: 3
-
+            }, {
+                label: '平均値変動歴',
+                data: data,
+                borderColor: 'rgba(255, 100, 100, 1)',
+                lineTension: 0,
+                fill: false,
+                borderWidth: 3
+            }, {
+                label: '最小値変動歴',
+                data: data,
+                borderColor: 'rgba(153, 102, 255, 1)',
+                lineTension: 0,
+                fill: false,
+                borderWidth: 3
             }]
         },
         options: {
@@ -21093,6 +21106,11 @@ window.make_chart = function make_chart(id, labels, data) {
                     gridLines: { // 補助線
                         display: true,
                         color: "rgba(255, 0, 0, 0.2)" // 補助線の色
+                    },
+                    ticks: {
+                        suggestedMin: 0,
+                        stepSize: 100,
+                        maxTicksLimit: 10 // 最大表示数
                     }
                 }]
             }

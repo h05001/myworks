@@ -53,6 +53,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('carddetail', 'Admin\CardDetailController@index');
     Route::get('carddetail/price', 'Admin\CardDetailController@price');
     Route::get('carddetail/history', 'Admin\CardDetailController@history');
+    Route::get('carddetail/historyAvg', 'Admin\CardDetailController@historyAvg');
     Route::get('carddetail/detail', 'Admin\CardDetailController@detail');
 
     Route::get('carddetail/delete', 'Admin\CardDetailController@delete');

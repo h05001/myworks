@@ -1,13 +1,14 @@
 
 @extends('layouts.admin')
-@section('title', '価格変動歴')
+@section('title', '価格変動歴(平均)')
 @section('script')
 <script src="{{ mix('js/test.js') }}"></script>
 <script>
     window.onload = function(){
       id = 'allChart';
       labels = @json($keys);
-      data = @json($counts);
+      
+      data = @json($maxPrices,$avgPrices,$minPrices);
       make_chart(id,labels,data);
   };
 
@@ -15,7 +16,7 @@
 @endsection
 
 @section('content')
-    <form action="{{ action('Admin\CardDetailController@history') }}" method="get">
+    <form action="{{ action('Admin\CardDetailController@historyAvg') }}" method="get">
         <div class="form-group row">
             <div class="col-md-3" class="form-control">
                 <select name="term" value="term">
@@ -26,7 +27,7 @@
                 </select>
             </div>
             <input type="hidden" name="id" value="{{ $id }}">
-            <input type="hidden" name="cardshop_id" value="{{ $cardshop_id }}">
+
         </div>
         <input type="submit" class="btn btn-primary" value="グラフの生成">
     </form>
