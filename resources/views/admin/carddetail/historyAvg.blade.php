@@ -7,9 +7,12 @@
     window.onload = function(){
       id = 'allChart';
       labels = @json($keys);
-      
-      data = @json($maxPrices,$avgPrices,$minPrices);
-      make_chart(id,labels,data);
+
+      max = @json($maxPrices);
+      avg = @json($avgPrices);
+      min = @json($minPrices);
+
+      make_chart_avg(id,labels,max,avg,min);
   };
 
 </script>

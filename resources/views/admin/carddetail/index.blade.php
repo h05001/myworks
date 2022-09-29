@@ -48,6 +48,27 @@ function clearElement(element) {
             <h2>登録カード一覧</h2>
         </div>
         <div class="row">
+            <form action="{{ action('Admin\CardDetailController@import') }}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
+                    <div class="grid grid-cols-1">
+
+                        <select class="form-control" name="file_class" >
+                            <option value="">csvファイルの種類を選択（必須)</option>
+                            <option value="select1">モンスター</option>
+                            <option value="select2">魔法</option>
+                            <option value="select3">罠</option>
+
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-1">
+                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold mb-1">CSVファイルを選択（必須）</label>
+                        <input type='file' name='import' />
+
+                    </div>
+                </div>
+                <button type="submit" class='bg-gray-500 hover:bg-gray-700 text-black font-bold py-1 px-3 mt-1 rounded'>登録</button>
+            </form>
 
             <div class="col-md-12">
                 <form action="{{ action('Admin\CardDetailController@index') }}" method="get">

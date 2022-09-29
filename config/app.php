@@ -147,6 +147,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Weidner\Goutte\GoutteServiceProvider::class, // 追記
+        Maatwebsite\Excel\ExcelServiceProvider::class,//laravel excel
 
         /*
          * Package Service Providers...
@@ -164,7 +165,7 @@ return [
         //スクレイピング
         Weidner\Goutte\GoutteServiceProvider::class,
         // 追記1227
-        //Collective\Html\HtmlServiceProvider::class, 
+        //Collective\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -217,6 +218,8 @@ return [
 
         //スクレイピング
         'Goutte' => Weidner\Goutte\GoutteFacade::class,
+
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,//laravel excel
         //追記1227
         //'Form' => Collective\Html\FormFacade::class,
         //'Html' => Collective\Html\HtmlFacade::class,

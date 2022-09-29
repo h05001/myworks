@@ -21,6 +21,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('cardprice/create', 'Admin\CardPriceController@create');
     Route::get('cardprice/edit', 'Admin\CardPriceController@edit');
     Route::post('cardprice/edit', 'Admin\CardPriceController@update');
+    Route::get('carddetail', 'Admin\CardDetailController@index');
 
 
     Route::get('cardshop/create', 'Admin\CardShopController@add');
@@ -55,6 +56,8 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('carddetail/history', 'Admin\CardDetailController@history');
     Route::get('carddetail/historyAvg', 'Admin\CardDetailController@historyAvg');
     Route::get('carddetail/detail', 'Admin\CardDetailController@detail');
+    Route::post('carddetail/import', 'Admin\CardDetailController@import');//laravel excel
+
 
     Route::get('carddetail/delete', 'Admin\CardDetailController@delete');
 

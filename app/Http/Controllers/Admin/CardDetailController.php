@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use Maatwebsite\Excel\Facades\Excel;
+
+
 use App\CardDetail;
 use App\MonsterCardDetail;
 use App\MonsterCardClass;
@@ -15,6 +18,7 @@ use App\Tribe;
 use App\CardPrice;
 use App\RecordingCard;
 use Carbon\Carbon;
+use App\Imports\CardDetailsImport as CardDetailImport;
 
 class CardDetailController extends Controller
 {
@@ -474,25 +478,24 @@ class CardDetailController extends Controller
 
          return view('admin.carddetail.historyAvg',compact('keys','maxPrices','avgPrices','minPrices','id'));
       }
-}
-/*
 
-RecordingCard::leftjoin('card_prices','recording_cards.id', '=', 'card_prices.recordingcard_id')
-                      ->leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
-                      ->leftjoin('card_shops', 'card_prices.cardshop_id', '=', 'card_shops.id')
-                      ->leftjoin('recording_packs','recording_cards.recordingpackid', '=', 'recording_packs.id')
-                      ->select('recording_cards.id',
-                               'recording_cards.cardname',
-                               'recording_cards.recordingcardid',
-                               'recording_cards.recordingpackid',
-                               'recording_cards.rarity_id',
-                               'card_prices.cardprice',
-                               'card_prices.notes',
-                               'card_prices.created_at',
-                               'rarities.rarity_jp',
-                               'card_shops.cardshop',
-                               'recording_packs.recordingpack')
-                      ->where('recording_cards.card_master_id',$request -> id)
-                      ->whereNull('notes')
-                      ->get();
-*/
+        public function import(Request $request)
+      {
+//dd($request);
+          $file = $request->file('import');
+          if($request->file_class == "select1"){
+              Excel::import(new CardDetailImport, $file);
+          }
+          if($request->file_class == "select2"){
+              //Excel::import(new MagicCardDetailImport, $file);
+          }
+          if($request->file_class == "select3"){
+              //Excel::import(new TrapCardDetailImport, $file);
+          }
+
+
+          return redirect('admin/carddetail')->with('flash_message', '登録が完了しました');
+
+
+      }
+}

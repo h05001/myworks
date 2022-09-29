@@ -19,10 +19,17 @@ class CardPriceController extends Controller
           $this->validate($request, CardPrice::$rules);
 
 
-          
+
       return redirect('admin/cardprice/create');
   }
 
+  public function index(Request $request)
+    {
+
+        $posts = CardPrice::all();
+
+        return view('admin.cardprice.index', ['posts' => $posts]);
+    }
     public function edit()
   {
       return view('admin.cardprice.edit');

@@ -43,41 +43,47 @@ class Scraping extends Command
      */
     public function handle()
     {
+        try {
+          
+            $start = microtime(true);
 
-        $start = microtime(true);
-
-        $shop_list = CardShop::get();
-        foreach ($shop_list as $shop) {
-/*
-          // TODO: テスト用 ショップid2の開発が終わったら消す
-          if ($shop ->id == 1) {
-            continue;
-          }
-*/
-            $site_url = $shop->URL;
-            $keyword = RecordingCard::select('recordingcardid')->get();
-            $keyword = $keyword->unique('recordingcardid');
-
-            foreach ($keyword as  $keywords) {
-
-                    $url = $site_url.$keywords->recordingcardid;
-
-                    $goutte = GoutteFacade::request('GET', $url);
-                    $goutte ->text();
-
-                    if($shop ->id == 1){
-                        $this->scraping_c_labo($goutte,$shop ->id,$keywords->recordingcardid);
-                        $end = microtime(true);
-                        print_r( '処理時間 = ' . ($end - $start) . '秒'."\n" );
-                    }
-
-                    if($shop ->id == 2){
-                        $this->scraping_amenityDream($goutte,$shop ->id,$keywords->recordingcardid);
-                        $end = microtime(true);
-                        print_r( '処理時間 = ' . ($end - $start) . '秒'."\n" );
-                    }
+            $shop_list = CardShop::get();
+            foreach ($shop_list as $shop) {
+            /*
+              // TODO: テスト用 ショップid2の開発が終わったら消す
+              if ($shop ->id == 1) {
+                continue;
               }
-          }
+            */
+                $site_url = $shop->URL;
+                $keyword = RecordingCard::select('recordingcardid')->get();
+                $keyword = $keyword->unique('recordingcardid');
+
+                foreach ($keyword as  $keywords) {
+
+                        $url = $site_url.$keywords->recordingcardid;
+
+                        $goutte = GoutteFacade::request('GET', $url);
+                        $goutte ->text();
+
+                        if($shop ->id == 1){
+                            $this->scraping_c_labo($goutte,$shop ->id,$keywords->recordingcardid);
+                            $end = microtime(true);
+                            print_r( '処理時間 = ' . ($end - $start) . '秒'."\n" );
+                        }
+
+                        if($shop ->id == 2){
+                            $this->scraping_amenityDream($goutte,$shop ->id,$keywords->recordingcardid);
+                            $end = microtime(true);
+                            print_r( '処理時間 = ' . ($end - $start) . '秒'."\n" );
+                        }
+                  }
+              }
+        } catch (\Exception $e) {
+            \Log::error($e);
+
+        }
+
 
     }
 
