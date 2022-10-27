@@ -14,8 +14,11 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\OnEachRow;
 
-class CardDetailImport implements OnEachRow,WithStartRow,ToModel
+class CardDetailImport implements ToModel,OnEachRow,WithStartRow
+//class CardDetailImport implements ToModel,WithStartRow
 {
+    public static $startRow = 2; // csvの1行目にヘッダがあるので2行目から取り込む
+
     public function onRow(Row $row)
     {
 
@@ -59,7 +62,7 @@ class CardDetailImport implements OnEachRow,WithStartRow,ToModel
      */
     public function startRow(): int
     {
-        return 2;
+        return self::$startRow;
     }
 
 

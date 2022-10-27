@@ -18,7 +18,8 @@ use App\Tribe;
 use App\CardPrice;
 use App\RecordingCard;
 use Carbon\Carbon;
-use App\Imports\CardDetailsImport as CardDetailImport;
+//use App\Imports\CardDetailsImport as CardDetailImport;
+
 
 class CardDetailController extends Controller
 {
@@ -479,23 +480,180 @@ class CardDetailController extends Controller
          return view('admin.carddetail.historyAvg',compact('keys','maxPrices','avgPrices','minPrices','id'));
       }
 
-        public function import(Request $request)
+      public function import(Request $request)
       {
-//dd($request);
-          $file = $request->file('import');
-          if($request->file_class == "select1"){
-              Excel::import(new CardDetailImport, $file);
-          }
-          if($request->file_class == "select2"){
-              //Excel::import(new MagicCardDetailImport, $file);
-          }
-          if($request->file_class == "select3"){
-              //Excel::import(new TrapCardDetailImport, $file);
-          }
+        $file = $request->file('import');
+
+        $import = new \SplFileObject($file);
+        $import->setFlags(
+            \SplFileObject::READ_CSV |      // CSVとして行を読み込み
+            \SplFileObject::READ_AHEAD |    // 先読み／巻き戻しで読み込み
+            \SplFileObject::SKIP_EMPTY |    // 空行を読み飛ばす
+            \SplFileObject::DROP_NEW_LINE   // 行末の改行を読み飛ばす
+        );
 
 
-          return redirect('admin/carddetail')->with('flash_message', '登録が完了しました');
+        if($request->file_class == "select1"){
+            $this -> importMonsterCard($import);
+        }
+        if($request->file_class == "select2"){
+            $this -> importMagicCard($import);
+        }
+        if($request->file_class == "select3"){
+            $this -> importTrapCard($import);
+        }
+        if($request->file_class == "select4"){
+            $this -> importCardPrice($import);
+        }
 
+
+        return redirect('admin/carddetail')->with('flash_message', '登録が完了しました');
+    }
+
+    public function importMonsterCard($import_data)
+    {
+      $import_flag = false;
+
+      $import_data->seek(PHP_INT_MAX);
+      //dd($import_data->key() + 1);
+      foreach($import_data as $row) {
+          if (!$import_flag ){
+          $import_flag = true;
+          continue;
+        }
+        // 文字コード変換
+        $row = mb_convert_encoding($row, "UTF-8","sjis-win, sjis");
+        $import = CardDetail::create([
+          'card_name' => $row[0],
+          'ruby' => $row[1],
+          'card_class' => "select1",
+          'card_text' => $row[2],
+        ]);
+
+        $monsterCardclassArr = explode("_",$row[3]);
+
+        foreach ($monsterCardclassArr as $monsterCardclass) {
+          $monstercardclass = new MonsterCardClass;
+
+          // データベースに保存する
+          $monstercardclass->card_master_id = $import-> card_master_id;
+          $monstercardclass->class_id = (int)$monsterCardclass;
+          $monstercardclass->save();
+          /*
+          MonsterCardclass::create([
+            'card_master_id' => $import-> card_master_id,
+            'class_id' => $monsterCardclass
+          ]);*/
+        }
+        $monstercarddetail = new MonsterCardDetail;
+
+        // データベースに保存する
+        $monstercarddetail->card_master_id = $import-> card_master_id;
+        $monstercarddetail->property = $row[4];
+        $monstercarddetail->tribe_id = (int)$row[5];
+        $monstercarddetail->level_rank_link = (int)$row[6];
+        $monstercarddetail->scale = (int)$row[7];
+
+        $monstercarddetail->pendulum_effect = $row[8];
+
+        $monstercarddetail->link_marker = $row[9];
+
+        $monstercarddetail->attack = $row[10];
+        $monstercarddetail->defense = $row[11];
+        $monstercarddetail->save();
 
       }
+    }
+
+      public function importMagicCard($import_data)
+      {
+        $import_flag = false;
+        foreach($import_data as $row) {
+          if (!$import_flag ){
+            $import_flag = true;
+            continue;
+          }
+          // 文字コード変換
+          $row = mb_convert_encoding($row, "UTF-8","sjis-win, sjis");
+          $import = CardDetail::create([
+            'card_name' => $row[0],
+            'ruby' => $row[1],
+            'card_class' => "select2",
+            'card_text' => $row[2],
+          ]);
+//dd($import);
+          $magiccarddetail = new MagicCardDetail;//$magiccarddetail変数をインスタンス化
+
+          // データベースに保存する
+          $magiccarddetail->card_master_id = $import-> card_master_id;
+          $magiccarddetail->magic_card_class = $row[3];
+          $magiccarddetail->save();
+
+        }
+      }
+
+        public function importTrapCard($import_data)
+        {
+          $import_flag = false;
+          foreach($import_data as $row) {
+            if (!$import_flag ){
+              $import_flag = true;
+              continue;
+            }
+
+            // 文字コード変換
+            $row = mb_convert_encoding($row, "UTF-8","sjis-win, sjis");
+
+            $import = CardDetail::create([
+              'card_name' => $row[0],
+              'ruby' => $row[1],
+              'card_class' => "select3",
+              'card_text' => $row[2],
+            ]);
+
+            $trapcarddetail = new TrapCardDetail;//$trapcarddetail変数をインスタンス化
+
+            // データベースに保存する
+            $trapcarddetail->card_master_id = $import-> card_master_id;
+            $trapcarddetail->trap_card_class = $row[3];
+            $trapcarddetail->save();
+          }
+        }
+
+        public function importCardPrice($import_data)
+        {
+          $import_flag = false;
+          foreach($import_data as $row) {
+            if (!$import_flag ){
+              $import_flag = true;
+              continue;
+            }
+            // 文字コード変換
+            $row = mb_convert_encoding($row, "UTF-8","sjis-win, sjis");
+            $recordingcard = new RecordingCard;//$recordingcard変数をインスタンス化
+
+            // データベースに保存する
+            $recordingcard->cardname = $row[0];
+            //$recordingcard->card_master_id = $row[1];
+            $card_master_id = CardDetail::select('card_details.card_name',
+                                                 'card_details.card_master_id')
+                                           ->where($row[0])
+                                           ->get();
+            $recordingcard->card_master_id = $card_master_id->card_master_id;
+            $recordingcard->recordingpackid = $row[1];
+            $recordingcard->recordingcardid = $row[2];
+            $recordingcard->rarity_id = (int)$row[3];
+            $recordingcard->save();
+            /*
+            $import = CardPrice::create([
+              'cardname' => $row[0],
+              'card_master_id' => $row[1],
+              'recordingpackid' => $row[2],
+              'recordingcardid' => $row[3],
+              'rarity_id' => (int)$row[4]
+            ]);*/
+
+
+          }
+        }
 }

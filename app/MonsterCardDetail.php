@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class MonsterCardDetail extends Model
 {
+    //protected $fillable = ['card_master_id'];
     //
     public static function getRules($classIdArr)//$classId
     {
+
         $rules = array(
             'property' => 'required',//属性
             'tribe_id' => 'required',//種族
