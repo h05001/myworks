@@ -18,7 +18,9 @@ class Scraping extends Command
      */
 
      //スクレイピング
-     protected $signature = 'command:scraping';
+     //protected $signature = 'command:scraping';
+     protected $signature = 'command:scraping {conditions?}{shop_list?}';
+     //protected $signature = 'command:scraping {conditions?}';
     /**
      * The console command description.
      *
@@ -43,11 +45,18 @@ class Scraping extends Command
      */
     public function handle()
     {
+      $logger = \Log::channel('batch')->getLogger();
+      $logger->info("スクレイピング開始");
         try {
-          
-            $start = microtime(true);
 
-            $shop_list = CardShop::get();
+            $start = microtime(true);
+            if($this->argument('shop_list') != null){
+                $shop_list = $this->argument('shop_list');
+
+            }else{
+                $shop_list = CardShop::select('id')->get();
+            }
+
             foreach ($shop_list as $shop) {
             /*
               // TODO: テスト用 ショップid2の開発が終わったら消す
@@ -58,25 +67,38 @@ class Scraping extends Command
                 $site_url = $shop->URL;
                 $keyword = RecordingCard::select('recordingcardid')->get();
                 $keyword = $keyword->unique('recordingcardid');
+                if($this->argument('conditions') != null){
+                    $keyword = RecordingCard::select('recordingcardid')->where("recordingcardid",$this->argument('recordingcardid'))->get();
+
+                }
+
+                //$keyword = RecordingCard::select('recordingcardid')->where('recordingcardid',"AC02-JP047")->get();
 
                 foreach ($keyword as  $keywords) {
-
+                        print_r( '対象ID' .$keywords->recordingcardid." " );
+                        print_r( 'ShopID' .$shop ->id." " );
                         $url = $site_url.$keywords->recordingcardid;
 
                         $goutte = GoutteFacade::request('GET', $url);
                         $goutte ->text();
 
+
                         if($shop ->id == 1){
                             $this->scraping_c_labo($goutte,$shop ->id,$keywords->recordingcardid);
                             $end = microtime(true);
-                            print_r( '処理時間 = ' . ($end - $start) . '秒'."\n" );
+                            print_r( '処理時間 = ' . ($end - $start) . '秒' );
                         }
 
                         if($shop ->id == 2){
                             $this->scraping_amenityDream($goutte,$shop ->id,$keywords->recordingcardid);
                             $end = microtime(true);
-                            print_r( '処理時間 = ' . ($end - $start) . '秒'."\n" );
+                            print_r( '処理時間 = ' . ($end - $start) . '秒');
                         }
+                        if($shop ->id == 3){
+                          break;
+
+                        }
+                        print_r("\n" );
                   }
               }
         } catch (\Exception $e) {
@@ -84,20 +106,23 @@ class Scraping extends Command
 
         }
 
-
+        $logger->info("スクレイピング完了");
     }
 
 
     public function save_card_price($shop_id,$recordingcardid,$rarities,$prices,$notes)
     {
         // データベースに保存する
-        $check = RecordingCard :: leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
-                               -> leftjoin('rarity_converts', 'recording_cards.rarity_id', '=', 'rarity_converts.rarity_id')
-                               -> select('recording_cards.*')
-                               -> where('recordingcardid',$recordingcardid)
-                               -> where('shop_id',$shop_id)
-                               -> where('rarity_convert',$rarities)
-                               -> first();
+        try{
+          $check = RecordingCard :: leftjoin('rarities', 'recording_cards.rarity_id', '=', 'rarities.id')
+                                 -> leftjoin('rarity_converts', 'recording_cards.rarity_id', '=', 'rarity_converts.rarity_id')
+                                 -> select('recording_cards.*')
+                                 -> where('recordingcardid',$recordingcardid)
+                                 -> where('shop_id',$shop_id)
+                                 -> where('rarity_convert',$rarities)
+                                 -> first();
+
+//dd($check->toSql()
 
         $cardprice = new CardPrice;
         $cardprice->cardshop_id = $shop_id;
@@ -105,7 +130,10 @@ class Scraping extends Command
         $cardprice->cardprice = $prices;
         $cardprice->notes = $notes;
         $cardprice->save();
-
+      }catch(\Exception $e){
+        print_r("aiueo");
+        print_r($rarities);
+      }
     }
 
     /***
@@ -123,6 +151,7 @@ class Scraping extends Command
           $rarity_start = mb_strpos($rarity, "【",$rarity_s )+1;
           $rarity_end = mb_strpos($rarity, "/" , $rarity_s)-$rarity_start;
           $rarities = mb_substr($rarity, $rarity_start , $rarity_end);
+
 
           $price = $div->filter('span.figure')->text();
           $prices = str_replace("円","",$price);
@@ -168,24 +197,3 @@ class Scraping extends Command
 
     }
 }
-/*
-            $note = $div->filter('span.goods_name')->text();
-            $note_start = mb_strpos($note, "《",1)+1;
-            $note_end = mb_strpos($note, "》" , 1)-$note_start;
-            $notes = null;
-
-            if(1 <= $note_end){
-                $notes = mb_substr($note, $note_start , $note_end);
-            }
-*/
-/*
-          echo "--------------------------------------------------------------------------------------\n";
-          echo $recordingcardid;
-          echo"\n";
-          echo $shop_id;
-          echo"\n";
-          echo $rarities;
-          echo"\n";
-          echo $prices;
-          echo"\n";
-*/

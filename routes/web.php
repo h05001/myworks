@@ -57,7 +57,8 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('carddetail/historyAvg', 'Admin\CardDetailController@historyAvg');
     Route::get('carddetail/detail', 'Admin\CardDetailController@detail');
     Route::post('carddetail/import', 'Admin\CardDetailController@import');//laravel excel
-
+    Route::get('carddetail/scrapingConditions', 'Admin\CardDetailController@scrapingConditions');
+    Route::post('carddetail/scraping', 'Admin\CardDetailController@scraping');
 
     Route::get('carddetail/delete', 'Admin\CardDetailController@delete');
 
@@ -98,34 +99,28 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('rarityconvert/create', 'Admin\RarityConvertController@create');
 
     /*
-
     Route::get('cardinfomation/create', 'Admin\CardInfomationController@add');
     Route::post('cardinfomation/create', 'Admin\CardInfomationController@create');
     Route::get('cardinfomation/edit', 'Admin\CardInfomationController@edit');
     Route::post('cardinfomation/edit', 'Admin\CardInfomationController@update');
-
     Route::get('magiccarddetail/create', 'Admin\MagicCardDetailController@add');
     Route::post('magiccarddetail/create', 'Admin\MagicCardDetailController@create');
     Route::get('magiccarddetail/edit', 'Admin\MagicCardDetailController@edit');
     Route::post('magiccarddetail/edit', 'Admin\MagicCardDetailController@update');
     Route::get('magiccarddetail', 'Admin\MagicCardDetailController@index');
     Route::get('magiccarddetail/delete', 'Admin\MagicCardDetailController@delete');
-
-
     Route::get('trapcarddetail/create', 'Admin\TrapCardDetailController@add');
     Route::post('trapcarddetail/create', 'Admin\TrapCardDetailController@create');
     Route::get('trapcarddetail/edit', 'Admin\TrapCardDetailController@edit');
     Route::post('trapcarddetail/edit', 'Admin\TrapCardDetailController@update');
     Route::get('trapcarddetail', 'Admin\TrapCardDetailController@index');
     Route::get('trapcarddetail/delete', 'Admin\TrapCardDetailController@delete');
-
     Route::get('pendulummonstercarddetail/create', 'Admin\PendulumMonsterCardDetailController@add');
     Route::post('pendulummonstercarddetail/create', 'Admin\PendulumMonsterCardDetailController@create');
     Route::get('pendulummonstercarddetail/edit', 'Admin\PendulumMonsterCardDetailController@edit');
     Route::post('pendulummonstercarddetail/edit', 'Admin\PendulumMonsterCardDetailController@update');
     Route::get('pendulummonstercarddetail', 'Admin\PendulumMonsterCardDetailController@index');
     Route::get('pendulummonstercarddetail/delete', 'Admin\PendulumMonsterCardDetailController@delete');
-
     Route::get('linkmonstercarddetail/create', 'Admin\LinkMonsterCardDetailController@add');
     Route::post('linkmonstercarddetail/create', 'Admin\LinkMonsterCardDetailController@create');
     Route::get('linkmonstercarddetail/edit', 'Admin\LinkMonsterCardDetailController@edit');

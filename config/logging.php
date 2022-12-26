@@ -76,6 +76,13 @@ return [
             'driver' => 'errorlog',
             'level' => 'debug',
         ],
+        'batch' => [
+            'driver'     => 'daily',
+            'path'       => storage_path('logs/batch/batch.log'),
+            'level'      => 'info',
+            'days'       => 30,
+            'permission' => 0666,
+        ],
     ],
 
 ];

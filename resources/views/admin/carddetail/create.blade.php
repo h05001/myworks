@@ -433,37 +433,7 @@ function changeDisabled(value,checked){
                                 </select>
                             </div>
                         </div>
-<!--
-                        <select name="tribe_id" class="form-control"  value="{{ old('tribe_id') }}">
-                            <option value="">種族を選択</option>
-                            <option value="spell_caster">魔法使い族</option>
-                            <option value="dragon">ドラゴン族</option>
-                            <option value="zombie">アンデット族</option>
-                            <option value="warrior">戦士族</option>
-                            <option value="beast_warrior">獣戦士族</option>
-                            <option value="beast">獣族</option>
-                            <option value="winged_beast">鳥獣族</option>
-                            <option value="fiend">悪魔族</option>
-                            <option value="fairy">天使族</option>
-                            <option value="insect">昆虫族</option>
-                            <option value="dinosaur">恐竜族</option>
-                            <option value="reptile">爬虫類族</option>
-                            <option value="fish">魚族</option>
-                            <option value="sea_serpent">海竜族</option>
-                            <option value="aqua">水族</option>
-                            <option value="pyro">炎族</option>
-                            <option value="thunder">雷族</option>
-                            <option value="rock">岩石族</option>
-                            <option value="plant">植物族</option>
-                            <option value="machine">機械族</option>
-                            <option value="psychic">サイキック族</option>
-                            <option value="wyrm">幻竜族</option>
-                            <option value="cyberse">サイバース族</option>
-                            <option value="divine_beast">幻神獣族</option>
-                            <option value="creator">創造神族</option>
 
-                        </select>
--->
                         <div>
                             <div class="form-group row">
                                 <label class="col-md-3" for="level_rank_link">レベル/ランク/リンク</label>

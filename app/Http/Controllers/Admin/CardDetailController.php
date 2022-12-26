@@ -18,6 +18,7 @@ use App\Tribe;
 use App\CardPrice;
 use App\RecordingCard;
 use Carbon\Carbon;
+use \Artisan;
 //use App\Imports\CardDetailsImport as CardDetailImport;
 
 
@@ -634,26 +635,59 @@ class CardDetailController extends Controller
 
             // データベースに保存する
             $recordingcard->cardname = $row[0];
-            //$recordingcard->card_master_id = $row[1];
+
             $card_master_id = CardDetail::select('card_details.card_name',
                                                  'card_details.card_master_id')
-                                           ->where($row[0])
-                                           ->get();
+                                        ->where('card_details.card_name',$row[0])
+                                        ->first();
+
+            if($card_master_id == null){
+              continue;
+            }
             $recordingcard->card_master_id = $card_master_id->card_master_id;
             $recordingcard->recordingpackid = $row[1];
             $recordingcard->recordingcardid = $row[2];
             $recordingcard->rarity_id = (int)$row[3];
             $recordingcard->save();
-            /*
-            $import = CardPrice::create([
-              'cardname' => $row[0],
-              'card_master_id' => $row[1],
-              'recordingpackid' => $row[2],
-              'recordingcardid' => $row[3],
-              'rarity_id' => (int)$row[4]
-            ]);*/
-
 
           }
+        }
+
+        public function scrapingConditions(Request $request)
+        {
+          //dd($request);
+
+            $shop_list = \App\CardShop::pluck('cardshop', 'id');
+            $recordingpack_list = \App\RecordingPack::pluck('recordingpack', 'id');
+            //return view('admin.carddetail.scrapingConditions',compact('shop_list','recordingpack_list'));
+            return view('admin.carddetail.scrapingConditions', [ "shop_list" => $shop_list,
+                                                                  "recordingpack_list" => $recordingpack_list
+                                                                ]);
+        }
+        public function scraping(Request $request)
+        {
+          //dd($request);
+          $query = RecordingCard::select('recording_cards.recordingcardid','recording_packs.id')
+                                ->leftjoin('recording_packs','recording_cards.recordingpackid', '=', 'recording_packs.id');
+
+          if($request->recordingpack != null){
+              $pack = $request->recordingpack;
+              $query ->where(function($query2) use ($pack){
+
+                  foreach ( $pack as $value){
+                      $query2 -> orWhere('recording_packs.id', $value);
+                  }
+
+              });
+          }
+          $conditions = $query->get();
+          $shop_list = $request-> shop;
+
+          //
+            Artisan::call('command:scraping', ['conditions' => $conditions,
+                                               'shop_list' => $shop_list
+                                              ]);
+//dd($conditions);
+
         }
 }
