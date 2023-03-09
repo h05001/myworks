@@ -76,7 +76,7 @@ class CardDetailController extends Controller
             $monstercardclass = new MonsterCardClass;
 
             // Varidationを行う
-            //$this->validate($request, $rules);
+            $this->validate($request, $rules);
 
             $monstercarddetail = new MonsterCardDetail;
 
@@ -101,9 +101,6 @@ class CardDetailController extends Controller
             // Varidationを行う
             $this->validate($request, MonsterCardClass::$rules);
 
-
-            //$monstercardclass->class_id = $request->class_id;
-
             $classIdArr = $request->class_id;//$requestからclass_idを取り出して$classIdArrに代入
             foreach ($classIdArr as $value) {//$classIdArrの値の数だけ
               $monstercardclass = new MonsterCardClass;
@@ -113,7 +110,6 @@ class CardDetailController extends Controller
               $monstercardclass->class_id = $value;//$monstercardclassからclass_idを取り出して$classIdArrを代入
               $monstercardclass->save();
             }
-
 
         }
 
@@ -351,7 +347,7 @@ class CardDetailController extends Controller
       {
           $posts = CardDetail::find($request -> id);
           //dd(get_class($posts->monstercardclasses));
-          //dd($posts->trapcarddetails);
+          //dd($posts);
           return view('admin.carddetail.detail', ['posts' => $posts]);
 
       }
@@ -359,7 +355,7 @@ class CardDetailController extends Controller
       public function price(Request $request)
       {
           $carddetail = Carddetail::find($request -> id);
-
+//dd($carddetail);
           $subquery = RecordingCard::leftjoin('card_prices','recording_cards.id', '=', 'card_prices.recordingcard_id')
                                    ->select('recording_cards.id',
                                             'card_prices.notes',
@@ -553,13 +549,27 @@ class CardDetailController extends Controller
         $monstercarddetail->property = $row[4];
         $monstercarddetail->tribe_id = (int)$row[5];
         $monstercarddetail->level_rank_link = (int)$row[6];
+
+
+        if($row[7] === ""){
+            $row[7] = NULL;
+        }
         $monstercarddetail->scale = (int)$row[7];
 
+        if($row[8] === ""){
+            $row[8] = NULL;
+        }
         $monstercarddetail->pendulum_effect = $row[8];
 
+        if($row[9] === ""){
+            $row[9] = NULL;
+        }
         $monstercarddetail->link_marker = $row[9];
-
         $monstercarddetail->attack = $row[10];
+        $monstercarddetail->defense = $row[11];
+        if($row[11] === ""){
+            $row[11] = NULL;
+        }
         $monstercarddetail->defense = $row[11];
         $monstercarddetail->save();
 
@@ -656,7 +666,6 @@ class CardDetailController extends Controller
         public function scrapingConditions(Request $request)
         {
           //dd($request);
-
             $shop_list = \App\CardShop::pluck('cardshop', 'id');
             $recordingpack_list = \App\RecordingPack::pluck('recordingpack', 'id');
             //return view('admin.carddetail.scrapingConditions',compact('shop_list','recordingpack_list'));
@@ -664,30 +673,19 @@ class CardDetailController extends Controller
                                                                   "recordingpack_list" => $recordingpack_list
                                                                 ]);
         }
+
         public function scraping(Request $request)
         {
-          //dd($request);
-          $query = RecordingCard::select('recording_cards.recordingcardid','recording_packs.id')
-                                ->leftjoin('recording_packs','recording_cards.recordingpackid', '=', 'recording_packs.id');
 
-          if($request->recordingpack != null){
-              $pack = $request->recordingpack;
-              $query ->where(function($query2) use ($pack){
+          $conditions = json_encode($request->recordingpack);
+          $shop_list = json_encode($request->shop);
 
-                  foreach ( $pack as $value){
-                      $query2 -> orWhere('recording_packs.id', $value);
-                  }
 
-              });
-          }
-          $conditions = $query->get();
-          $shop_list = $request-> shop;
 
-          //
             Artisan::call('command:scraping', ['conditions' => $conditions,
                                                'shop_list' => $shop_list
                                               ]);
-//dd($conditions);
 
+            //return redirect('admin.carddetail.scrapingConditions');
         }
 }

@@ -18,8 +18,7 @@ class Scraping extends Command
      */
 
      //スクレイピング
-     //protected $signature = 'command:scraping';
-     protected $signature = 'command:scraping {conditions?}{shop_list?}';
+     protected $signature = 'command:scraping {conditions=null}{shop_list=null}';
      //protected $signature = 'command:scraping {conditions?}';
     /**
      * The console command description.
@@ -47,17 +46,22 @@ class Scraping extends Command
     {
       $logger = \Log::channel('batch')->getLogger();
       $logger->info("スクレイピング開始");
-        try {
 
+        try {
             $start = microtime(true);
-            if($this->argument('shop_list') != null){
-                $shop_list = $this->argument('shop_list');
+            if($this->argument('shop_list') != "null" ){
+//$logger->info(gettype($this->argument('shop_list')));
+                $shop_list = CardShop::whereIn('id', json_decode($this->argument('shop_list')))->get();
 
             }else{
-                $shop_list = CardShop::select('id')->get();
+                $shop_list = CardShop::get();
+                //$logger->info("null");
             }
 
             foreach ($shop_list as $shop) {
+                print_r( 'ShopID:' .$shop ->id." "."開始"."\n" );
+                $logger->info('ShopID:' .$shop ->id."開始");
+                //$logger->info($shop);
             /*
               // TODO: テスト用 ショップid2の開発が終わったら消す
               if ($shop ->id == 1) {
@@ -65,42 +69,57 @@ class Scraping extends Command
               }
             */
                 $site_url = $shop->URL;
-                $keyword = RecordingCard::select('recordingcardid')->get();
-                $keyword = $keyword->unique('recordingcardid');
-                if($this->argument('conditions') != null){
-                    $keyword = RecordingCard::select('recordingcardid')->where("recordingcardid",$this->argument('recordingcardid'))->get();
+
+                if($this->argument('conditions') != 'null'){
+                    $query = RecordingCard::select('recording_cards.recordingcardid','recording_packs.id')
+                                          ->leftjoin('recording_packs','recording_cards.recordingpackid', '=', 'recording_packs.id');
+
+                        $pack = json_decode($this->argument('conditions'));
+                        $query ->where(function($query2) use ($pack){
+                            foreach ( $pack as $value){
+                                $query2 -> orWhere('recording_packs.id', $value);
+                            }
+                        });
+
+                    $keyword = $query->get();
+
+                }else{
+                    $keyword = RecordingCard::select('recordingcardid')->get();
 
                 }
 
-                //$keyword = RecordingCard::select('recordingcardid')->where('recordingcardid',"AC02-JP047")->get();
+                $keyword = $keyword->unique('recordingcardid');
 
                 foreach ($keyword as  $keywords) {
-                        print_r( '対象ID' .$keywords->recordingcardid." " );
-                        print_r( 'ShopID' .$shop ->id." " );
+                        print_r( '対象ID:' .$keywords->recordingcardid." " );
+                        //$logger->info('対象ID:' .$keywords->recordingcardid);
+
                         $url = $site_url.$keywords->recordingcardid;
 
                         $goutte = GoutteFacade::request('GET', $url);
                         $goutte ->text();
 
-
                         if($shop ->id == 1){
                             $this->scraping_c_labo($goutte,$shop ->id,$keywords->recordingcardid);
-                            $end = microtime(true);
-                            print_r( '処理時間 = ' . ($end - $start) . '秒' );
+
                         }
 
                         if($shop ->id == 2){
                             $this->scraping_amenityDream($goutte,$shop ->id,$keywords->recordingcardid);
-                            $end = microtime(true);
-                            print_r( '処理時間 = ' . ($end - $start) . '秒');
-                        }
-                        if($shop ->id == 3){
-                          break;
 
                         }
-                        print_r("\n" );
+                        if($shop ->id == 3){
+                            $this->scraping_yuyutei($goutte,$shop ->id,$keywords->recordingcardid);
+
+                        }
+                        $end = microtime(true);
+                        print_r( '処理時間 = ' . ($end - $start) . '秒'."\n" );
+                        $logger->info('対象ID:' .$keywords->recordingcardid." " .'処理時間 = ' . ($end - $start) . '秒' );
                   }
+                  print_r( 'ShopID:' .$shop ->id." "."\n" );
+                  $logger->info('ShopID:' .$shop ->id."終了");
               }
+
         } catch (\Exception $e) {
             \Log::error($e);
 
@@ -131,7 +150,9 @@ class Scraping extends Command
         $cardprice->notes = $notes;
         $cardprice->save();
       }catch(\Exception $e){
-        print_r("aiueo");
+        $logger = \Log::channel('batch')->getLogger();
+        $logger->info($rarities);
+        $logger->info($e);
         print_r($rarities);
       }
     }
@@ -194,6 +215,26 @@ class Scraping extends Command
 
             $this->save_card_price($shop_id,$recordingcardid,$rarities,$prices,$notes);
       });
+
+    }
+
+    public function scraping_yuyutei($goutte,$shop_id,$recordingcardid)
+    {
+      // 無名関数(クロージャ)
+      $goutte ->filter('div.card_list_box')->each(function ($div)use ($shop_id,$recordingcardid) {
+
+          $rarities = $div->filter('em.gr_color')->text();
+
+          $price = $div->filter('p.price')->text();
+          $prices = (int)str_replace("円","",$price);
+          $notes = null;
+          //print_r( 'レアリティ：' .$rarity);
+          //print_r( '価格：' .$prices);
+
+
+          $this->save_card_price($shop_id,$recordingcardid,$rarities,$prices,$notes);
+
+        });
 
     }
 }

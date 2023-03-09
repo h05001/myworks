@@ -74,8 +74,6 @@ function entryChange(){
             </div>
 -->
 
-
-
         </div>
     </div>
 @endsection

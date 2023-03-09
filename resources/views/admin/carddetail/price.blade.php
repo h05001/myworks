@@ -7,7 +7,7 @@
 
         <div class="col-md-12 mx-auto">
             <div class="row">
-
+                <div>{{ $carddetail->card_name }}:価格情報</div>
                 <table class="table table-dark">
                     <thead>
                         <tr>

@@ -1,13 +1,13 @@
 {{-- layouts/admin.blade.phpを読み込む --}}
 @extends('layouts.admin')
-@section('title', '登録済みカードの詳細')
+@section('title', 'カード詳細')
 
 {{-- admin.blade.phpの@yield('content')に以下のタグを埋め込む --}}
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto">
-            <h2>カード詳細情報</h2>
+            <h2>{{ $posts->card_name }}:詳細情報</h2>
             <form action="{{ action('Admin\CardDetailController@detail') }}" method="post" enctype="multipart/form-data">
 
                 <div class="form-group row">
@@ -115,6 +115,9 @@
                     </div>
                 @endif
             </form>
+            <div>
+                <a href="{{ action('Admin\CardDetailController@price', ['id' => $posts->card_master_id]) }}">価格</a>
+            </div>
         </div>
     </div>
 </div>

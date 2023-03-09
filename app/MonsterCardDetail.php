@@ -12,24 +12,26 @@ class MonsterCardDetail extends Model
     {
 
         $rules = array(
-            'property' => 'required',//属性
-            'tribe_id' => 'required',//種族
-            'level_rank_link' => 'required', //レベル,ランク、リンク
-            'attack' => 'required',//攻撃力
-            'defense' => 'required',//守備力
+            'property' => 'required | alpha',//属性
+            'tribe_id' => 'required | integer',//種族
+            'level_rank_link' => 'required | integer', //レベル,ランク、リンク
+            'attack' => 'required | regex:/^[0-9]+$|^[?]$/',//攻撃力
+            'defense' => 'required | regex:/^[0-9]+$|^[?]$/',//守備力
+            //'attack' => 'required',//攻撃力
+            //'defense' => 'required',//守備力
         );
 
         $classIdSearch = array_search('12',$classIdArr);//class_idの連想配列内にペンデュラム:12
             if ( $classIdSearch !== false ) {
                 $rules += array(
-                    'scale' => 'required', 'pendulum_effect' => 'required',
+                    'scale' => 'required | integer', 'pendulum_effect' => 'required | ',
                 );
             }
 
         $classIdSearch1 = array_search('14',$classIdArr);//class_idの連想配列内にリンク:14
             if ( $classIdSearch1 !== false ) {
               $rules += array(
-                  'link_marker' => 'required',
+                  'link_marker' => 'required | integer',
 
               );
               unset($rules['defense']);

@@ -3,8 +3,9 @@
 
 @section('content')
 <div class="container">
-    <div>
 
+
+    <div>
         <a href="{{ action('Admin\CardDetailController@scrapingConditions') }}">スクレイピングの条件を選択する</a>
     </div>
 

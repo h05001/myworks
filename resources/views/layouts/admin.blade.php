@@ -31,27 +31,35 @@
     <body>
         <div id="app">
             {{-- 画面上部に表示するナビゲーションバーです。 --}}
-            <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-                <div class="container">
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- Left Side Of Navbar -->
-                        <ul class="navbar-nav mr-auto">
+            <header class="header">
+                  <!-- ヘッダーロゴ -->
+                  <div class="logo">データベースへ登録</div>
 
-                        </ul>
+                  <!-- ハンバーガーメニュー部分 -->
+                  <div class="nav">
 
-                        <!-- Right Side Of Navbar -->
-                        <ul class="navbar-nav ml-auto">
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+                    <!-- ハンバーガーメニューの表示・非表示を切り替えるチェックボックス -->
+                    <input id="drawer_input" class="drawer_hidden" type="checkbox">
+
+                    <!-- ハンバーガーアイコン -->
+                    <label for="drawer_input" class="drawer_open"><span></span></label>
+
+                    <!-- メニュー -->
+                    <nav class="nav_content">
+                      <ul class="nav_list">
+                        <li class="nav_item"><a href="http://localhost:8000/admin/carddetail">カード情報の新規登録</a></li>
+                        <li class="nav_item"><a href="http://localhost:8000/admin/tribemaster/create">種族マスタの登録</a></li>
+                        <li class="nav_item"><a href="http://localhost:8000/admin/monsterclassmaster/create">モンスターカードの種類登録</a></li>
+                        <li class="nav_item"><a href="http://localhost:8000/admin/recordingpack/create">収録パックの登録</a></li>
+                        <li class="nav_item"><a href="http://localhost:8000/admin/cardshop/create">カードショップの登録</a></li>
+                        <li class="nav_item"><a href="http://localhost:8000/admin/rarity/create">レアリティの登録</a></li>
+                        <li class="nav_item"><a href="http://localhost:8000/admin/rarityconvert/create">レアリティ変換の登録</a></li>
+                      </ul>
+                    </nav>
+
+                  </div>
+                </header>
             {{-- ここまでナビゲーションバー --}}
 
             <main class="py-4">
