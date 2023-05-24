@@ -390,10 +390,11 @@ class CardDetailController extends Controller
                                     ->where('recording_cards.card_master_id',$request -> id)
                                     ->orderby('rarities.id','desc')
                                     ->get();
-
+//dd($lastprice);
+          //$rarity_list = array_column((array)$lastprice, 'rarity_jp','id');
           $rarity_list = array_column((array)json_decode($lastprice), 'rarity_jp','id');
           //dd($rarity_list);
-//dd($lastprice);
+
           return view('admin.carddetail.price', ['carddetail' => $carddetail,
                                                  'lastprice' => $lastprice,
                                                  'rarity_list' => $rarity_list,

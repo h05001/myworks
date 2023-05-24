@@ -46,7 +46,6 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('recordingpack/delete', 'Admin\RecordingPackController@delete');
 
 
-
     Route::get('carddetail/create', 'Admin\CardDetailController@add');
     Route::post('carddetail/create', 'Admin\CardDetailController@create');
     Route::get('carddetail/edit', 'Admin\CardDetailController@edit');
@@ -61,6 +60,8 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('carddetail/scraping', 'Admin\CardDetailController@scraping');
 
     Route::get('carddetail/delete', 'Admin\CardDetailController@delete');
+
+    Route::get('probability', 'Admin\ProbabilityController@calculation');
 
 
     Route::get('monstercarddetail/create', 'Admin\MonsterCardDetailController@add');
