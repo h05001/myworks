@@ -58,7 +58,7 @@
                 <div class="col-md-4">
                     <label for="card">投入枚数(A)</label>
                     <div>
-                        <input type="number" class="form-control text" name="card_A"  min="0" value="0" >
+                        <input type="number" class="form-control text" name="card_A"  min="0" value="3" >
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -80,7 +80,7 @@
             <input type="submit" class="btn btn-primary" value="計算">
         </form>
     </div>
-    @if(array_key_first($probability_arr) != null && $card_B == 0)
+    @if(array_key_first($probability_arr) != 0 && $card_B == 0)
 
         <div class="col-md-12">デッキ{{ $deck }}枚から{{ $card_A }}枚投入したカードを初手に引く確率は{{ reset($probability_arr) }}％</div>
         <div class="row">
@@ -108,8 +108,8 @@
 
     @endif
 
-    @if(array_key_first($probability_arr) != null && $card_B != 0)
-        <div class="border-end">デッキ{{ $deck }}枚から二種類のカード:{{ $card_A }}枚、{{ $card_B }}枚投入したカードを初手に引く確率は{{ reset($probability_arr) }}％</div>
+    @if(array_key_first($probability_arr) != 0 && $card_B != 0)
+        <div class="border-bottom border-white">デッキ{{ $deck }}枚から二種類のカード:{{ $card_A }}枚、{{ $card_B }}枚投入したカードを初手に引く確率は{{ reset($probability_arr) }}％</div>
         <div class="row">
             <table class="table-bordered">
                 <thead>
@@ -135,26 +135,14 @@
 
     @endif
 
-    @if(array_key_first($probability_arr) != null && $card_B == 0)
-        @if (session('history'))
-            <div>
-                @foreach(session('history') as $value)
-                    <div>デッキ{{ $value['deck'] }}枚から{{ $value['card_A'] }}枚投入したカードを初手に引く確率は{{ $value['probability'] }}％</div>
+    @if (session('history'))
+        <div>
+            @foreach(session('history') as $value)
+                <div class ="border-bottom border-white">デッキ{{ $value['deck'] }}枚から二種類のカード:{{ $value['card_A'] }}枚、{{ $value['card_B'] }}枚投入したカードを初手に引く確率は{{ $value['probability'] }}％</div>
 
-                @endforeach
-            </div>
-        @endif
-    @endif
+            @endforeach
+        </div>
 
-    @if(array_key_first($probability_arr) != null && $card_B != 0)
-        @if (session('history'))
-            <div>
-                @foreach(session('history') as $value)
-                    <div>デッキ{{ $value['deck'] }}枚から二種類のカード:{{ $value['card_A'] }}枚、{{ $value['card_B'] }}枚投入したカードを初手に引く確率は{{ $value['probability'] }}％</div>
-
-                @endforeach
-            </div>
-        @endif
     @endif
 
 </div>
