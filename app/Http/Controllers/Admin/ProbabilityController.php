@@ -63,7 +63,7 @@ class ProbabilityController extends Controller
             $count = count($data);
             if(5 < $count ){
                 $data = session()->pull('history', []);
-                $first = array_shift($data);
+                array_shift($data);
                 // if(($key = array_search($idToDelete, $data)) !== false) {
                 //     unset($data[$key]);
                 // }

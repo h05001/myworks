@@ -63,6 +63,11 @@ Route::group(['prefix' => 'admin'], function() {
 
     Route::get('probability', 'Admin\ProbabilityController@calculation');
 
+    Route::get('tournament/create', 'Admin\TournamentController@add');
+    Route::post('tournament/create', 'Admin\TournamentController@create');
+
+    Route::get('tournamentDeck/create', 'Admin\TournamentDeckController@add');
+    Route::post('tournamentDeck/create', 'Admin\TournamentDeckController@create');
 
     Route::get('monstercarddetail/create', 'Admin\MonsterCardDetailController@add');
     Route::post('monstercarddetail/create', 'Admin\MonsterCardDetailController@create');

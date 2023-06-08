@@ -555,7 +555,7 @@ class CardDetailController extends Controller
         if($row[7] === ""){
             $row[7] = NULL;
         }
-        $monstercarddetail->scale = (int)$row[7];
+        $monstercarddetail->scale = $row[7];
 
         if($row[8] === ""){
             $row[8] = NULL;

@@ -138,7 +138,7 @@
     @if (session('history'))
         <div>
             @foreach(session('history') as $value)
-                <div class ="border-bottom border-white">デッキ{{ $value['deck'] }}枚から二種類のカード:{{ $value['card_A'] }}枚、{{ $value['card_B'] }}枚投入したカードを初手に引く確率は{{ $value['probability'] }}％</div>
+                <div class ="border-bottom border-white">デッキ{{ $value['deck'] }}枚からカードAを{{ $value['card_A'] }}枚、カードBを{{ $value['card_B'] }}枚投入した場合初手に引く確率は{{ $value['probability'] }}％</div>
 
             @endforeach
         </div>
