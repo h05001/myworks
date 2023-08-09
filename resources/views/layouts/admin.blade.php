@@ -48,6 +48,11 @@
                                 <a class="dropdown-item" href="http://localhost:8000/admin/cardshop/create">カードショップの登録</a>
                                 <a class="dropdown-item" href="http://localhost:8000/admin/rarity/create">レアリティの登録</a>
                                 <a class="dropdown-item" href="http://localhost:8000/admin/rarityconvert/create">レアリティ変換の登録</a>
+                                <a class="dropdown-item" href="http://localhost:8000/admin/carddetail/scrapingConditions">スクレイピングの実行</a>
+                                <a class="dropdown-item" href="http://localhost:8000/admin/probability">確率計算</a>
+                                <a class="dropdown-item" href="http://localhost:8000/admin/tournament/create">大会情報の登録</a>
+                                <a class="dropdown-item" href="http://localhost:8000/admin/tournamentDeck/create">大会デッキ情報の登録</a>
+                                <a class="dropdown-item" href="http://localhost:8000/admin/tournamentDeckCard/create">大会デッキカード情報の登録</a>
                             </div>
                         </li>
                     </ul>

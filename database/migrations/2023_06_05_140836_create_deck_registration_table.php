@@ -13,12 +13,13 @@ class CreateDeckRegistrationTable extends Migration
      */
     public function up()
     {
-        Schema::create('deck_registration', function (Blueprint $table) {
+        Schema::create('tournament_deck_cards', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('deck_id'); //入賞デッキIDを保存するカラム
-            $table->integer('kinds'); //種別を保存するカラム
-            $table->string('card_name'); //カード名を保存するカラム
+            $table->integer('tournament_deck_id'); //入賞デッキIDを保存するカラム
+            $table->integer('kinds'); //種別を保存するカラム 1:メイン　2:エクストラ　3:サイド
             $table->integer('card_master_id')->nullable(); //カードマスタIDを保存するカラム
+            $table->string('card_name'); //カード名を保存するカラム
+            $table->integer('card_class'); //カード種類を保存するカラム 1:モンスター　2：魔法　3:罠
             $table->integer('number'); //投入枚数を保存するカラム
             $table->timestamps();
         });
@@ -31,6 +32,6 @@ class CreateDeckRegistrationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deck_registration');
+        Schema::dropIfExists('tournament_deck_cards');
     }
 }

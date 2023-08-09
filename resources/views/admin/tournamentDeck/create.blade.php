@@ -21,6 +21,36 @@
                         </ul>
                     @endif
 
+                    <div class="form-group row">
+                        <label class="col-md-2">大会ID</label>
+                        <div class="col-md-10">
+
+                            {{Form::select('tournament_id', $tournament_list, $cnt, ['class' => 'form-control'])}}
+                            {{--<select name="tournament_id" class="form-control"  value="{{ old('tournament_id') }}">
+
+                                @foreach ($tournament_list as $lists) {
+                                    @if ( {{ $lists->id == $cnt }})
+                                        echo '<option value="{{ $lists->id }}">{{ $lists->tournament_name }}</option>';
+                                    @endif
+                                }
+                                @endforeach --}}
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2">デッキ名</label>
+                        <div class="col-md-10">
+                            <input type="テキスト" class="form-control" name="deck_name" value="{{ old('deck_name') }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-2">順位</label>
+                        <div class="col-md-10">
+                            <input type="number" class="form-control" name="rank" value="{{ old('rank') }}">
+                        </div>
+                    </div>
 
                     {{ csrf_field() }}
                     <input type="submit" class="btn btn-primary" value="登録">

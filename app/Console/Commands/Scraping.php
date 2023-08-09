@@ -224,6 +224,7 @@ class Scraping extends Command
       $goutte ->filter('div.card_list_box')->each(function ($div)use ($shop_id,$recordingcardid) {
 
           $rarities = $div->filter('em.gr_color')->text();
+          $rarities = str_replace(array("\r\n", "\r", "\n"), '', $rarities);
 
           $price = $div->filter('p.price')->text();
           $prices = (int)str_replace("円","",$price);

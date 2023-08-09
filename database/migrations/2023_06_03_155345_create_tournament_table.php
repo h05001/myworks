@@ -13,10 +13,10 @@ class CreateTournamentTable extends Migration
      */
     public function up()
     {
-        Schema::create('tournament', function (Blueprint $table) {
+        Schema::create('tournaments', function (Blueprint $table) {
             $table->increments('id');//IDを保存するカラム
             $table->string('tournament_name'); //大会名を保存するカラム
-            $table->integer('date'); //開催日を保存するカラム            
+            $table->date('date'); //開催日を保存するカラム
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateTournamentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tournament');
+        Schema::dropIfExists('tournaments');
     }
 }

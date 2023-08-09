@@ -13,7 +13,7 @@ class CreateTournamentDeckTable extends Migration
      */
     public function up()
     {
-        Schema::create('tournament_deck', function (Blueprint $table) {
+        Schema::create('tournament_decks', function (Blueprint $table) {
           $table->increments('id');//IDを保存するカラム
           $table->integer('tournament_id'); //大会IDを保存するカラム
           $table->string('deck_name'); //デッキ名を保存するカラム
@@ -29,6 +29,6 @@ class CreateTournamentDeckTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tournament_deck');
+        Schema::dropIfExists('tournament_decks');
     }
 }

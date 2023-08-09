@@ -20,6 +20,18 @@
                             @endforeach
                         </ul>
                     @endif
+                    <div class="form-group row">
+                        <label class="col-md-2">大会名</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="tournament_name" value="{{ old('tournament_name') }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2">開催日</label>
+                        <div class="col-md-10">
+                            <input type="date" class="form-control" name="date" value="{{ old('date') }}">
+                        </div>
+                    </div>
 
 
                     {{ csrf_field() }}
