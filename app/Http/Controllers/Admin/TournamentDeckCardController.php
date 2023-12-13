@@ -49,7 +49,7 @@ class TournamentDeckCardController extends Controller
         continue;
       }
       // 文字コード変換
-      $row = mb_convert_encoding($row, "UTF-8","sjis-win, sjis");
+      $row = mb_convert_encoding($row, "UTF-8",'ASCII,JIS,UTF-8,EUC-JP,SJIS');
 
       $import = TournamentDeckCard::create([
         'tournament_deck_id' => $request->tournament_deck_id,
@@ -59,9 +59,63 @@ class TournamentDeckCardController extends Controller
         'card_class' => $row[3],
         'number' => $row[4],
       ]);
-
-      return redirect('admin/tournamentDeckCard/import')->with('flash_message', '登録が完了しました');
-
     }
+      return redirect('admin/tournamentDeckCard/create')->with('flash_message', '登録が完了しました');
+
   }
+
+  public function ranking(Request $request)
+  {
+
+      $kinds = 1;
+      if($request-> kinds != null){
+          $kinds = $request-> kinds;
+      }
+      $card_class = $request -> card_class;
+      $term_fr = $request -> term_fr;
+      $term_to = $request -> term_to;
+      $tournament_deck = TournamentDeck::count();
+
+      $ranking = TournamentDeckCard::query();
+
+      $ranking ->selectRaw('COUNT(*) as count , card_name , COUNT(number=1 or null) as cnt1, COUNT(number=2 or null) as cnt2, COUNT(number=3 or null) as cnt3, max(card_master_id) as id')
+               ->leftjoin('tournament_decks', 'tournament_deck_cards.tournament_deck_id', '=', 'tournament_decks.id')
+               ->leftjoin('tournaments', 'tournament_decks.tournament_id', '=', 'tournaments.id')
+               ->where('kinds','=', $kinds);
+
+
+          if ($request-> card_class != "") {
+              $ranking -> where('card_class','=', $card_class);
+          }
+          if ($term_fr != '') {//以降
+              // 検索されたら検索結果を取得する
+              $ranking -> where('date', '>=' ,$term_fr);
+          }
+
+          if ($term_to != '') {//以前
+              // 検索されたら検索結果を取得する
+              $ranking -> where('date', '<=' ,$term_to);
+          }
+      $ranking ->orderBy('count', 'desc')
+               ->groupBy('card_name');
+
+      $monster_ranking = $ranking -> get();
+
+      //dd($monster_ranking);
+
+      foreach ($monster_ranking as $value) {
+          $value -> rate = round($value -> count / $tournament_deck * 100 , 1);
+          $value -> numbers = "1枚:".round($value -> cnt1 / $value -> count * 100 , 1)."%, 2枚:".round($value -> cnt2 / $value -> count * 100 , 1)."%, 3枚:".round($value -> cnt3 / $value -> count * 100 , 1)."%";
+      }
+
+      //dd($monster_ranking);
+      return view('admin.tournamentDeckCard.ranking', [ "monster_ranking" => $monster_ranking, "kinds" => $kinds, "term_fr" => $term_fr, "term_to" => $term_to]);
+  }
+
 }
+// $monster_ranking = TournamentDeckCard::selectRaw('COUNT(card_name) as count , card_name')
+//                                      ->where('kinds','=', '1')
+//                                      ->where('card_class','=', '1')
+//                                      ->orderBy('count', 'desc')
+//                                      ->groupBy('card_name')
+//                                      ->get();

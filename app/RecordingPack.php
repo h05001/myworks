@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class RecordingPack extends Model
 {
     //
-    protected $fillable = ['recordingpack','recordingpackid'];
-    
+    protected $guarded = array('id');
+
     public static $rules = array(
         'recordingpack' => 'required',
         'recordingpackid' => 'required',
+        'category' => 'required | integer',
+
     );
 
 }

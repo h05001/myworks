@@ -12,7 +12,9 @@ class MonsterCardClass extends Model
   // 以下を追記
   public static $rules = array(
 
-      'class_id' => 'required | regex:/[0-9]+/',
+      //'class_id' => ['required' , 'regex:/[0-9]+/'],
+      'class_id' => 'required | array',
+      'class_id.*' => 'integer',
 
   );
   public function monsterClassMaster()

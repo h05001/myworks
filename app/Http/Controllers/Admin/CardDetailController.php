@@ -17,6 +17,7 @@ use App\TrapCardDetail;
 use App\Tribe;
 use App\CardPrice;
 use App\RecordingCard;
+use App\TournamentDeckCard;
 use Carbon\Carbon;
 use \Artisan;
 //use App\Imports\CardDetailsImport as CardDetailImport;
@@ -52,8 +53,7 @@ class CardDetailController extends Controller
     public function create(Request $request)
     {
 //
-        //$request->input("card_class");
-//dd($request);
+
         //カードマスタ
         // Varidationを行う
         $this->validate($request, CardDetail::$rules);
@@ -68,6 +68,13 @@ class CardDetailController extends Controller
         $carddetail->card_text = $request->card_text;
         $carddetail->save();
         $last_insert_id = $carddetail->card_master_id;
+
+        //カードマスタにデータを登録すると同時にデッキマスタに登録済みのデータをcard_nameで検索してnullになっているカードマスタIDを上書き
+        TournamentDeckCard::where('card_name', $request->card_name)
+                          ->whereNull('card_master_id')
+                          ->update(['card_master_id' => $last_insert_id]);
+
+        
 
         //モンスターカードマスタ
         if($request->card_class == "select1"){
@@ -138,6 +145,20 @@ class CardDetailController extends Controller
             $trapcarddetail->trap_card_class = $request->trap_card_class;
             $trapcarddetail->save();
         }
+        // //カードマスタにデータを登録すると同時にデッキマスタに登録済みのデータをcard_nameで検索してnullになっているカードマスタIDを上書き
+        // $query = TournamentDeckCard::where('card_name', $request->card_name)
+        //                            ->whereNull('card_master_id')
+        //                            ->get();
+        //                            //->first();
+        //
+        // if($query == null){
+        //     dd($tournamentDeckCard);
+        //     $tournamentDeckCard = new TournamentDeckCard;
+        //     //$tournamentDeckCard -> card_master_id = $last_insert_id;
+        //     foreach ($tournamentDeckCard as $value) {
+        //         $value -> card_master_id = $last_insert_id;
+        //     }
+        // }
 
         return redirect('admin/carddetail/create');
   }
@@ -668,10 +689,13 @@ class CardDetailController extends Controller
         {
           //dd($request);
             $shop_list = \App\CardShop::pluck('cardshop', 'id');
-            $recordingpack_list = \App\RecordingPack::pluck('recordingpack', 'id');
+            //$recordingpack_list = \App\RecordingPack::pluck('recordingpack', 'id');
+            //$recordingpack_list = \App\RecordingPack::orderBy('category', 'asc')->get();
+            $recordingpack_list = \App\RecordingPack::orderBy('category', 'asc')->pluck('recordingpack', 'id');
+            //dd($recordingpack_list);
             //return view('admin.carddetail.scrapingConditions',compact('shop_list','recordingpack_list'));
             return view('admin.carddetail.scrapingConditions', [ "shop_list" => $shop_list,
-                                                                  "recordingpack_list" => $recordingpack_list
+                                                                 "recordingpack_list" => $recordingpack_list
                                                                 ]);
         }
 

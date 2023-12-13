@@ -1,4 +1,10 @@
 @extends('layouts.admin')
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<link href="{{ asset('css/easySelectStyle.css') }}" rel="stylesheet">
+<script src="{{ asset('js/easySelect.js') }}" defer></script>
+
+
 <script type="text/javascript">
 
 function entryChange(){
@@ -35,11 +41,20 @@ function entryChange(){
                             <label class="form-control-label" for="CheckBox2">カードショップから選択</label>
                     </div>
 
-                <div id="select_pack">
+                <div>
                     <div class="form-group row">
 
-                        @foreach($recordingpack_list as $key => $val)
-                            <div class="col-md-6">
+                    </div>
+                    <div>
+                        <select name="recordingpack[]" class="form-control" multiple="multiple"  id="select_pack" >
+                          @foreach($recordingpack_list as $key => $val)
+
+                                  <option value="{{ $key }}" >{{ $val }}</option>
+                          @endforeach
+
+
+
+                            <!--
                             <input type="checkbox" class="form-control-input"  name= "recordingpack[]" value="{{ $key }}">
                             <label class="form-control-label"  for="{{ $key }}">{{ $val }}</label>
                             </div>
@@ -47,7 +62,8 @@ function entryChange(){
                             {{ Form::checkbox('recordingpack[]', $key, false, ['id' => 'tag'.$key, 'class' => 'form-control-input']) }}
                             {{ Form::label('tag'.$key, $val, []) }} style="transform:scale(2.0);"
                             -->
-                        @endforeach
+
+                        </select>
                     </div>
                 </div>
                     <div id="select_shop">
@@ -76,4 +92,18 @@ function entryChange(){
 
         </div>
     </div>
+
+    <script type="text/javascript">
+        function select_pack(){
+          mobiscroll.select('#multiple-select', {
+              inputElement: document.getElementById('my-input'),
+              touchUi: false
+          });
+        }
+
+        $("#select_pack").easySelect({
+
+        });
+
+    </script>
 @endsection

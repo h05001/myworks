@@ -11,12 +11,12 @@
 
 
             <form action="{{ action('Admin\TournamentDeckCardController@import') }}" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                @csrf
                 <div class="row">
                     <label class="col-md-2">大会ID</label>
                     <div class="col-md-8">
 
-                        {{Form::select('id', $tournament_list, null, ['class' => 'form-control','id' => 'tournament' , 'onchange'=>'selectBox()'])}}
+                        {{Form::select('id', $tournament_list, null, ['class' => 'form-control','id' => 'tournament' , 'onchange'=>'selectBox()']) }}
 
                     </div>
                 </div>
@@ -42,7 +42,7 @@
             </form>
 
     </div>
-@endsection
+
     <script type="text/javascript">
         function selectBox(){
 
@@ -81,3 +81,4 @@
         }
 
     </script>
+@endsection

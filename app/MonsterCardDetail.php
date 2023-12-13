@@ -15,8 +15,8 @@ class MonsterCardDetail extends Model
             'property' => 'required | alpha',//属性
             'tribe_id' => 'required | integer',//種族
             'level_rank_link' => 'required | integer', //レベル,ランク、リンク
-            'attack' => 'required | regex:/^[0-9]+$|^[?]$/',//攻撃力
-            'defense' => 'required | regex:/^[0-9]+$|^[?]$/',//守備力
+            'attack' => ['required' , 'regex:/^[0-9]+$|^[?]$/'],//攻撃力
+            'defense' => ['required' , 'regex:/^[0-9]+$|^[?]$/'],//守備力
             //'attack' => 'required',//攻撃力
             //'defense' => 'required',//守備力
         );
@@ -24,7 +24,7 @@ class MonsterCardDetail extends Model
         $classIdSearch = array_search('12',$classIdArr);//class_idの連想配列内にペンデュラム:12
             if ( $classIdSearch !== false ) {
                 $rules += array(
-                    'scale' => 'required | integer', 'pendulum_effect' => 'required | ',
+                    'scale' => 'required | integer', 'pendulum_effect' => 'required',
                 );
             }
 

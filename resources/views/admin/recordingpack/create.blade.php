@@ -32,8 +32,20 @@
                         <input type="text" class="form-control" name="recordingpackid" value="{{ old('recordingpackid') }}">
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label class="col-md-3" for="category">カテゴリ</label>
+                    <div class="col-md-9">
+                        <select  name="category" class="form-control"  value="{{ old('category') }}">
+                            <option value="">収録パックのカテゴリを選択</option>
+                            <option value="0">基本ブースターパック</option>
+                            <option value="1">構築済みデッキ</option>
+                            <option value="2">その他ブースターパック</option>
+
+                        </select>
+                    </div>
+                </div>
                 {{ csrf_field() }}
-                <input type="submit" class="btn btn-primary" value="更新">
+                <input type="submit" class="btn btn-primary" value="登録">
 
             </form>
         </div>

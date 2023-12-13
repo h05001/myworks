@@ -23,14 +23,16 @@
                     <div class="form-group row">
                         <label class="col-md-3" for="rarity_id">レアリティID</label>
                         <div class="col-md-9">
-                            <input type="number" class="form-control" name="rarity_id" value="{{ old('rarity_id') }}">
+                            {{Form::select('rarity_id', $raritylist, null, ['class' => 'form-control'])}}
+                            {{--<input type="number" class="form-control" name="rarity_id" value="{{ old('rarity_id') }}">--}}
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <label class="col-md-3" for="shop_id">ショップID</label>
                         <div class="col-md-9">
-                            <input type="number" class="form-control" name="shop_id" value="{{ old('shop_id') }}">
+                            {{Form::select('shop_id', $shoplist, null, ['class' => 'form-control'])}}
+                            {{--<input type="number" class="form-control" name="shop_id" value="{{ old('shop_id') }}">--}}
                         </div>
                     </div>
 

@@ -6,19 +6,29 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\RarityConvert;
+use App\Rarity;
+use App\CardShop;
 
 class RarityConvertController extends Controller
 {
     //
     public function add()
     {
+        $raritylist = \App\Rarity::pluck('rarity_jp', 'id');
+        //dd($raritylist);
+        $raritylist = $raritylist -> prepend('レアリティIDを選択', '');
 
-        return view('admin.rarityconvert.create');
+        $shoplist = \App\CardShop::pluck('cardshop', 'id');
+        //dd($raritylist);
+        $shoplist = $shoplist -> prepend('カードショップIDを選択', '');
+
+        return view('admin.rarityconvert.create',[ "raritylist" => $raritylist, "shoplist" => $shoplist ]);
     }
 
     public function create(Request $request)
     {
     // Varidationを行う
+    //dd($request);
           $this->validate($request, RarityConvert::$rules);
 
           $rarityconvert = new RarityConvert;

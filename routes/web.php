@@ -71,7 +71,8 @@ Route::group(['prefix' => 'admin'], function() {
 
     Route::get('tournamentDeckCard/create', 'Admin\TournamentDeckCardController@add');
     Route::post('tournamentDeckCard/create', 'Admin\TournamentDeckCardController@create');
-    Route::post('tournamentDeckCard/import', 'Admin\TournamentDeckCardController@import');//laravel excel
+    Route::post('tournamentDeckCard/import', 'Admin\TournamentDeckCardController@import');
+    Route::get('tournamentDeckCard/ranking', 'Admin\TournamentDeckCardController@ranking');
 
     Route::get('monstercarddetail/create', 'Admin\MonsterCardDetailController@add');
     Route::post('monstercarddetail/create', 'Admin\MonsterCardDetailController@create');

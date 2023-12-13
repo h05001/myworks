@@ -178,18 +178,35 @@ class Scraping extends Command
           $prices = str_replace("円","",$price);
           $prices = (int)str_replace(",","",$prices);
 
-            $note = $div->filter('span.goods_name')->text();
-            $note_start = mb_strpos($note, "《",1)+1;
-            $note_end = mb_strpos($note, "》" , 1)-$note_start;
-            $notes = null;
 
-            if(1 <= $note_end){
-                $notes = mb_substr($note, $note_start , $note_end);
-            }
+          //キズあり特価品
+          $note = $div->filter('span.goods_name')->text();
+          $note_start = mb_strpos($note, "《",1)+1;
+          $note_end = mb_strpos($note, "》" , 1)-$note_start;
+          $notes = null;
 
-            $this->save_card_price($shop_id,$recordingcardid,$rarities,$prices,$notes);
+          if(1 <= $note_end){
+              $notes = mb_substr($note, $note_start , $note_end);
+          }
 
-        });
+          //イラスト違い
+          $illust = $div->filter('span.goods_name')->text();
+          $illust_start = mb_strpos($illust, "(",1)+1;
+          $illust_end = mb_strpos($illust, ")" , 1)-$illust_start;
+          $illusts = null;
+
+          if(1 <= $illust_end){
+              $illusts = mb_substr($illust, $illust_start , $illust_end);
+              if ($notes != null ) {
+                  $notes = $notes."/";
+              }
+              $notes = $notes.$illusts;
+          }
+
+          
+          $this->save_card_price($shop_id,$recordingcardid,$rarities,$prices,$notes);
+
+      });
 
     }
 
