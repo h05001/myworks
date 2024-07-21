@@ -13,7 +13,7 @@ class TrapCardDetail extends Model
     // 以下を追記
     public static $rules = array(
         //'card_master_id' => 'required',
-        'trap_card_class' => 'required | regex:/^[a-z]+$',
+        'trap_card_class' => 'required | regex:/^[a-z]+$/',
 
     );
 }

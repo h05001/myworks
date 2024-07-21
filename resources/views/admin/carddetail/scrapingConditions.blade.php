@@ -1,9 +1,37 @@
 @extends('layouts.admin')
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+@section('script')
+<link href="{{ asset('css/sumoselect.css') }}" rel="stylesheet" defer>
+<script defer src="{{ asset('js/jquery.sumoselect.min.js') }}" ></script>
+
+<script defer>
+    $(document).ready(function () {
+        $('#select_pack').SumoSelect({
+          csvDispCount: 6,
+          selectAll: true,
+          search:true,
+          selectAllPartialCheck: true
+        });
+    });
+
+    $(document).ready(function () {
+        $('#select_shop').SumoSelect({
+          csvDispCount: 6,
+          selectAll: true,
+          search:true,
+          selectAllPartialCheck: true
+        });
+    });
+</script>
+
+<!--<link href="{{ asset('css/multiPick.css') }}" rel="stylesheet">
+<script src="{{ asset('js/multiPick.min.js') }}" ></script>
 
 <link href="{{ asset('css/easySelectStyle.css') }}" rel="stylesheet">
-<script src="{{ asset('js/easySelect.js') }}" defer></script>
-
+<script src="{{ asset('js/jquery.bs-select.min.js') }}" ></script>
+ <link href="{{ asset('css/easySelectStyle.css') }}" rel="stylesheet">
+<script src="{{ asset('js/easySelect.js') }}" ></script> -->
+@endsection
 
 <script type="text/javascript">
 
@@ -33,49 +61,29 @@ function entryChange(){
             <form action="{{ action('Admin\CardDetailController@scraping') }}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                    <div class="custom-control custom-checkbox">
-
-                        <input type="checkbox" class="form-control-input"  onchange="entryChange();" value = "select_pack" checked id="checkbox_pack">
-                            <label class="form-control-label" for="CheckBox2">収録パックから選択</label>
-                        <input type="checkbox" class="form-control-input"  onchange="entryChange();" value = "select_shop" checked id="checkbox_shop">
-                            <label class="form-control-label" for="CheckBox2">カードショップから選択</label>
-                    </div>
-
-                <div>
                     <div class="form-group row">
+                        <div class="col-md-12">収録パックから選択</div>
 
+                        <div>
+                            <select name="recordingpack[]" class="form-control" multiple="multiple"  id="select_pack" >
+                              @foreach($recordingpack_list as $key => $val)
+
+                                      <option value="{{ $val->id }}" >{{ $val->recordingpack ." [".$val->recordingpackid."]" }}</option>
+                              @endforeach
+
+                            </select>
+                        </div>
                     </div>
+
                     <div>
-                        <select name="recordingpack[]" class="form-control" multiple="multiple"  id="select_pack" >
-                          @foreach($recordingpack_list as $key => $val)
-
-                                  <option value="{{ $key }}" >{{ $val }}</option>
-                          @endforeach
-
-
-
-                            <!--
-                            <input type="checkbox" class="form-control-input"  name= "recordingpack[]" value="{{ $key }}">
-                            <label class="form-control-label"  for="{{ $key }}">{{ $val }}</label>
-                            </div>
-                            <!--
-                            {{ Form::checkbox('recordingpack[]', $key, false, ['id' => 'tag'.$key, 'class' => 'form-control-input']) }}
-                            {{ Form::label('tag'.$key, $val, []) }} style="transform:scale(2.0);"
-                            -->
-
-                        </select>
-                    </div>
-                </div>
-                    <div id="select_shop">
                         <div class="form-group row">
+                            <div class="col-md-12">カードショップから選択</div>
+                            <select name="shop[]" class="form-control" multiple="multiple"  id="select_shop" >
+                                @foreach($shop_list as $key => $val)
+                                    <option value="{{ $key }}" >{{ $val }}</option>
 
-                            @foreach($shop_list as $key => $val)
-                                <div class="col-md-6">
-                                <input type="checkbox" class="form-control-input"  name= "shop[]" value="{{ $key }}">
-                                <label class="form-control-label"  for="{{ $key }}">{{ $val }}</label>
-                                </div>
-
-                            @endforeach
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
@@ -83,27 +91,10 @@ function entryChange(){
                     <input type="submit" class="btn btn-primary" value="実行">
                 </div>
             </form>
-            <!--
-            <div>
 
-                <a href="{{ action('Admin\CardDetailController@scraping') }}">実行</a>
-            </div>
--->
 
         </div>
     </div>
 
-    <script type="text/javascript">
-        function select_pack(){
-          mobiscroll.select('#multiple-select', {
-              inputElement: document.getElementById('my-input'),
-              touchUi: false
-          });
-        }
 
-        $("#select_pack").easySelect({
-
-        });
-
-    </script>
 @endsection

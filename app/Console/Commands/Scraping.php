@@ -151,6 +151,7 @@ class Scraping extends Command
         $cardprice->save();
       }catch(\Exception $e){
         $logger = \Log::channel('batch')->getLogger();
+        $logger->info($recordingcardid);
         $logger->info($rarities);
         $logger->info($e);
         print_r($rarities);
@@ -203,7 +204,7 @@ class Scraping extends Command
               $notes = $notes.$illusts;
           }
 
-          
+
           $this->save_card_price($shop_id,$recordingcardid,$rarities,$prices,$notes);
 
       });

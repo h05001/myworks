@@ -59,6 +59,7 @@ function clearElement(element) {
                             <option value="select2">魔法</option>
                             <option value="select3">罠</option>
                             <option value="select4">価格テーブル</option>
+                            <option value="select5">リミットレギュレーション</option>
 
                         </select>
                     </div>

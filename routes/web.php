@@ -48,8 +48,8 @@ Route::group(['prefix' => 'admin'], function() {
 
     Route::get('carddetail/create', 'Admin\CardDetailController@add');
     Route::post('carddetail/create', 'Admin\CardDetailController@create');
-    Route::get('carddetail/edit', 'Admin\CardDetailController@edit');
-    Route::post('carddetail/edit', 'Admin\CardDetailController@update');
+    Route::get('carddetail/update', 'Admin\CardDetailController@edit');
+    Route::post('carddetail/update', 'Admin\CardDetailController@update');
     Route::get('carddetail', 'Admin\CardDetailController@index');
     Route::get('carddetail/price', 'Admin\CardDetailController@price');
     Route::get('carddetail/history', 'Admin\CardDetailController@history');
@@ -58,8 +58,10 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('carddetail/import', 'Admin\CardDetailController@import');//laravel excel
     Route::get('carddetail/scrapingConditions', 'Admin\CardDetailController@scrapingConditions');
     Route::post('carddetail/scraping', 'Admin\CardDetailController@scraping');
+    //Route::get('carddetail/update', 'Admin\CardDetailController@update');
 
     Route::get('carddetail/delete', 'Admin\CardDetailController@delete');
+
 
     Route::get('probability', 'Admin\ProbabilityController@calculation');
 

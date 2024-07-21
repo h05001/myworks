@@ -48,17 +48,32 @@ class TournamentDeckCardController extends Controller
         $import_flag = true;
         continue;
       }
+
       // 文字コード変換
       $row = mb_convert_encoding($row, "UTF-8",'ASCII,JIS,UTF-8,EUC-JP,SJIS');
+      //dd($row[1]);
+      if(empty($row[1]) ){
+          $card_master_id = null;
 
+      }else {
+          $card_master_id = (int)$row[1];
+      }
       $import = TournamentDeckCard::create([
         'tournament_deck_id' => $request->tournament_deck_id,
         'kinds' => $row[0],
-        //'card_master_id' => $row[1],
+        'card_master_id' => $card_master_id,
+
         'card_name' => $row[2],
         'card_class' => $row[3],
         'number' => $row[4],
+        //
       ]);
+      // $card_master_id = CardDetail::where('card_name', $row[2])->get();
+      // $check = TournamentDeckCard::where('card_name', $row[2])->get();
+      // if ($card_master_id != null) {
+      //   $check -> card_master_id = $card_master_id -> card_master_id;
+      // }
+
     }
       return redirect('admin/tournamentDeckCard/create')->with('flash_message', '登録が完了しました');
 

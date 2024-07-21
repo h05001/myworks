@@ -44,7 +44,7 @@
                             </tr>
                             <td>
                                 <div>
-                                    <a href="{{ action('Admin\CardDetailController@history', ['id' => $lastprices->id, 'cardshop_id' => $lastprices->cardshop_id]) }}">変動歴</a>
+                                    <a href="{{ action('Admin\CardDetailController@history', ['id' => $lastprices->id, 'cardshop_id' => $lastprices->cardshop_id, 'note' => $lastprices->notes]) }}">変動歴</a>
                                 </div>
 
                             </td>

@@ -16,6 +16,8 @@
         {{-- Laravel標準で用意されているJavascriptを読み込みます --}}
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
         @yield('script')
 
         <!-- Fonts -->
@@ -28,6 +30,8 @@
 
         {{-- この章の後半で作成するCSSを読み込みます --}}
         <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+
+
     </head>
     <body>
         <div id="app">
@@ -55,6 +59,7 @@
                                 <a class="dropdown-item" href="http://localhost:8000/admin/tournament/create">大会情報の登録</a>
                                 <a class="dropdown-item" href="http://localhost:8000/admin/tournamentDeck/create">大会デッキ情報の登録</a>
                                 <a class="dropdown-item" href="http://localhost:8000/admin/tournamentDeckCard/create">大会デッキカード情報の登録</a>
+                                <a class="dropdown-item" href="http://localhost:8000/admin/tournamentDeckCard/ranking">大会デッキカードランキング表</a>
                             </div>
                         </li>
                     </ul>

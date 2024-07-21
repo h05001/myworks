@@ -18,15 +18,17 @@
     <form action="{{ action('Admin\CardDetailController@history') }}" method="get">
         <div class="form-group row">
             <div class="col-md-3" class="form-control">
-                <select name="term" value="term">
+              <input type = "month" name="term" value="{{ $term }}">
+                <!-- <select name="term" value="term">
                   <option value="">期間の選択</option>
                   <option value="1">1が月</option>
                   <option value="3">3か月</option>
                   <option value="6">6か月</option>
-                </select>
+                </select> -->
             </div>
             <input type="hidden" name="id" value="{{ $id }}">
             <input type="hidden" name="cardshop_id" value="{{ $cardshop_id }}">
+            <input type="hidden" name="note" value="{{ $note }}">
         </div>
         <input type="submit" class="btn btn-primary" value="グラフの生成">
     </form>

@@ -276,6 +276,8 @@ function changeDisabled(value,checked){
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <h2>カード詳細情報　新規作成</h2>
+
+                
                 <form action="{{ action('Admin\CardDetailController@create') }}" method="post" enctype="multipart/form-data">
 
                     @if (count($errors) > 0)

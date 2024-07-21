@@ -7,12 +7,32 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto">
+          <!-- フラッシュメッセージ -->
+          @if (session('flash_message'))
+              <div class="flash_message">
+                  {{ session('flash_message') }}
+              </div>
+          @endif
+          @if($posts != null)
+
+
             <h2>{{ $posts->card_name }}:詳細情報</h2>
             <form action="{{ action('Admin\CardDetailController@detail') }}" method="post" enctype="multipart/form-data">
 
                 <div class="form-group row">
+
                     <div class="col-md-3">カード名</div>
-                    <div class="col-md-6">{{ $posts->card_name }}</div>
+                    <div class="col-md-6">{{ $posts->card_name }}
+
+                        @if($posts->latestRegulation() != null)
+                            @if($posts->latestRegulation()->able =='0')
+                                <div class="col-md-3">禁止</div>
+                            @elseif($posts->latestRegulation()->able =='1')
+                                <div class="col-md-3">制限</div>
+                            @elseif($posts->latestRegulation()->able =='2')
+                                <div class="col-md-3">準制限</div>
+                            @endif
+                        @endif</div>
                 </div>
                 <div class="form-group row">
                     <div class="col-md-3">読み方</div>
@@ -118,6 +138,33 @@
             <div>
                 <a href="{{ action('Admin\CardDetailController@price', ['id' => $posts->card_master_id]) }}">価格</a>
             </div>
+            <div>
+                <a href="{{ action('Admin\CardDetailController@update', ['id' => $posts->card_master_id]) }}">編集</a>
+            </div>
+            <div class="row">リミットレギュレーションの変遷歴</div>
+                <div class="row">
+                  <table class="table table-dark">
+                       <thead>
+                           <tr>
+                               <th width="25%">レギュレーション</th>
+                               <th width="25%">投入可能枚数</th>
+
+                           </tr>
+                       </thead>
+                       <tbody>
+                           @foreach($transitions as $value)
+                               <tr>
+                                   <th>{{ $value->regulation_id }}</th>
+                                   <td>{{ $value->able }}</td>
+
+                               </tr>
+                           @endforeach
+                       </tbody>
+                   </table>
+                </div>
+                @else
+                    <div class="col-md-3">詳細情報未登録です</div>
+                @endif
         </div>
     </div>
 </div>
